@@ -1,18 +1,17 @@
 #include <iostream>
-#include <SDL_Abstractions.h>
+#include "CosmoCombat.h"
 #undef main //prevents interfearence from SDL2_main.h
 
+
+//global variables:
+SDL_Window* window;
+SDL_Renderer* renderer;
+SDL_Surface* screen;
+bool running = true;
 
 
 using namespace std;
 //Global Variables
-
-SDL_Window* window;
-SDL_Renderer* renderer;
-SDL_Surface *screen;
-bool running = true;
-int width;
-int height;
 
 
 void setup() {
@@ -35,8 +34,8 @@ int main(int argc, char* argv[])
 	quickInit(8,2); //setup SDL subsystems (SDL, Image, TTF), 8 = color depth, 2 = samples
 	setup(); //create window, and setup renderer and screen
 	setDefaultColor(color(255,255,255)); //sets default screen background color;
-
-
+	loadSprites(renderer);
+	configureParts();
 	//Game Loop:
 
 	while (running) {
@@ -51,8 +50,7 @@ int main(int argc, char* argv[])
 				break;
 			}
 			if (event.type == SDL_KEYDOWN) {
-				
-				
+
 			}
 
 		}
@@ -61,15 +59,13 @@ int main(int argc, char* argv[])
 		//Draw Stuff:
 
 
-		
 	
 	
-	
-		resetRenderColor(renderer);
+		//resetRenderColor(renderer);
 		SDL_RenderPresent(renderer);
 	}
 
-
+	smoothFinish(window, renderer);
 
 
     cout << "Hello World!\n";

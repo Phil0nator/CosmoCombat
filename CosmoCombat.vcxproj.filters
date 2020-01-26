@@ -33,9 +33,21 @@
     <ClCompile Include="Abstractions\Text.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="assetHandling.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Parts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Abstractions\SDL_Abstractions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CosmoCombat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

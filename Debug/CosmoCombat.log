@@ -1,20 +1,15 @@
-﻿  Colors.cpp
-  Geometry.cpp
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(73,23): warning C4215:  nonstandard extension used: long float
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(73,23): warning C4215:  nonstandard extension used: long float
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\Geometry.cpp(110,13): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\Geometry.cpp(111,13): warning C4244:  '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\Geometry.cpp(123,24): warning C4244:  'return': conversion from 'double' to 'float', possible loss of data
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\Geometry.cpp(126,21): warning C4215:  nonstandard extension used: long float
-  Images.cpp
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\Geometry.cpp(128,14): warning C4244:  'return': conversion from 'double' to 'Uint32', possible loss of data
-  Misc.cpp
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(73,23): warning C4215:  nonstandard extension used: long float
-  Text.cpp
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(73,23): warning C4215:  nonstandard extension used: long float
+﻿  assetHandling.cpp
+C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\CosmoCombat.h(2,10): warning C4067:  unexpected tokens following preprocessor directive - expected a newline
   CosmoCombat.cpp
 C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(73,23): warning C4215:  nonstandard extension used: long float
+C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\CosmoCombat.h(2,10): warning C4067:  unexpected tokens following preprocessor directive - expected a newline
 C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(73,23): warning C4215:  nonstandard extension used: long float
-  Generating Code...
+  ItemData.cpp
 C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\CosmoCombat.cpp(32,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\CosmoCombat.h(2,10): warning C4067:  unexpected tokens following preprocessor directive - expected a newline
+  Parts.cpp
+C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(73,23): warning C4215:  nonstandard extension used: long float
+C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\CosmoCombat.h(2,10): warning C4067:  unexpected tokens following preprocessor directive - expected a newline
+  Generating Code...
+C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(73,23): warning C4215:  nonstandard extension used: long float
   CosmoCombat.vcxproj -> C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Debug\CosmoCombat.exe
