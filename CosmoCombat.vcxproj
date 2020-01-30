@@ -93,12 +93,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\include;C:\SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\include;C:\SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\include;C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\include;C:\SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\include;C:\SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\include;C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions;C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\SDL_UILibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\lib\x86;C:\SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\lib\x86;C:\SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\lib\x86;C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>G:\My Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions;C:\SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\lib\x86;C:\SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\lib\x86;C:\SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\lib\x86;C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -110,7 +110,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\include;C:\SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\include;C:\SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\include;C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\include;C:\SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\include;C:\SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\include;C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions;C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\SDL_UILibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -166,6 +166,9 @@
     <ClCompile Include="CosmoCombat.cpp" />
     <ClCompile Include="ItemData.cpp" />
     <ClCompile Include="Parts.cpp" />
+    <ClCompile Include="SDL_GUI.cpp" />
+    <ClCompile Include="Ship.cpp" />
+    <ClCompile Include="UIConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Abstractions\SDL_Abstractions.h" />

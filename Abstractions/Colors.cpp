@@ -67,4 +67,12 @@ SDL_Color sdlColor(int r, int g, int b, int a) {
 	return color(color(r, g, b,a));
 }
 
+void print(Color inp) {
+	
+	cout << "Color @(" << inp.r << ", " << inp.g << ", " << inp.b;
+	if (inp.a != 0) {
+		cout << ", " << inp.a;
+	}
+	cout << ")" << endl;
 
+}

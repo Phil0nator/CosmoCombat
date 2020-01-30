@@ -1,11 +1,12 @@
 #pragma once
-#include "SDL_Abstractions.h";
+#include "Abstractions\SDL_Abstractions.h"
+ //will include "SDL_Abstractions.h", which includes the all the other libraries
 
 
-
-#define SPRITE_DIM 100;
-int width;
-int height;
+const int SPRITE_DIM =100;
+const int DEFAULT_SHIP_DIM =11;
+extern int width;
+extern int height;
 
 
 //assetHandling:
@@ -16,6 +17,10 @@ struct Part {
 	int weight;
 	int type;
 	int price = 9;
+	int capacity;
+	int thrust;
+	int consumtion;
+	int defence;
 
 };
 struct GamePart {
@@ -41,7 +46,8 @@ SDL_Texture* sprite(int index);
 
 //item Data:
 void configureParts();
-
+Part part(int index);
+GamePart gamePart(int index);
 
 //Ships:
 struct GameShip {
@@ -58,3 +64,13 @@ struct GameShip {
 
 
 };
+extern vector<GameShip> bluePrints;
+
+
+
+GameShip createNewShip(int w, int h);
+
+
+
+//UIConfig
+void configure_UI_Elements(SDL_Renderer* renderer);

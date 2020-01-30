@@ -1,15 +1,11 @@
-﻿  assetHandling.cpp
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\CosmoCombat.h(2,10): warning C4067:  unexpected tokens following preprocessor directive - expected a newline
-  CosmoCombat.cpp
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(73,23): warning C4215:  nonstandard extension used: long float
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\CosmoCombat.h(2,10): warning C4067:  unexpected tokens following preprocessor directive - expected a newline
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(73,23): warning C4215:  nonstandard extension used: long float
-  ItemData.cpp
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\CosmoCombat.cpp(32,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\CosmoCombat.h(2,10): warning C4067:  unexpected tokens following preprocessor directive - expected a newline
-  Parts.cpp
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(73,23): warning C4215:  nonstandard extension used: long float
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\CosmoCombat.h(2,10): warning C4067:  unexpected tokens following preprocessor directive - expected a newline
+﻿  SDL_GUI.cpp
+C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
+  Ship.cpp
+C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\SDL_GUI.cpp(136,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
+C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Ship.cpp(31,20): warning C4018:  '<': signed/unsigned mismatch
+  UIConfig.cpp
+C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Ship.cpp(32,21): warning C4018:  '<': signed/unsigned mismatch
   Generating Code...
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(73,23): warning C4215:  nonstandard extension used: long float
+C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
   CosmoCombat.vcxproj -> C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Debug\CosmoCombat.exe
