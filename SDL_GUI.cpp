@@ -8,14 +8,15 @@ vector<UIElement*> master = vector<UIElement*>();
 void UIElement::click() {
 	
 	pressed = true;
-	if (callback != nullptr) {
-		callback();
-	}
+
 }
 void UIElement::release() {
-	
-	pressed = false;
-
+	if (pressed) {
+		pressed = false;
+		if (callback != nullptr) {
+			callback();
+		}
+	}
 }
 void tickButton(UIElement* b, SDL_Event* event) {
 	int x = b->x;
@@ -28,9 +29,9 @@ void tickButton(UIElement* b, SDL_Event* event) {
 
 	b->currentColor = &b->getColor();
 	if (mx > x&& my > y&& mx < x + w && my < y + h) { //if in bounds
-		b->currentColor = &b->getMouseOverColor();
+		b->currentColor = &b->mouseOverColor;
 		if (event->button.state == SDL_PRESSED) {
-			b->currentColor = &b->getMouseDownColor();
+			b->currentColor = &b->mouseDownColor;
 			b->click();
 		}
 		else {
@@ -48,6 +49,7 @@ void UIElement::tick(SDL_Event* event) {
 	if (type == BUTTON) {
 		tickButton(this, event);
 	}
+
 
 }
 
@@ -150,8 +152,14 @@ UIElement Page(int x, int y, int w, int h) {
 
 void drawButton(UIElement* b, SDL_Renderer* renderer) {
 	
-	quickFillRect(renderer, b->x, b->y, b->w, b->h,*b->currentColor);
-
+	if (b->texture == nullptr) {
+		quickFillRect(renderer, b->x, b->y, b->w, b->h, *b->currentColor);
+	}
+	else {
+		quickFillRect(renderer, b->x - 1, b->y - 1, b->w + 2, b->h + 2, *b->currentColor);
+		image(renderer,b->texture,getTextureRect(b->texture),getQuickRect(b->x,b->y,b->w,b->h));
+		
+	}
 
 	quickImage(renderer,b->text_texture, b->x+b->w/10,b->y+b->h/2);
 

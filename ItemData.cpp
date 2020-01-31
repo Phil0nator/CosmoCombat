@@ -1,6 +1,7 @@
 #include "CosmoCombat.h"
 
 vector<Part> ALLPARTS = vector<Part>();
+int numberOfParts;
 
 Part Empty;
 
@@ -13,6 +14,16 @@ Part QuadHall;
 Part TriArmor;
 Part ShellArmor;
 
+
+UIElement buttonFromPart(int index) {
+
+	UIElement out = Button(0, 0, ICON_DIM, ICON_DIM);
+	Part p = part(index);
+	out.texture = sprite(p.sprite);
+	out.setColors(color(255,255,255), color(230,10,15),color(150,10,15));
+	return out;
+
+}
 
 Part part(int index) {
 
@@ -86,5 +97,5 @@ void configureParts() {
 	ALLPARTS.push_back(TriArmor);
 
 
-
+	numberOfParts = ALLPARTS.size();
 }

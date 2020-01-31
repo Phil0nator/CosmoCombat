@@ -1,3 +1,5 @@
-﻿  UIConfig.cpp
+﻿  SDL_GUI.cpp
 C:\Users\philo\Documents\GitHub\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
+C:\Users\philo\Documents\GitHub\CosmoCombat\SDL_GUI.cpp(170,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\philo\Documents\GitHub\CosmoCombat\SDL_GUI.cpp(193,20): warning C4018:  '<': signed/unsigned mismatch
   CosmoCombat.vcxproj -> C:\Users\philo\Documents\GitHub\CosmoCombat\Debug\CosmoCombat.exe

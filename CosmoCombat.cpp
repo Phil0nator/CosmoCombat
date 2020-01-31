@@ -20,7 +20,7 @@ SDL_Surface* screen;
 bool running = true;
 int width;
 int height;
-
+gameState state = MAIN_MENU;
 using namespace std;
 //Global Variables
 void endGame() {
@@ -33,7 +33,7 @@ void setup() {
 	//fullscreen, opengl window
 	window = SDL_CreateWindow("--CosmoCombat--", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, SDL_WINDOW_OPENGL || SDL_WINDOW_FULLSCREEN);
 	SDL_GetWindowSize(window, &width, &height); //setup window size variables
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED|| SDL_RENDERER_PRESENTVSYNC);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	screen = SDL_GetWindowSurface(window);
 }
 
@@ -74,12 +74,19 @@ int main(int argc, char* argv[])
 		SDL_RenderClear(renderer); //clear last frame
 		//Draw Stuff:
 
+		if (state == MAIN_MENU) {
+			root_Main_Menu();
+		}
+		else if (state == BUILD_SHIP) {
+			root_Build_Ship(renderer);
+		}
+
+
 	
 		SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer
-
 		SDL_SetRenderDrawColor(renderer,0,0,0,255); //reset to black background
 		SDL_RenderPresent(renderer); //update display
-		SDL_Delay(100);
+
 	}
 
 	smoothFinish(window, renderer);

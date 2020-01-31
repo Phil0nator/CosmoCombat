@@ -94,6 +94,14 @@ typedef void(__cdecl* Callback)(); //Function Pointer typdef
 class UIElement {
 private:
 	UIElement* parent;
+
+
+	Callback callback; //defines function pointer for callbacks
+	
+	
+
+public:
+	vector<UIElement*> elems;
 	Color color;
 	Color mouseOverColor;
 	Color mouseDownColor;
@@ -104,15 +112,7 @@ private:
 	bool holdable;
 	bool textured;
 	bool expander;
-	
 
-	Callback callback; //defines function pointer for callbacks
-	
-	
-
-public:
-	vector<UIElement*> elems;
-	
 	bool visible = true;
 	int x, y, w, h;
 	Color text_color;

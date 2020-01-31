@@ -164,6 +164,7 @@
     <ClCompile Include="Abstractions\Text.cpp" />
     <ClCompile Include="assetHandling.cpp" />
     <ClCompile Include="CosmoCombat.cpp" />
+    <ClCompile Include="GameStates.cpp" />
     <ClCompile Include="ItemData.cpp" />
     <ClCompile Include="Parts.cpp" />
     <ClCompile Include="SDL_GUI.cpp" />

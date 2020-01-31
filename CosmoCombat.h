@@ -1,12 +1,21 @@
 #pragma once
 #include "Abstractions\SDL_Abstractions.h"
+#define ICON_DIM 75
+#define SPRITE_DIM 100
+#define FSDIM 1000
  //will include "SDL_Abstractions.h", which includes the all the other libraries
 
+enum gameState {
 
-const int SPRITE_DIM =100;
+	MAIN_MENU, BUILD_SHIP, SHIP_VIEW, PLAYER_VIEW, CUSTOMIZE_PLAYER
+
+};
+
+extern int numberOfParts;
 const int DEFAULT_SHIP_DIM =11;
 extern int width;
 extern int height;
+extern gameState state;
 void endGame();
 
 //assetHandling:
@@ -45,6 +54,7 @@ void loadSprites(SDL_Renderer* renderer);
 SDL_Texture* sprite(int index);
 
 //item Data:
+UIElement buttonFromPart(int index);
 void configureParts();
 Part part(int index);
 GamePart gamePart(int index);
@@ -74,3 +84,12 @@ GameShip createNewShip(int w, int h);
 
 //UIConfig
 void configure_UI_Elements(SDL_Renderer* renderer);
+
+
+//Game State Functions:
+void root_Main_Menu();
+/*     */void UI_Main_Menu();
+
+
+void root_Build_Ship(SDL_Renderer* renderer);
+/*     */void UI_Build_Ship(SDL_Renderer* renderer);
