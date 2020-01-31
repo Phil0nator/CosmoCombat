@@ -23,7 +23,11 @@ int height;
 
 using namespace std;
 //Global Variables
+void endGame() {
+	
+	running = false;
 
+}
 
 void setup() {
 	//fullscreen, opengl window

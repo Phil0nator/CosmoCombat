@@ -1,4 +1,6 @@
 #include "SDL_Abstractions.h"
+#define PI 3.141592
+#define TAO PI*2
 
 //drawing
 SDL_Rect getQuickRect(int x, int y, int w, int h) {

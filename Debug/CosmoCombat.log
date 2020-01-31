@@ -1,11 +1,3 @@
-﻿  SDL_GUI.cpp
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
-  Ship.cpp
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\SDL_GUI.cpp(136,20): warning C4018:  '<': signed/unsigned mismatch
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Ship.cpp(31,20): warning C4018:  '<': signed/unsigned mismatch
-  UIConfig.cpp
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Ship.cpp(32,21): warning C4018:  '<': signed/unsigned mismatch
-  Generating Code...
-C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
-  CosmoCombat.vcxproj -> C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Debug\CosmoCombat.exe
+﻿  UIConfig.cpp
+C:\Users\philo\Documents\GitHub\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
+  CosmoCombat.vcxproj -> C:\Users\philo\Documents\GitHub\CosmoCombat\Debug\CosmoCombat.exe

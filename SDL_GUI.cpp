@@ -8,7 +8,9 @@ vector<UIElement*> master = vector<UIElement*>();
 void UIElement::click() {
 	
 	pressed = true;
-	callback();
+	if (callback != nullptr) {
+		callback();
+	}
 }
 void UIElement::release() {
 	

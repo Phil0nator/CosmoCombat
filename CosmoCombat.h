@@ -7,7 +7,7 @@ const int SPRITE_DIM =100;
 const int DEFAULT_SHIP_DIM =11;
 extern int width;
 extern int height;
-
+void endGame();
 
 //assetHandling:
 
