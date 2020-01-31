@@ -3,7 +3,7 @@
 TTF_Font *fontAstro[50];
 UIElement PlayButton;
 UIElement SettingsButton;
-
+UIElement mainPage;
 
 void loadFontAstro() {
 
@@ -23,17 +23,25 @@ void configure_UI_Elements(SDL_Renderer* renderer) {
 
 	loadFontAstro();
 
+	mainPage = Page(0,0,width,height);
+	mainPage.setColors(color(0,0,0),color(0,0,0),color(0,0,0));
+
+
 	PlayButton = Button(width/2-width/6,height/2,width/3,height/15);
 	PlayButton.setColors(color(235,235,235),color(255,255,255),color(135,135,135));
 	PlayButton.text_color = color(0, 0, 0, 255);
 	PlayButton.renderOwnText(renderer,"Play Game", fontAstro[20],SLOW);
 	PlayButton.setCallback(buttonFunctionA);
-	PlayButton.init();
+	mainPage.add(&PlayButton);
 
 	SettingsButton = Button(width / 2 - width / 6, height / 2+height/15+10, width / 3, height / 15);
 	SettingsButton.setColors(color(235, 235, 235), color(255, 255, 255), color(135, 135, 135));
 	SettingsButton.text_color = color(0, 0, 0, 255);
 	SettingsButton.renderOwnText(renderer, "Options", fontAstro[20], SLOW);
 	SettingsButton.setCallback(buttonFunctionA);
-	SettingsButton.init();
+	mainPage.add(&SettingsButton);
+
+
+	mainPage.init();
+
 }

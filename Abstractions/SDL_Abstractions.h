@@ -10,7 +10,7 @@
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 #include <time.h>
-
+#include <algorithm>
 
 #pragma comment(lib, "SDL2main.lib")
 #pragma comment(lib, "SDL2.lib")
@@ -104,13 +104,16 @@ private:
 	bool holdable;
 	bool textured;
 	bool expander;
+	
 
 	Callback callback; //defines function pointer for callbacks
-
 	
 	
 
 public:
+	vector<UIElement*> elems;
+	
+	bool visible = true;
 	int x, y, w, h;
 	Color text_color;
 	SDL_Texture* texture;
@@ -133,14 +136,20 @@ public:
 	void renderOwnText(SDL_Renderer* renderer, string text, TTF_Font* f, TextQuality q);
 	void setCallback(Callback inp);
 	Callback getCallback();
+	void show();
+	void hide();
+	void toggle();
+	void add(UIElement* adder);
 	//client
-	void draw(SDL_Renderer* renderer);
+	void draw(SDL_Renderer* renderer,SDL_Event* event);
 	void update(SDL_Renderer* renderer, SDL_Event* event);
 	void tick(SDL_Event* event);
 	void init();
 
+	void destroy();
 
 
 };
 UIElement Button(int x, int y, int w, int h);
+UIElement Page(int x, int y, int w, int h);
 void SDL_GUI_DISPLAY(SDL_Renderer* renderer, SDL_Event* event);

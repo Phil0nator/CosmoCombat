@@ -29,7 +29,7 @@ void setup() {
 	//fullscreen, opengl window
 	window = SDL_CreateWindow("--CosmoCombat--", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, SDL_WINDOW_OPENGL || SDL_WINDOW_FULLSCREEN);
 	SDL_GetWindowSize(window, &width, &height); //setup window size variables
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED|| SDL_RENDERER_PRESENTVSYNC);
 	screen = SDL_GetWindowSurface(window);
 }
 
@@ -51,7 +51,6 @@ int main(int argc, char* argv[])
 	
 
 	//Game Loop:
-
 	while (running) {
 
 		//event loop:
@@ -76,6 +75,7 @@ int main(int argc, char* argv[])
 
 		SDL_SetRenderDrawColor(renderer,0,0,0,255); //reset to black background
 		SDL_RenderPresent(renderer); //update display
+		SDL_Delay(100);
 	}
 
 	smoothFinish(window, renderer);

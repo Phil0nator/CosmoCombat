@@ -51,8 +51,10 @@ void UIElement::tick(SDL_Event* event) {
 
 void UIElement::update(SDL_Renderer* renderer, SDL_Event* event) {
 	
+	
+
 	tick(event);
-	draw(renderer);
+	draw(renderer,event);
 
 }
 
@@ -88,6 +90,25 @@ void UIElement::renderOwnText(SDL_Renderer* renderer, string text, TTF_Font *f, 
 	text_texture = renderText(renderer,text.c_str(),f,text_color,q);
 
 }
+void UIElement::show() {
+	visible = true;
+}
+void UIElement::hide() {
+	visible = false;
+}
+void UIElement::toggle() {
+	visible = !visible;
+}
+void UIElement::add(UIElement* adder) {
+
+	if (type != PAGE) {
+		cout << "Error: Attempting to add UIElements to something other than a page" << endl;
+		return;
+	}
+	elems.push_back(adder);
+	adder->parent = this;
+}
+
 
 //data type Callback is just a function pointer
 void UIElement::setCallback(Callback inp) {
@@ -107,9 +128,23 @@ UIElement Button(int x, int y, int w, int h) {
 	out.w = w;
 	out.h = h;
 	out.type = BUTTON;
+	out.currentColor = &color(255, 0, 255);
 	return out;
 
 }
+UIElement Page(int x, int y, int w, int h) {
+	
+	UIElement out;
+	out.x = x;
+	out.y = y;
+	out.w = w;
+	out.h = h;
+	out.type = PAGE;
+	out.currentColor =&color(0,0,0);
+	return out;
+}
+
+
 
 void drawButton(UIElement* b, SDL_Renderer* renderer) {
 	
@@ -119,13 +154,25 @@ void drawButton(UIElement* b, SDL_Renderer* renderer) {
 	quickImage(renderer,b->text_texture, b->x+b->w/10,b->y+b->h/2);
 
 }
+void drawPage(UIElement* p, SDL_Renderer* renderer, SDL_Event* event) {
 
+	quickFillRect(renderer, p->x, p->y, p->w, p->h, p->getColor());
+	for (int i = 0; i < p->elems.size(); i++) {
+		p->elems.at(i)->update(renderer,event); //draw each sub element
 
-void UIElement::draw(SDL_Renderer* renderer) {
+	}
 	
+}
+
+void UIElement::draw(SDL_Renderer* renderer,SDL_Event* event) {
+	if (!visible)return;
 	if (type == BUTTON) {
 		drawButton(this, renderer);
 	}
+	else if (type == PAGE) {
+		drawPage(this, renderer, event);
+	}
+
 
 
 }
@@ -137,4 +184,17 @@ void SDL_GUI_DISPLAY(SDL_Renderer*renderer,SDL_Event*event) {
 		master.at(i)->update(renderer,event);
 	}
 	resetRenderColor(renderer);
+}
+void removeFromVector(vector<UIElement*> *e, UIElement* t) {
+	e->erase(remove(e->begin(), e->end(), t));
+} //remove from vector by value
+void UIElement::destroy() {
+
+	if (parent != nullptr) {
+		removeFromVector(&parent->elems, this);
+	}
+	else {
+		removeFromVector(&master, this); //removes element from master
+	}
+
 }
