@@ -9,11 +9,10 @@ Part Bridge;
 Part Hallway;
 Part FuelReserve;
 Part TorpedoBay;
-Part Engine;
 Part QuadHall;
 Part TriArmor;
 Part ShellArmor;
-
+Part Engine;
 
 UIElement buttonFromPart(int index) {
 
@@ -24,6 +23,12 @@ UIElement buttonFromPart(int index) {
 	return out;
 
 }
+void addPart(Part part) {
+	part.num = ALLPARTS.size();
+	ALLPARTS.push_back(part);
+	
+}
+
 
 Part part(int index) {
 
@@ -36,6 +41,7 @@ GamePart gamePart(int index) {
 	GamePart out;
 	out.origin = &p;
 	out.sprite = p.sprite;
+	out.rot = p.rot;
 	return out;
 
 }
@@ -44,21 +50,21 @@ GamePart gamePart(int index) {
 void configureParts() {
 
 	Empty.sprite = 0;
-	ALLPARTS.push_back(Empty);
+	addPart(Empty);
 
 
 	Bridge.sprite = 1;
 	Bridge.price = 0;
 	Bridge.weight = 10;
 	Bridge.type = BRIDGE;
-	ALLPARTS.push_back(Bridge);
+	addPart(Bridge);
 
 
 	Hallway.sprite = 10;
 	Hallway.price = 50;
 	Hallway.weight = 20;
 	Hallway.type = HALL;
-	ALLPARTS.push_back(Hallway);
+	addPart(Hallway);
 
 	FuelReserve.price = 200;
 	FuelReserve.weight = 25;
@@ -66,27 +72,27 @@ void configureParts() {
 	FuelReserve.capacity = 30;
 	FuelReserve.consumtion = 0;
 	FuelReserve.type = STORAGE;
-	ALLPARTS.push_back(FuelReserve);
+	addPart(FuelReserve);
 
 	QuadHall.price = 50;
 	QuadHall.weight = 20;
 	QuadHall.sprite = 11;
 	QuadHall.type = HALL;
-	ALLPARTS.push_back(QuadHall);
+	addPart(QuadHall);
 
 
 	TorpedoBay.price = 200;
 	TorpedoBay.weight = 50;
 	TorpedoBay.sprite = 4;
 	TorpedoBay.type = WEAPON;
-	ALLPARTS.push_back(TorpedoBay);
+	addPart(TorpedoBay);
 
 	ShellArmor.price = 10;
 	ShellArmor.weight = 20;
 	ShellArmor.sprite = 14;
 	ShellArmor.type = ARMOR;
 	ShellArmor.defence = 20;
-	ALLPARTS.push_back(ShellArmor);
+	addPart(ShellArmor);
 
 
 	TriArmor.price = 50;
@@ -94,8 +100,13 @@ void configureParts() {
 	TriArmor.sprite = 3;
 	TriArmor.defence = 20;
 	TriArmor.type = ARMOR;
-	ALLPARTS.push_back(TriArmor);
+	addPart(TriArmor);
 
-
+	Engine.price = 50;
+	Engine.weight = 100;
+	Engine.sprite = 2;
+	Engine.thrust = 1;
+	addPart(Engine);
+	
 	numberOfParts = ALLPARTS.size();
 }

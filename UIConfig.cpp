@@ -1,4 +1,7 @@
 #include "CosmoCombat.h"
+#define MAX_PARTS 128
+
+
 
 TTF_Font *fontAstro[50];
 UIElement MM_ToGame;
@@ -7,7 +10,7 @@ UIElement MM_Quit;
 UIElement MM_EditShip;
 
 UIElement BSP_Back;
-UIElement BSP_allParts[128];
+UIElement BSP_allParts[MAX_PARTS];
 
 
 UIElement mainPage;
@@ -30,6 +33,15 @@ void MM_toEditShip() {
 }
 void BSP_toBack() {
 	state = MAIN_MENU;
+}
+void BSP_setCurrentPart() {
+	int mx, my;
+	SDL_GetMouseState(&mx, &my);
+	int ix = (mx-10) / (ICON_DIM+10);
+	int iy = (my-10) / (ICON_DIM+10);
+	int i = ix + (4 * (iy-1));
+	setCurrentPart(part(i));
+
 }
 
 
@@ -54,7 +66,7 @@ void fill_Build_Ship_Page(SDL_Renderer* renderer) {
 		BSP_allParts[i] = buttonFromPart(i);
 		BSP_allParts[i].x = ((ICON_DIM+10)*(i%4))+10;
 		BSP_allParts[i].y = (ICON_DIM+10)*((i/4)+1)+10;
-		
+		BSP_allParts[i].setCallback(BSP_setCurrentPart);
 		buildShipsPage_SideMenu.add(&BSP_allParts[i]);
 		
 	}
@@ -73,8 +85,8 @@ void configure_UI_Elements(SDL_Renderer* renderer) {
 	mainPage = Page(0,0,width,height);
 	mainPage.setColors(color(0,0,0),color(0,0,0),color(0,0,0));
 
-	buildShipsPage = Page(0, 0, width, height);
-	buildShipsPage.setColors(color(100,100,100), color(0, 0, 0), color(0, 0, 0));
+	buildShipsPage = Page(0, 0, 0, 0); //dims set to 0 because its just a container
+	buildShipsPage.setColors(color(0,0,0,0), color(0, 0, 0), color(0, 0, 0));
 	buildShipsPage.hide();
 
 
@@ -126,6 +138,7 @@ void UI_Build_Ship(SDL_Renderer* renderer) {
 
 	mainPage.hide();
 	buildShipsPage.show();
+
 
 }
 

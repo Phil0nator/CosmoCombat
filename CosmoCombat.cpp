@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
 	setDefaultColor(color(255,255,255)); //sets default screen background color;
 	loadSprites(renderer);
 	configureParts(); // sets up reference Part structures
-	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM)); //creates a placeholder for the first ship
+	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
 	configure_UI_Elements(renderer); 
 	
 
@@ -73,17 +73,22 @@ int main(int argc, char* argv[])
 
 		SDL_RenderClear(renderer); //clear last frame
 		//Draw Stuff:
+		//note: SDL_GUI_DISPLAY is called seperately in different gamestates because in some of them it 
+		//should be behind other graphics, while in others it should go in the front
+
 
 		if (state == MAIN_MENU) {
 			root_Main_Menu();
+			SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer
 		}
 		else if (state == BUILD_SHIP) {
-			root_Build_Ship(renderer);
+			SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer
+			root_Build_Ship(renderer,screen,&event);
 		}
 
 
 	
-		SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer
+		
 		SDL_SetRenderDrawColor(renderer,0,0,0,255); //reset to black background
 		SDL_RenderPresent(renderer); //update display
 

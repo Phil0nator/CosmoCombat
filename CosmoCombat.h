@@ -21,7 +21,7 @@ void endGame();
 //assetHandling:
 
 struct Part {
-
+	int num;
 	int sprite;
 	int weight;
 	int type;
@@ -30,11 +30,12 @@ struct Part {
 	int thrust;
 	int consumtion;
 	int defence;
-
+	float rot = 0;
 };
 struct GamePart {
 	int x;
 	int y;
+	float rot = 0;
 	Part* origin;
 	int sprite;
 
@@ -71,15 +72,16 @@ struct GameShip {
 	float vely;
 	float rot;
 	float rotvel;
+	SDL_Texture* texture;
 
 
 };
 extern vector<GameShip> bluePrints;
-
-
-
-GameShip createNewShip(int w, int h);
-
+SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* ship);
+void drawShip(SDL_Renderer* renderer, GameShip* ship);
+void placePart(GameShip* ship, int x, int y, int part);
+GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen);
+void placePart(GameShip* ship, int x, int y, int part, float r);
 
 
 //UIConfig
@@ -87,9 +89,10 @@ void configure_UI_Elements(SDL_Renderer* renderer);
 
 
 //Game State Functions:
+void setCurrentPart(Part p);
 void root_Main_Menu();
 /*     */void UI_Main_Menu();
 
 
-void root_Build_Ship(SDL_Renderer* renderer);
+void root_Build_Ship(SDL_Renderer* renderer,SDL_Surface* screen,SDL_Event* event);
 /*     */void UI_Build_Ship(SDL_Renderer* renderer);
