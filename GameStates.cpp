@@ -29,7 +29,7 @@ void root_Build_Ship(SDL_Renderer* renderer, SDL_Surface* screen, SDL_Event* eve
 		if (event->button.clicks == 1&&current_Part.num>0) {
 			int sx = width / 4;
 			if (mx > sx) {
-				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, current_Part.num);
+				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, current_Part.num,current_Part.rot);
 				bufferShip(renderer, screen, &bluePrints.at(0));
 			}
 

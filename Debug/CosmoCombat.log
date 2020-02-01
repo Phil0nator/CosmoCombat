@@ -1,5 +1,18 @@
-﻿  GameStates.cpp
+﻿  CosmoCombat.cpp
+C:\Users\philo\Documents\GitHub\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
+  GameStates.cpp
+C:\Users\philo\Documents\GitHub\CosmoCombat\CosmoCombat.cpp(45,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   ItemData.cpp
+C:\Users\philo\Documents\GitHub\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
+  Parts.cpp
+C:\Users\philo\Documents\GitHub\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
+  Ship.cpp
+C:\Users\philo\Documents\GitHub\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
+C:\Users\philo\Documents\GitHub\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
+C:\Users\philo\Documents\GitHub\CosmoCombat\Ship.cpp(20,20): warning C4018:  '<': signed/unsigned mismatch
+  UIConfig.cpp
+C:\Users\philo\Documents\GitHub\CosmoCombat\Ship.cpp(21,21): warning C4018:  '<': signed/unsigned mismatch
+  assetHandling.cpp
 C:\Users\philo\Documents\GitHub\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
   Generating Code...
 C:\Users\philo\Documents\GitHub\CosmoCombat\Abstractions\SDL_Abstractions.h(66,21): warning C4215:  nonstandard extension used: long float
