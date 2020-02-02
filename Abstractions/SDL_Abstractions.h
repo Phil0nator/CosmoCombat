@@ -1,12 +1,14 @@
 #pragma once
+#ifdef __linux__
 
+#endif
 
 
 #include <iostream>
 #include <stdio.h>
 #include <vector>
 #include <string>
-#include <SDL.h>
+//#include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 #include <time.h>

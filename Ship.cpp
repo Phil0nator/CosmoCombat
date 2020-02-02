@@ -60,6 +60,3 @@ void drawGameShip(SDL_Renderer* renderer, GameShip* ship) {
 
 
 }
-
-
-
