@@ -1,4 +1,12 @@
-#include "SDL_Abstractions.h"
+#pragma once
+
+//misc
+
+int main(int argc, char* argv[]);
+int randint(int min, int max);
+void smoothFinish(SDL_Window* window, SDL_Renderer* renderer);
+void quickInit();
+void quickInit(int colorDepth, int samples);
 
 int randint(int min, int max) {
 	return min + rand() % (max - min);

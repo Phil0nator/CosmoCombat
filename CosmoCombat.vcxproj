@@ -94,6 +94,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\include;C:\SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\include;C:\SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\include;C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions;C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\SDL_UILibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -111,6 +112,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\SDL\SDL2-devel-2.0.10-VC\SDL2-2.0.10\include;C:\SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\include;C:\SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\include;C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\Abstractions;C:\Users\philo\Google Drive\PY ATOM\CPP\CosmoCombat\CosmoCombat\SDL_UILibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,23 +159,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Abstractions\Colors.cpp" />
-    <ClCompile Include="Abstractions\Geometry.cpp" />
-    <ClCompile Include="Abstractions\Images.cpp" />
-    <ClCompile Include="Abstractions\Misc.cpp" />
-    <ClCompile Include="Abstractions\Text.cpp" />
+    <ClCompile Include="Abstractions\Colors.h" />
+    <ClCompile Include="Abstractions\Geometry.h" />
+    <ClCompile Include="Abstractions\Images.h" />
+    <ClCompile Include="Abstractions\Misc.h" />
+    <ClCompile Include="Abstractions\SDL_GUI.h" />
+    <ClCompile Include="Abstractions\Text.h" />
     <ClCompile Include="assetHandling.cpp" />
     <ClCompile Include="CosmoCombat.cpp" />
     <ClCompile Include="GameStates.cpp" />
     <ClCompile Include="ItemData.cpp" />
     <ClCompile Include="Parts.cpp" />
-    <ClCompile Include="SDL_GUI.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="UIConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Abstractions\SDL_Abstractions.h" />
     <ClInclude Include="CosmoCombat.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\sprites\2.PNG" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

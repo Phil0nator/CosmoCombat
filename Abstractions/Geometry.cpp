@@ -1,6 +1,32 @@
-#include "SDL_Abstractions.h"
+
 #define PI 3.141592
 #define TAO PI*2
+//Geometry
+	//drawing
+SDL_Rect getQuickRect(int x, int y, int w, int h);
+void quickCircle(SDL_Renderer* renderer, int32_t centerx, int32_t centery, int32_t r, Color color);
+void quickRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color color);
+void quickPoint(SDL_Renderer* renderer, SDL_Point p, Color color);
+void quickPoint(SDL_Renderer* renderer, int x, int y, Color color);
+void quickLine(SDL_Renderer* renderer, int sx, int sy, int fx, int fy, Color color);
+void quickFillRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color color);
+//math
+
+SDL_Point rotatePoint(SDL_Point p, SDL_Point center, float r);
+SDL_Point Point(int x, int y);
+float radians(Uint32 degrees);
+Uint32 degrees(double r);
+
+
+//Images
+void image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect source, SDL_Rect dest);
+void image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect source, SDL_Rect dest, float r, SDL_Point center, SDL_RendererFlip flags);
+void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y);
+void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, float r, SDL_Point center, SDL_RendererFlip flags);
+
+SDL_Point getTextureSize(SDL_Texture* texture);
+SDL_Texture* loadImage(SDL_Renderer* renderer, const char* path);
+SDL_Rect getTextureRect(SDL_Texture* texture);
 
 //drawing
 SDL_Rect getQuickRect(int x, int y, int w, int h) {
@@ -125,7 +151,7 @@ float radians(Uint32 degrees) {
 	return degrees * M_PI / 180;
 
 }
-Uint32 degrees(long float r) {
+Uint32 degrees(double r) {
 
 	return r*180/M_PI;
 

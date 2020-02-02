@@ -1,7 +1,6 @@
-#include "CosmoCombat.h"
 
 
-using namespace std;
+
 vector<SDL_Texture*> sprites = vector<SDL_Texture*>();
 
 void loadSprites(SDL_Renderer *renderer) {

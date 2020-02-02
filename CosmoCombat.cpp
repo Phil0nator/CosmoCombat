@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Abstractions\\SDL_Abstractions.h"
 #include "CosmoCombat.h"
 #undef main //prevents interfearence from SDL2_main.h
 
@@ -24,7 +25,7 @@ gameState state = MAIN_MENU;
 using namespace std;
 //Global Variables
 void endGame() {
-	
+
 	running = false;
 
 }
@@ -51,8 +52,8 @@ int main(int argc, char* argv[])
 	loadSprites(renderer);
 	configureParts(); // sets up reference Part structures
 	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
-	configure_UI_Elements(renderer); 
-	
+	configure_UI_Elements(renderer);
+
 
 	//Game Loop:
 	while (running) {
@@ -73,7 +74,7 @@ int main(int argc, char* argv[])
 
 		SDL_RenderClear(renderer); //clear last frame
 		//Draw Stuff:
-		//note: SDL_GUI_DISPLAY is called seperately in different gamestates because in some of them it 
+		//note: SDL_GUI_DISPLAY is called seperately in different gamestates because in some of them it
 		//should be behind other graphics, while in others it should go in the front
 
 
@@ -87,8 +88,8 @@ int main(int argc, char* argv[])
 		}
 
 
-	
-		
+
+
 		SDL_SetRenderDrawColor(renderer,0,0,0,255); //reset to black background
 		SDL_RenderPresent(renderer); //update display
 

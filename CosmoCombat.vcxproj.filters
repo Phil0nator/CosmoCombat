@@ -21,21 +21,6 @@
     <ClCompile Include="CosmoCombat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Abstractions\Colors.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Abstractions\Geometry.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Abstractions\Images.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Abstractions\Misc.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Abstractions\Text.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="assetHandling.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,14 +33,29 @@
     <ClCompile Include="Ship.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SDL_GUI.cpp">
-      <Filter>Header Files\UI</Filter>
-    </ClCompile>
     <ClCompile Include="UIConfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameStates.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Abstractions\SDL_GUI.h">
+      <Filter>Header Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Abstractions\Geometry.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Abstractions\Colors.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Abstractions\Misc.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Abstractions\Images.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Abstractions\Text.h">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,5 +65,18 @@
     <ClInclude Include="CosmoCombat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\sprites\2.PNG">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

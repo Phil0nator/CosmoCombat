@@ -1,5 +1,4 @@
-#include "SDL_Abstractions.h"
-
+#pragma once
 
 
 TTF_Font *loadFont(const char* path, Uint32 size) {
