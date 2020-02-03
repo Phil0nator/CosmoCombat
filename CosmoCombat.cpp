@@ -77,12 +77,16 @@ int main(int argc, char* argv[])
 		else if (state == BUILD_SHIP) {
 			SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer
 			root_Build_Ship(renderer,screen,&event);
+		} else if (state == SHIP_VIEW){
+
+			SDL_GUI_DISPLAY(renderer, &event);
+			
 		}
 
 
 
 		SDL_SetRenderDrawColor(renderer,0,0,0,255); //reset to black background
-		
+
 		SDL_RenderPresent(renderer); //update display
 		SDL_Delay(0);
 	}
