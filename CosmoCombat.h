@@ -100,6 +100,9 @@ void root_Main_Menu();
 void root_Build_Ship(SDL_Renderer* renderer,SDL_Surface* screen,SDL_Event* event);
 /*     */void UI_Build_Ship(SDL_Renderer* renderer);
 
+void root_Ship_View();
+/*     */void UI_Ship_View();
+
 #include "assetHandling.cpp"
 #include "ItemData.cpp"
 #include "Ship.cpp"

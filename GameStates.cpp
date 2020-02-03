@@ -49,3 +49,18 @@ void root_Build_Ship(SDL_Renderer* renderer, SDL_Surface* screen, SDL_Event* eve
 
 
 }
+
+
+void root_Ship_View(){
+
+//draw world
+//draw ships
+//draw objs
+
+
+}
+void root_Player_View(){
+
+
+
+}
