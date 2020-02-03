@@ -1,9 +1,6 @@
 
 #include "CosmoCombat.h"
 #undef main
-//TODO:
-//runtime pointer access violations making it very unstable
-//see pointer issues in SDL_GUI & Modifiers
 
 
 
@@ -85,6 +82,7 @@ int main(int argc, char* argv[])
 
 
 		SDL_SetRenderDrawColor(renderer,0,0,0,255); //reset to black background
+		
 		SDL_RenderPresent(renderer); //update display
 		SDL_Delay(0);
 	}

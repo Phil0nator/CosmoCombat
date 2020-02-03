@@ -14,7 +14,8 @@ enum UIElement_Type {
 
 void defaultCallback(){}
 
-typedef void(__cdecl* Callback)(); //Function Pointer typdef
+typedef void(__cdecl* Callback)(void); //Function Pointer typdef
+
 class UIElement {
 private:
 	UIElement* parent;

@@ -65,7 +65,7 @@ void fill_Build_Ship_Page(SDL_Renderer* renderer) {
 		BSP_allParts[i] = buttonFromPart(i);
 		BSP_allParts[i].x = ((ICON_DIM+10)*(i%4))+10;
 		BSP_allParts[i].y = (ICON_DIM+10)*((i/4)+1)+10;
-		BSP_allParts[i].setCallback(BSP_setCurrentPart);
+		BSP_allParts[i].setCallback(&BSP_setCurrentPart);
 		buildShipsPage_SideMenu.add(&BSP_allParts[i]);
 
 	}
@@ -105,7 +105,7 @@ void configure_UI_Elements(SDL_Renderer* renderer) {
 	MM_EditShip.setColors(color(235, 235, 235), color(255, 255, 255), color(135, 135, 135));
 	MM_EditShip.text_color = color(0, 0, 0, 255);
 	MM_EditShip.renderOwnText(renderer, "Edit Ship", fontAstro[20], SLOW);
-	MM_EditShip.setCallback(MM_toEditShip);
+	MM_EditShip.setCallback(&MM_toEditShip);
 	mainPage.add(&MM_EditShip);
 
 
@@ -113,7 +113,7 @@ void configure_UI_Elements(SDL_Renderer* renderer) {
 	MM_Quit.setColors(color(235,235,235),color(255,235,235),color(255,0,0));
 	MM_Quit.text_color = color(0,0,0);
 	MM_Quit.renderOwnText(renderer, "Quit", fontAstro[15], SLOW);
-	MM_Quit.setCallback(endGame);
+	MM_Quit.setCallback(&endGame);
 	mainPage.add(&MM_Quit);
 
 
@@ -125,7 +125,7 @@ void configure_UI_Elements(SDL_Renderer* renderer) {
 	BSP_Back = Button(0,0, width / 10, height / 15);
 	BSP_Back.setColors(color(235, 235, 235), color(255, 235, 235), color(255, 0, 0));
 	BSP_Back.renderOwnText(renderer, "Back", fontAstro[15], SLOW);
-	BSP_Back.setCallback(BSP_toBack);
+	BSP_Back.setCallback(&BSP_toBack);
 	buildShipsPage.add(&BSP_Back);
 
 	buildShipsPage.init();
