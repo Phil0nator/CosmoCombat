@@ -1,3 +1,7 @@
+#include <iostream>
+#include <cstddef>
+#include "Abstractions\\SDL_Abstractions.h"
+
 #pragma once
 #define ICON_DIM 75
 #define SPRITE_DIM 100
@@ -96,9 +100,10 @@ void root_Main_Menu();
 void root_Build_Ship(SDL_Renderer* renderer,SDL_Surface* screen,SDL_Event* event);
 /*     */void UI_Build_Ship(SDL_Renderer* renderer);
 
+#include "assetHandling.cpp"
 #include "ItemData.cpp"
 #include "Ship.cpp"
-#include "assetHandling.cpp"
-#include "SDL_GUI.h"
+
+
 #include "GameStates.cpp"
 #include "UIConfig.cpp"

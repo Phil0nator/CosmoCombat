@@ -1,4 +1,3 @@
-#include "CosmoCombat.h"
 
 vector<Part> ALLPARTS = vector<Part>();
 int numberOfParts;
@@ -26,7 +25,7 @@ UIElement buttonFromPart(int index) {
 void addPart(Part part) {
 	part.num = ALLPARTS.size();
 	ALLPARTS.push_back(part);
-	
+
 }
 
 
@@ -36,7 +35,7 @@ Part part(int index) {
 
 }
 GamePart gamePart(int index) {
-	
+
 	Part p = part(index);
 	GamePart out;
 	out.origin = &p;
@@ -107,6 +106,6 @@ void configureParts() {
 	Engine.sprite = 2;
 	Engine.thrust = 1;
 	addPart(Engine);
-	
+
 	numberOfParts = ALLPARTS.size();
 }

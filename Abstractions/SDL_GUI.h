@@ -11,13 +11,16 @@ enum UIElement_Type {
 	UNKOWN, BUTTON, ENTRY, SLIDER, PROGRESS_BAR, PAGE
 
 };
+
+void defaultCallback(){}
+
 typedef void(__cdecl* Callback)(); //Function Pointer typdef
 class UIElement {
 private:
 	UIElement* parent;
 
 
-	Callback callback; //defines function pointer for callbacks
+	Callback callback = defaultCallback; //defines function pointer for callbacks
 
 
 
@@ -26,7 +29,7 @@ public:
 	Color color;
 	Color mouseOverColor;
 	Color mouseDownColor;
-	bool pressed;
+	bool pressed = false;
 	string text;
 	string hintText;
 
@@ -37,8 +40,8 @@ public:
 	bool visible = true;
 	int x, y, w, h;
 	Color text_color;
-	SDL_Texture* texture;
-	SDL_Texture* text_texture;
+	SDL_Texture* texture = nullptr;
+	SDL_Texture* text_texture = nullptr;
 	UIElement_Type type = UNKOWN;
 	Color* currentColor;
 	//getters
@@ -77,8 +80,6 @@ void SDL_GUI_DISPLAY(SDL_Renderer* renderer, SDL_Event* event);
 
 
 vector<UIElement*> master = vector<UIElement*>();
-
-
 void UIElement::click() {
 
 	pressed = true;
@@ -91,7 +92,9 @@ void UIElement::release() {
 			callback();
 		}
 	}
+
 }
+
 void tickButton(UIElement* b, SDL_Event* event) {
 	int x = b->x;
 	int y = b->y;
@@ -102,8 +105,11 @@ void tickButton(UIElement* b, SDL_Event* event) {
 	SDL_GetMouseState(&mx, &my);
 
 	b->currentColor = &b->getColor();
+
 	if (mx > x&& my > y&& mx < x + w && my < y + h) { //if in bounds
+
 		b->currentColor = &b->mouseOverColor;
+		if(event == nullptr)return;
 		if (event->button.state == SDL_PRESSED) {
 			b->currentColor = &b->mouseDownColor;
 			b->click();
@@ -113,10 +119,52 @@ void tickButton(UIElement* b, SDL_Event* event) {
 		}
 	}
 	else {
+
 		b->release();
+
 	}
 
 }
+void drawButton(UIElement* b, SDL_Renderer* renderer) {
+	if (b->texture == nullptr) {
+
+		quickFillRect(renderer, b->x, b->y, b->w, b->h, *b->currentColor);
+
+	}
+	else {
+		quickFillRect(renderer, b->x - 1, b->y - 1, b->w + 2, b->h + 2, *b->currentColor);
+		image(renderer,b->texture,getTextureRect(b->texture),getQuickRect(b->x,b->y,b->w,b->h));
+	}
+
+	if(b->text_texture!=nullptr){
+
+		quickImage(renderer,b->text_texture, b->x+b->w/10,b->y+b->h/2);
+
+	}
+
+}
+void drawPage(UIElement* p, SDL_Renderer* renderer, SDL_Event* event) {
+	quickFillRect(renderer, p->x, p->y, p->w, p->h, p->getColor());
+	for (int i = 0; i < p->elems.size(); i++) {
+		p->elems.at(i)->update(renderer,event); //draw each sub element
+
+	}
+
+}
+
+void UIElement::draw(SDL_Renderer* renderer,SDL_Event* event) {
+	if (!visible)return;
+	if (type == BUTTON) {
+		drawButton(this, renderer);
+	}
+	else if (type == PAGE) {
+		drawPage(this, renderer, event);
+	}
+
+
+
+}
+
 
 void UIElement::tick(SDL_Event* event) {
 
@@ -224,46 +272,9 @@ UIElement Page(int x, int y, int w, int h) {
 
 
 
-void drawButton(UIElement* b, SDL_Renderer* renderer) {
-
-	if (b->texture == nullptr) {
-		quickFillRect(renderer, b->x, b->y, b->w, b->h, *b->currentColor);
-	}
-	else {
-		quickFillRect(renderer, b->x - 1, b->y - 1, b->w + 2, b->h + 2, *b->currentColor);
-		image(renderer,b->texture,getTextureRect(b->texture),getQuickRect(b->x,b->y,b->w,b->h));
-
-	}
-
-	quickImage(renderer,b->text_texture, b->x+b->w/10,b->y+b->h/2);
-
-}
-void drawPage(UIElement* p, SDL_Renderer* renderer, SDL_Event* event) {
-
-	quickFillRect(renderer, p->x, p->y, p->w, p->h, p->getColor());
-	for (int i = 0; i < p->elems.size(); i++) {
-		p->elems.at(i)->update(renderer,event); //draw each sub element
-
-	}
-
-}
-
-void UIElement::draw(SDL_Renderer* renderer,SDL_Event* event) {
-	if (!visible)return;
-	if (type == BUTTON) {
-		drawButton(this, renderer);
-	}
-	else if (type == PAGE) {
-		drawPage(this, renderer, event);
-	}
-
-
-
-}
 
 
 void SDL_GUI_DISPLAY(SDL_Renderer*renderer,SDL_Event*event) {
-
 	for (int i = 0; i < master.size(); i++) {
 		master.at(i)->update(renderer,event);
 	}

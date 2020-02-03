@@ -1,10 +1,9 @@
-#include "CosmoCombat.h"
 
 Part current_Part; //part being held in the ship build menu
 bool BSP_Rotated = false;
 
 void root_Main_Menu() {
-	
+
 	UI_Main_Menu();
 
 }
@@ -12,14 +11,14 @@ void setCurrentPart(Part p) {
 	current_Part = p;
 }
 void root_Build_Ship(SDL_Renderer* renderer, SDL_Surface* screen, SDL_Event* event) {
-	
+
 	UI_Build_Ship(renderer);
 
 	drawShip(renderer,&bluePrints.at(0));
 	int mx, my;
 	SDL_GetMouseState(&mx, &my);
 	if (&current_Part != nullptr) {
-		
+
 
 		if (current_Part.sprite > 0) {
 			SDL_Rect textRect = getTextureRect(sprite(current_Part.sprite));

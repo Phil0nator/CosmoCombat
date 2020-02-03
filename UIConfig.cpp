@@ -1,4 +1,3 @@
-#include "CosmoCombat.h"
 #define MAX_PARTS 128
 
 
@@ -49,7 +48,7 @@ void BSP_setCurrentPart() {
 
 
 void fill_Build_Ship_Page(SDL_Renderer* renderer) {
-	
+
 
 	BSP_Back = Button(0, 0, width / 10, height / 15);
 	BSP_Back.setColors(color(235, 235, 235), color(255, 235, 235), color(255, 0, 0));
@@ -68,9 +67,9 @@ void fill_Build_Ship_Page(SDL_Renderer* renderer) {
 		BSP_allParts[i].y = (ICON_DIM+10)*((i/4)+1)+10;
 		BSP_allParts[i].setCallback(BSP_setCurrentPart);
 		buildShipsPage_SideMenu.add(&BSP_allParts[i]);
-		
+
 	}
-	
+
 
 
 	buildShipsPage.add(&buildShipsPage_SideMenu);
@@ -120,8 +119,8 @@ void configure_UI_Elements(SDL_Renderer* renderer) {
 
 
 	mainPage.init();
-	
-	
+
+
 	fill_Build_Ship_Page(renderer);
 	BSP_Back = Button(0,0, width / 10, height / 15);
 	BSP_Back.setColors(color(235, 235, 235), color(255, 235, 235), color(255, 0, 0));

@@ -1,4 +1,3 @@
-#include "CosmoCombat.h"
 vector<GameShip> bluePrints;
 
 void placePart(GameShip* ship, int x, int y, int part) {
@@ -43,7 +42,7 @@ GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen
 		for (int j = 0; j < h; j++) {
 			out.contents.at(i).push_back(gamePart(0));
 		}
-	
+
 	}
 	placePart(&out, w / 2, h / 2, 1);
 	bufferShip(renderer, screen, &out);

@@ -1,5 +1,3 @@
-#include "SDL_Abstractions.h"
-
 enum TextQuality{
 
 	SLOW, MEDIUM, FAST

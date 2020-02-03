@@ -1,8 +1,6 @@
-#include <iostream>
-#include "Abstractions\\SDL_Abstractions.h"
-#include "CosmoCombat.h"
-#undef main //prevents interfearence from SDL2_main.h
 
+#include "CosmoCombat.h"
+#undef main
 //TODO:
 //runtime pointer access violations making it very unstable
 //see pointer issues in SDL_GUI & Modifiers
@@ -56,31 +54,28 @@ int main(int argc, char* argv[])
 
 
 	//Game Loop:
+	SDL_Event event;
+	cout << "Starting Game Loop" << endl;
 	while (running) {
 
 		//event loop:
 
-		SDL_Event event;
-		while (SDL_PollEvent(&event)) {
+		while(SDL_PollEvent(&event)){
 			if (event.type == SDL_QUIT) {
 				running = false;
 				break;
 			}
-			if (event.type == SDL_KEYDOWN) {
-
-			}
 
 		}
-
 		SDL_RenderClear(renderer); //clear last frame
 		//Draw Stuff:
 		//note: SDL_GUI_DISPLAY is called seperately in different gamestates because in some of them it
 		//should be behind other graphics, while in others it should go in the front
 
-
 		if (state == MAIN_MENU) {
 			root_Main_Menu();
 			SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer
+
 		}
 		else if (state == BUILD_SHIP) {
 			SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer
@@ -89,14 +84,13 @@ int main(int argc, char* argv[])
 
 
 
-
 		SDL_SetRenderDrawColor(renderer,0,0,0,255); //reset to black background
 		SDL_RenderPresent(renderer); //update display
-
+		SDL_Delay(0);
 	}
 
 	smoothFinish(window, renderer);
-
+	cout << " GOODBYE " << endl;
 
 	return 1;
 

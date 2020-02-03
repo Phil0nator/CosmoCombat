@@ -2,14 +2,14 @@
 #ifdef __linux__
 
 #endif
-
+#define SDL_MAIN_HANDLED
 
 #include <iostream>
 #include <stdio.h>
 #include <vector>
 #include <string>
 #include "SDL.h"
-#include "SDL_main.h"
+//#include "SDL_main.h"
 #include "SDL_ttf.h"
 #include "SDL_image.h"
 #include <time.h>
@@ -24,6 +24,5 @@ using namespace std;
 #include "Colors.h"
 #include "Geometry.h"
 #include "Images.h"
-
 #include "Text.h"
 #include "SDL_GUI.h"
