@@ -26,7 +26,11 @@ void loadFontAstro() {
 }
 
 //designated callbacks:
+void MM_toShipView(){
+	state = SHIP_VIEW;
+	current_Ship = bluePrints.at(0);
 
+}
 void MM_toEditShip() {
 	state = BUILD_SHIP;
 }
@@ -93,6 +97,7 @@ void configure_UI_Elements(SDL_Renderer* renderer) {
 	MM_ToGame.setColors(color(235, 235, 235),color(255,255,255),color(135,135,135));
 	MM_ToGame.text_color = color(0, 0, 0, 255);
 	MM_ToGame.renderOwnText(renderer,"Play Game", fontAstro[20],SLOW);
+	MM_ToGame.setCallback(&MM_toShipView);
 	mainPage.add(&MM_ToGame);
 
 	MM_ToSettings = Button(width / 2 - width / 6, height / 2+height/15+10, width / 3, height / 15);
@@ -145,6 +150,12 @@ void UI_Build_Ship(SDL_Renderer* renderer) {
 void UI_Main_Menu() {
 
 	mainPage.show();
+	buildShipsPage.hide();
+
+}
+void UI_Ship_View(){
+
+	mainPage.hide();
 	buildShipsPage.hide();
 
 }

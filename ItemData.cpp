@@ -61,12 +61,12 @@ void configureParts() {
 
 	Hallway.sprite = 10;
 	Hallway.price = 50;
-	Hallway.weight = 20;
+	Hallway.weight = 10;
 	Hallway.type = HALL;
 	addPart(Hallway);
 
 	FuelReserve.price = 200;
-	FuelReserve.weight = 25;
+	FuelReserve.weight = 10;
 	FuelReserve.sprite = 5;
 	FuelReserve.capacity = 30;
 	FuelReserve.consumtion = 0;
@@ -74,20 +74,20 @@ void configureParts() {
 	addPart(FuelReserve);
 
 	QuadHall.price = 50;
-	QuadHall.weight = 20;
+	QuadHall.weight = 10;
 	QuadHall.sprite = 11;
 	QuadHall.type = HALL;
 	addPart(QuadHall);
 
 
 	TorpedoBay.price = 200;
-	TorpedoBay.weight = 50;
+	TorpedoBay.weight = 10;
 	TorpedoBay.sprite = 4;
 	TorpedoBay.type = WEAPON;
 	addPart(TorpedoBay);
 
 	ShellArmor.price = 10;
-	ShellArmor.weight = 20;
+	ShellArmor.weight = 10;
 	ShellArmor.sprite = 14;
 	ShellArmor.type = ARMOR;
 	ShellArmor.defence = 20;
@@ -95,14 +95,14 @@ void configureParts() {
 
 
 	TriArmor.price = 50;
-	TriArmor.weight = 35;
+	TriArmor.weight = 10;
 	TriArmor.sprite = 3;
 	TriArmor.defence = 20;
 	TriArmor.type = ARMOR;
 	addPart(TriArmor);
 
 	Engine.price = 50;
-	Engine.weight = 100;
+	Engine.weight = 10;
 	Engine.sprite = 2;
 	Engine.thrust = 1;
 	addPart(Engine);

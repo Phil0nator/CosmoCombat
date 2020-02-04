@@ -67,14 +67,18 @@ GamePart gamePart(int index);
 struct GameShip {
 
 	vector<vector<GamePart>> contents = vector<vector<GamePart>>();
-	int gx;
-	int gy;
+	int gx = 0;
+	int gy = 0;
 	int weight;
 	int fuel;
-	float velx;
-	float vely;
-	float rot;
-	float rotvel;
+	float velx = 0;
+	float vely = 0;
+	float rot = 0;
+	float rotvel = 0;
+	bool updated = true;
+	int acceleration;
+	int angularAcceleration;
+	int fuelConsumption;
 	SDL_Texture* texture;
 
 
@@ -85,6 +89,8 @@ void drawShip(SDL_Renderer* renderer, GameShip* ship);
 void placePart(GameShip* ship, int x, int y, int part);
 GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen);
 void placePart(GameShip* ship, int x, int y, int part, float r);
+void shipPhysics(GameShip* ship);
+void drawGameShip(SDL_Renderer* renderer, GameShip* ship);
 
 
 //UIConfig
@@ -100,7 +106,7 @@ void root_Main_Menu();
 void root_Build_Ship(SDL_Renderer* renderer,SDL_Surface* screen,SDL_Event* event);
 /*     */void UI_Build_Ship(SDL_Renderer* renderer);
 
-void root_Ship_View();
+void root_Ship_View(SDL_Renderer* renderer, SDL_Event event);
 /*     */void UI_Ship_View();
 
 #include "assetHandling.cpp"

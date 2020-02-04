@@ -1,5 +1,6 @@
 
 Part current_Part; //part being held in the ship build menu
+GameShip current_Ship;//ship that the player is currently flying (ship view)
 bool BSP_Rotated = false;
 
 void root_Main_Menu() {
@@ -51,11 +52,50 @@ void root_Build_Ship(SDL_Renderer* renderer, SDL_Surface* screen, SDL_Event* eve
 }
 
 
-void root_Ship_View(){
-
+void root_Ship_View(SDL_Renderer* renderer, SDL_Event event){
+	UI_Ship_View();
 //draw world
-//draw ships
+
+//draw/physiscs ships
+	if(event.type == SDL_KEYDOWN){
+		bool engineUsed = false;
+		if (event.key.keysym.sym == SDLK_w) { //w
+			//degrees(current_Ship.acceleration)*spriteDimention
+			float dx = cos((current_Ship.rot)+90) * current_Ship.acceleration*SPRITE_DIM; // last = size
+			float dy = sin((current_Ship.rot)+90) * current_Ship.acceleration*SPRITE_DIM;
+
+			current_Ship.velx+=dx;
+			current_Ship.vely+=dy;
+			engineUsed=true;
+		}
+		if (event.key.keysym.sym == SDLK_a) {//a
+			current_Ship.rotvel-=current_Ship.angularAcceleration;
+			engineUsed=true;
+ 		}
+		if (event.key.keysym.sym == SDLK_d) { //d
+			current_Ship.rotvel+=current_Ship.angularAcceleration;
+			engineUsed=true;
+		}
+		if (event.key.keysym.sym == SDLK_s) { //s
+		}
+
+		if (engineUsed) {
+			/*
+			current_Ship.fuel-=current_Ship.fuelConsumption;
+			for (int i = 0; i < current_Ship.engines.size(); i++) {
+				Particle p = new Particle(current_Ship.engines.get(i).getAbsolute());
+				p.setVelocity((int)current_Ship.velx+(int)random(-3, 3), (int) current_Ship.vely+(int)random(-3, 3));
+				particles.add(p);
+			}
+			*/
+		}
+	}
+
+
+	shipPhysics(&current_Ship);
+	drawGameShip(renderer, &current_Ship);
 //draw objs
+
 
 
 }
