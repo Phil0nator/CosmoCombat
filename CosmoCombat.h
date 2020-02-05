@@ -24,15 +24,15 @@ void endGame();
 //assetHandling:
 
 struct Part {
-	int num;
-	int sprite;
-	int weight;
-	int type;
+	int num = 0;
+	int sprite = 0;
+	int weight = 0;
+	int type = 0;
 	int price = 9;
 	int capacity;
-	int thrust;
-	int consumtion;
-	int defence;
+	int thrust = 0;
+	int consumtion = 0;
+	int defence = 0;
 	float rot = 0;
 };
 struct GamePart {
@@ -69,16 +69,17 @@ struct GameShip {
 	vector<vector<GamePart>> contents = vector<vector<GamePart>>();
 	int gx = 0;
 	int gy = 0;
-	int weight;
-	int fuel;
+	int weight = 0;
+	int fuel = 0;
 	float velx = 0;
 	float vely = 0;
 	float rot = 0;
 	float rotvel = 0;
 	bool updated = true;
-	int acceleration;
-	int angularAcceleration;
-	int fuelConsumption;
+	float acceleration =0;
+	float angularAcceleration = 0;
+	int fuelConsumption = 0;
+	float thrust = 0;
 	SDL_Texture* texture;
 
 
@@ -106,8 +107,8 @@ void root_Main_Menu();
 void root_Build_Ship(SDL_Renderer* renderer,SDL_Surface* screen,SDL_Event* event);
 /*     */void UI_Build_Ship(SDL_Renderer* renderer);
 
-void root_Ship_View(SDL_Renderer* renderer, SDL_Event event);
-/*     */void UI_Ship_View();
+void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event);
+/*     */void UI_Ship_View(SDL_Renderer*renderer);
 
 #include "assetHandling.cpp"
 #include "ItemData.cpp"

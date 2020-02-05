@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 		} else if (state == SHIP_VIEW){
 
 			SDL_GUI_DISPLAY(renderer, &event);
-			root_Ship_View(renderer, event);
+			root_Ship_View(renderer, &event);
 		}
 
 

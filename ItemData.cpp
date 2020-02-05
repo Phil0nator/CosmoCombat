@@ -104,7 +104,8 @@ void configureParts() {
 	Engine.price = 50;
 	Engine.weight = 10;
 	Engine.sprite = 2;
-	Engine.thrust = 1;
+	Engine.thrust = 25;
+	Engine.type = ENGINE;
 	addPart(Engine);
 
 	numberOfParts = ALLPARTS.size();

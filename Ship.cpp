@@ -1,25 +1,18 @@
 vector<GameShip> bluePrints;
 
-void placePart(GameShip* ship, int x, int y, int part) {
 
-	ship->contents.at(x).at(y) = gamePart(part);
-	ship->updated =false;
-
-}
-void placePart(GameShip* ship, int x, int y, int part, float r) {
-	GamePart p = gamePart(part);
-	p.rot = r;
-	ship->contents.at(x).at(y) = p;
-	ship->updated =false;
-}
 void setShipAttributes(GameShip* ship){
+	ship -> weight = 0;
+	ship->thrust=0;
+	ship->fuelConsumption = 0;
+	ship->fuel = 0;
 	for (int i = 0; i < ship->contents.size(); i++) {
 		for (int j = 0; j < ship->contents.at(i).size(); j++) {
 			if(ship->contents.at(i).at(j).sprite != 0){
 				Part *temp = ship->contents.at(i).at(j).origin;
 				ship->weight+=temp->weight;
 				if(temp->type == ENGINE){
-					ship->acceleration+=temp->thrust;
+					ship->thrust+=temp->thrust;
 					ship->fuelConsumption+=temp->consumtion;
 				}
 				if(temp->type == STORAGE){
@@ -28,9 +21,23 @@ void setShipAttributes(GameShip* ship){
 			}
 		}
 	}
+	ship->angularAcceleration = ship->thrust/(ship->weight);
+	ship->acceleration = ship->thrust/(ship->weight);
+}
+void placePart(GameShip* ship, int x, int y, int part) {
+
+	ship->contents.at(x).at(y) = gamePart(part);
+	setShipAttributes(ship);
+	ship->updated =false;
 
 }
-
+void placePart(GameShip* ship, int x, int y, int part, float r) {
+	GamePart p = gamePart(part);
+	p.rot = r;
+	ship->contents.at(x).at(y) = p;
+	setShipAttributes(ship);
+	ship->updated =false;
+}
 SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* ship) {
 
 
@@ -50,7 +57,6 @@ SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* s
 
 	}
 	SDL_SetRenderTarget(renderer, NULL);
-	setShipAttributes(ship);
 	ship->texture = out;
 	ship->updated = true;
 	return out;
@@ -95,7 +101,8 @@ void drawGameShip(SDL_Renderer* renderer, GameShip* ship) {
 	int sw = textDim.w;
 	int sh = textDim.h;
 
-	quickImage(renderer, ship->texture,(width/2)-(sw/2),(height/2)-(sh/2),ship->rot,Point(sw/2,sh/2),SDL_FLIP_NONE);
+
+	quickImage(renderer, ship->texture,(width/2)-(sw/2),(height/2)-(sh/2),degrees(ship->rot),Point(sw/2,sh/2),SDL_FLIP_NONE);
 
 
 }
