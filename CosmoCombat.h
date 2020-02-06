@@ -39,7 +39,7 @@ struct GamePart {
 	int x = 0;
 	int y = 0;
 	float rot = 0;
-	Part* origin = nullptr;
+	Part origin;
 	int sprite = 0;
 
 
@@ -81,6 +81,7 @@ struct GameShip {
 	int fuelConsumption = 0;
 	float thrust = 0;
 	SDL_Texture* texture;
+	SDL_Point centerOfMass;
 
 
 };

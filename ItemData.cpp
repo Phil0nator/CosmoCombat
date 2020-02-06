@@ -38,7 +38,7 @@ GamePart gamePart(int index) {
 
 	Part p = part(index);
 	GamePart out;
-	out.origin = &p;
+	out.origin = p;
 	out.sprite = p.sprite;
 	out.rot = p.rot;
 	return out;

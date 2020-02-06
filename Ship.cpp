@@ -6,12 +6,30 @@ void setShipAttributes(GameShip ship){
 	ship.angularAcceleration = ship.thrust/(ship.weight*25);
 	ship.acceleration = ship.thrust/(ship.weight);
 
+	//find center of mass:
+	int xnumerator = 0;
+	int ynumerator = 0;
+
+	for(int i = 0 ; i < ship.contents.size();i++){
+		for(int j = 0 ; j < ship.contents.at(i).size();j++){
+			int w =  ship.contents.at(i).at(j).origin.weight;
+			xnumerator += w*i;
+			ynumerator += ship.contents.at(i).at(j).origin.weight *j;
+		}
+
+	}
+	int x = xnumerator / (ship.weight+1);
+	int y = ynumerator / (ship.weight+1);
+	ship.centerOfMass = Point(x,y);
+	//	</center of mass>
+
+
 }
 void placePart(GameShip* ship, int x, int y, GamePart p) {
 
 	ship->contents.at(x).at(y) = p;
-	ship->thrust += ship->contents.at(x).at(y).origin->thrust;
-	ship->weight += ship->contents.at(x).at(y).origin->weight;
+	ship->thrust += ship->contents.at(x).at(y).origin.thrust;
+	ship->weight += ship->contents.at(x).at(y).origin.weight;
 	setShipAttributes(*ship);
 	ship->updated =false;
 
@@ -58,6 +76,7 @@ GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen
 		}
 
 	}
+	out.centerOfMass = Point((int)w/2,(int)h/2);
 	placePart(&out, w / 2, h / 2, 1,0);
 	bufferShip(renderer, screen, &out);
 	return out;
@@ -85,7 +104,8 @@ void drawGameShip(SDL_Renderer* renderer, GameShip* ship) {
 	SDL_Rect textDim = getTextureRect(ship->texture);
 	int sw = textDim.w;
 	int sh = textDim.h;
-
+	//int rotCentx = SPRITE_DIM*ship->centerOfMass.x;
+	//int rotCenty = SPRITE_DIM*ship->centerOfMass.y;
 	quickImage(renderer, ship->texture,(width/2)-(sw/2),(height/2)-(sh/2),ship->rot,Point(sw/2,sh/2),SDL_FLIP_NONE);
 
 
