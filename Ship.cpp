@@ -1,41 +1,25 @@
 vector<GameShip> bluePrints;
 
 
-void setShipAttributes(GameShip* ship){
-	ship -> weight = 0;
-	ship->thrust=0;
-	ship->fuelConsumption = 0;
-	ship->fuel = 0;
-	for (int i = 0; i < ship->contents.size(); i++) {
-		for (int j = 0; j < ship->contents.at(i).size(); j++) {
-			if(ship->contents.at(i).at(j).sprite != 0){
-				Part *temp = ship->contents.at(i).at(j).origin;
-				ship->weight+=temp->weight;
-				if(temp->type == ENGINE){
-					ship->thrust+=temp->thrust;
-					ship->fuelConsumption+=temp->consumtion;
-				}
-				if(temp->type == STORAGE){
-					ship->fuel+=temp->capacity;
-				}
-			}
-		}
-	}
-	ship->angularAcceleration = ship->thrust/(ship->weight);
-	ship->acceleration = ship->thrust/(ship->weight);
-}
-void placePart(GameShip* ship, int x, int y, int part) {
+void setShipAttributes(GameShip ship){
 
-	ship->contents.at(x).at(y) = gamePart(part);
-	setShipAttributes(ship);
+	ship.angularAcceleration = ship.thrust/(ship.weight*25);
+	ship.acceleration = ship.thrust/(ship.weight);
+
+}
+void placePart(GameShip* ship, int x, int y, GamePart p) {
+
+	ship->contents.at(x).at(y) = p;
+	ship->thrust += ship->contents.at(x).at(y).origin->thrust;
+	ship->weight += ship->contents.at(x).at(y).origin->weight;
+	setShipAttributes(*ship);
 	ship->updated =false;
 
 }
 void placePart(GameShip* ship, int x, int y, int part, float r) {
 	GamePart p = gamePart(part);
 	p.rot = r;
-	ship->contents.at(x).at(y) = p;
-	setShipAttributes(ship);
+	placePart(ship,x,y,p);
 	ship->updated =false;
 }
 SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* ship) {
@@ -57,6 +41,7 @@ SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* s
 
 	}
 	SDL_SetRenderTarget(renderer, NULL);
+
 	ship->texture = out;
 	ship->updated = true;
 	return out;
@@ -73,7 +58,7 @@ GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen
 		}
 
 	}
-	placePart(&out, w / 2, h / 2, 1);
+	placePart(&out, w / 2, h / 2, 1,0);
 	bufferShip(renderer, screen, &out);
 	return out;
 }
@@ -101,8 +86,7 @@ void drawGameShip(SDL_Renderer* renderer, GameShip* ship) {
 	int sw = textDim.w;
 	int sh = textDim.h;
 
-
-	quickImage(renderer, ship->texture,(width/2)-(sw/2),(height/2)-(sh/2),degrees(ship->rot),Point(sw/2,sh/2),SDL_FLIP_NONE);
+	quickImage(renderer, ship->texture,(width/2)-(sw/2),(height/2)-(sh/2),ship->rot,Point(sw/2,sh/2),SDL_FLIP_NONE);
 
 
 }

@@ -1,8 +1,9 @@
-
+#include "SDL_timer.h"
 #include "CosmoCombat.h"
 #undef main
 
-
+#define CAP_FRAMERATE true
+#define FRAME_CAP 120
 
 
 
@@ -48,13 +49,13 @@ int main(int argc, char* argv[])
 	configureParts(); // sets up reference Part structures
 	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
 	configure_UI_Elements(renderer);
-
+	time_t lastFrame = now();
 
 	//Game Loop:
 	SDL_Event event;
 	cout << "Starting Game Loop" << endl;
 	while (running) {
-
+		lastFrame = now();
 		//event loop:
 
 		while(SDL_PollEvent(&event)){
@@ -89,6 +90,11 @@ int main(int argc, char* argv[])
 
 		SDL_RenderPresent(renderer); //update display
 		SDL_Delay(0);
+
+		//Sleep the remaining frame time
+		SDL_Delay((1000 / FRAME_CAP ));
+
+
 	}
 
 	smoothFinish(window, renderer);

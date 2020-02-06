@@ -28,14 +28,18 @@ void loadFontAstro() {
 //designated callbacks:
 void MM_toShipView(){
 	state = SHIP_VIEW;
-	current_Ship = &bluePrints.at(0);
-	current_Ship->angularAcceleration = bluePrints.at(0).angularAcceleration;
+	//current_Ship = &bluePrints.at(0);
+
 }
 void MM_toEditShip() {
 	state = BUILD_SHIP;
 }
 void BSP_toBack() {
 	state = MAIN_MENU;
+	setShipAttributes(bluePrints.at(0));
+	cout << bluePrints.at(0).angularAcceleration << endl;
+	current_Ship = &bluePrints.at(0);
+
 }
 void BSP_setCurrentPart() {
 	int mx, my;
@@ -157,9 +161,9 @@ void UI_Ship_View(SDL_Renderer*renderer){
 
 	mainPage.hide();
 	buildShipsPage.hide();
-	quickImage(renderer, renderText(renderer,to_string(current_Ship->rot).c_str(),fontAstro[15],color(255,255,255),SLOW), 0,0);
-	quickImage(renderer, renderText(renderer,to_string(current_Ship->rotvel).c_str(),fontAstro[15],color(255,255,255),SLOW), 0,150);
-	quickImage(renderer, renderText(renderer,to_string(bluePrints.at(0).angularAcceleration).c_str(),fontAstro[15],color(255,255,255),SLOW), 0,300);
+	//quickImage(renderer, renderText(renderer,to_string(current_Ship->rot).c_str(),fontAstro[15],color(255,255,255),SLOW), 0,0);
+	//quickImage(renderer, renderText(renderer,to_string(current_Ship->rotvel).c_str(),fontAstro[15],color(255,255,255),SLOW), 0,150);
+	//quickImage(renderer, renderText(renderer,to_string(bluePrints.at(0).angularAcceleration).c_str(),fontAstro[15],color(255,255,255),SLOW), 0,300);
 
 
 }

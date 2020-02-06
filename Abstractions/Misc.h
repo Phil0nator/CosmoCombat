@@ -1,4 +1,5 @@
 //misc
+#include <chrono>
 int randint(int min, int max);
 void smoothFinish(SDL_Window* window, SDL_Renderer* renderer);
 void quickInit();
@@ -8,7 +9,12 @@ int randint(int min, int max) {
 	return min + rand() % (max - min);
 }
 
+int now(){
 
+	return time(NULL)*1000;
+
+
+}
 void smoothFinish(SDL_Window *window,SDL_Renderer*renderer) { //smoothly close and finish data buffers for the end of the program
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);

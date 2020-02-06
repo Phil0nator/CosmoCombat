@@ -29,18 +29,18 @@ struct Part {
 	int weight = 0;
 	int type = 0;
 	int price = 9;
-	int capacity;
+	int capacity = 0;
 	int thrust = 0;
 	int consumtion = 0;
 	int defence = 0;
 	float rot = 0;
 };
 struct GamePart {
-	int x;
-	int y;
+	int x = 0;
+	int y = 0;
 	float rot = 0;
-	Part* origin;
-	int sprite;
+	Part* origin = nullptr;
+	int sprite = 0;
 
 
 
@@ -77,21 +77,25 @@ struct GameShip {
 	float rotvel = 0;
 	bool updated = true;
 	float acceleration =0;
-	float angularAcceleration = 0;
+	float angularAcceleration = 1.0;
 	int fuelConsumption = 0;
 	float thrust = 0;
 	SDL_Texture* texture;
 
 
 };
+
+
+
 extern vector<GameShip> bluePrints;
 SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* ship);
 void drawShip(SDL_Renderer* renderer, GameShip* ship);
-void placePart(GameShip* ship, int x, int y, int part);
+void placePart(GameShip* ship, int x, int y, GamePart p);
 GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen);
 void placePart(GameShip* ship, int x, int y, int part, float r);
 void shipPhysics(GameShip* ship);
 void drawGameShip(SDL_Renderer* renderer, GameShip* ship);
+void setShipAttributes(GameShip ship);
 
 
 //UIConfig

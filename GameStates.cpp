@@ -2,6 +2,8 @@
 Part current_Part; //part being held in the ship build menu
 GameShip *current_Ship;//ship that the player is currently flying (ship view)
 bool BSP_Rotated = false;
+time_t lastShipUpdate = 1;
+
 
 void root_Main_Menu() {
 
@@ -59,9 +61,9 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 //draw world
 
 //draw/physiscs ships
-	if(event->type == SDL_KEYDOWN){
+
 		bool engineUsed = false;
-		if (event->key.keysym.sym == SDLK_w) { //w
+		if (event->key.state == SDLK_w) { //w
 			//degrees(current_Ship->acceleration)*spriteDimention
 			float dx = cos((current_Ship->rot)+90) * current_Ship->acceleration*SPRITE_DIM; // last = size
 			float dy = sin((current_Ship->rot)+90) * current_Ship->acceleration*SPRITE_DIM;
@@ -70,15 +72,15 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 			current_Ship->vely+=dy;
 			engineUsed=true;
 		}
-		if (event->key.keysym.sym == SDLK_a) {//a
+		if (event->key.state == SDLK_a) {//a
 			current_Ship->rotvel-=current_Ship->angularAcceleration;
 			engineUsed=true;
  		}
-		if (event->key.keysym.sym == SDLK_d) { //d
+		if (event->key.state == SDLK_d) { //d
 			current_Ship->rotvel+=current_Ship->angularAcceleration;
 			engineUsed=true;
 		}
-		if (event->key.keysym.sym == SDLK_s) { //s
+		if (event->key.state == SDLK_s) { //s
 		}
 		if(event->key.keysym.sym == SDLK_ESCAPE){
 			state = MAIN_MENU;
@@ -95,10 +97,11 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 			}
 			*/
 		}
-	}
+
 
 
 	shipPhysics(current_Ship);
+	lastShipUpdate=now();
 	drawGameShip(renderer, current_Ship);
 //draw objs
 

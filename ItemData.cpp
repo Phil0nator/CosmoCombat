@@ -1,5 +1,5 @@
 
-vector<Part> ALLPARTS = vector<Part>();
+vector<Part> ALLPARTS;
 int numberOfParts;
 
 Part Empty;
@@ -104,7 +104,7 @@ void configureParts() {
 	Engine.price = 50;
 	Engine.weight = 10;
 	Engine.sprite = 2;
-	Engine.thrust = 25;
+	Engine.thrust = 10;
 	Engine.type = ENGINE;
 	addPart(Engine);
 
