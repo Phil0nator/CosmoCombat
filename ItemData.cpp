@@ -74,7 +74,7 @@ void configureParts() {
 	addPart(FuelReserve);
 
 	QuadHall.price = 50;
-	QuadHall.weight = 10;
+	QuadHall.weight = 100;
 	QuadHall.sprite = 11;
 	QuadHall.type = HALL;
 	addPart(QuadHall);

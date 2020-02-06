@@ -96,7 +96,7 @@ GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen
 void placePart(GameShip* ship, int x, int y, int part, float r);
 void shipPhysics(GameShip* ship);
 void drawGameShip(SDL_Renderer* renderer, GameShip* ship);
-void setShipAttributes(GameShip ship);
+void setShipAttributes(GameShip *ship);
 
 
 //UIConfig
