@@ -78,6 +78,7 @@ GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen
 
 	}
 	out.centerOfMass = Point((int)w/2,(int)h/2);
+	setShipAttributes(&out);
 	placePart(&out, w / 2, h / 2, 1,0);
 	bufferShip(renderer, screen, &out);
 	return out;
