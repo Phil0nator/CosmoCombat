@@ -1,0 +1,90 @@
+{
+  "Keys": [
+    "Bridge",
+    "Lvl 1 Engine",
+    "Triagonal Armor",
+    "Armor Slab",
+    "Torpedo Bay",
+    "Fuel Reserve",
+    "Straight hallway",
+    "Quad Hallway"
+
+  ],
+
+  "All Parts": {
+    "Bridge" : {
+      "price":0,
+      "weight":10,
+      "properties":"none",
+      "sprite":1,
+      "range": 100,
+      "type":"Bridge"
+    },
+    "Lvl 1 Engine" : {
+      "price":200,
+      "weight":100,
+      "properties":"none",
+      "sprite":2,
+      "thrust":1,
+      "fuelCapacity":0,
+      "fuelConsumption":.01,
+      "type":"Engine"
+    },
+    "Triagonal Armor" : {
+      "price":50,
+      "weight":35,
+      "properties":"none",
+      "sprite":3,
+      "defence":20,
+      "type":"Armor"
+    },
+    "Armor Slab" :{
+      "price":10,
+      "weight":20,
+      "properties":"none",
+      "sprite":14,
+      "defence":20,
+      "type":"Armor"
+
+    },
+    "Torpedo Bay" : {
+      "price":200,
+      "weight":50,
+      "properties":"NEP",
+      "sprite":4,
+      "damage":20,
+      "range": 100,
+      "muzzle-velocity":30,
+      "type":"Weapon"
+    },
+    "Fuel Reserve" : {
+      "price":200,
+      "weight":25,
+      "properties":"walkable",
+      "sprite":5,
+      "damage":0,
+      "range":0,
+      "thrust":0,
+      "muzzle-velocity":0,
+      "fuelCapacity":30,
+      "fuelConsumption":0,
+      "type":"Engine"
+    },
+      "Straight hallway" : {
+      "price":50,
+      "weight":20,
+      "properties":"none",
+      "sprite":10,
+      "type":"Bridge"
+    },
+
+    "Quad Hallway":{
+      "price":50,
+      "weight":20,
+      "properties":"none",
+      "sprite":11,
+      "type":"Bridge"
+    }
+
+    }
+}
