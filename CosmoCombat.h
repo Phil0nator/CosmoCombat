@@ -10,7 +10,7 @@
 
 enum gameState {
 
-	MAIN_MENU, BUILD_SHIP, SHIP_VIEW, PLAYER_VIEW, CUSTOMIZE_PLAYER
+	MAIN_MENU, BUILD_SHIP, SHIP_VIEW, PLAYER_VIEW, CUSTOMIZE_PLAYER, NONE_STATE
 
 };
 
@@ -118,6 +118,8 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event);
 
 
 //animations
+void startAnimations();
+
 #include "Animations.cpp"
 
 #include "assetHandling.cpp"

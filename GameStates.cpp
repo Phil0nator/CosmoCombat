@@ -9,6 +9,7 @@ void root_Main_Menu() {
 
 	UI_Main_Menu();
 
+
 }
 void setCurrentPart(Part p) {
 	current_Part = p;
@@ -84,7 +85,7 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 		}
 		if(event->key.keysym.sym == SDLK_ESCAPE){
 			state = MAIN_MENU;
-			
+
 		}
 
 		if (engineUsed) {

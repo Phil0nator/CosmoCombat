@@ -11,7 +11,7 @@ int randint(int min, int max) {
 
 int now(){
 
-	return time(NULL)*1000;
+	return chrono::system_clock::now().time_since_epoch().count();
 
 
 }

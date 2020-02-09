@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
 	configure_UI_Elements(renderer);
 	time_t lastFrame = now();
-
+	startAnimations();//start the animation handling thread
 	//Game Loop:
 	SDL_Event event;
 	cout << "Starting Game Loop" << endl;
@@ -74,7 +74,6 @@ int main(int argc, char* argv[])
 		if (state == MAIN_MENU) {
 			root_Main_Menu();
 			SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer
-
 		}
 		else if (state == BUILD_SHIP) {
 			SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer
@@ -88,6 +87,7 @@ int main(int argc, char* argv[])
 
 
 		SDL_SetRenderDrawColor(renderer,0,0,0,255); //reset to black background
+		image(renderer, Shoulders1.get(), getTextureRect(Shoulders1.get()),getQuickRect(50,50,100,100));
 
 		SDL_RenderPresent(renderer); //update display
 		SDL_Delay(0);
