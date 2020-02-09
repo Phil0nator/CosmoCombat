@@ -7,33 +7,42 @@ void setShipAttributes(GameShip *ship){
 	ship->acceleration = ship->thrust/(ship->weight);
 
 	//find center of mass:
-	int xnumerator = 0;
-	int ynumerator = 0;
+	float xnumerator = 0;
+	float ynumerator = 0;
 
 	for(int i = 0 ; i < ship->contents.size();i++){
 		for(int j = 0 ; j < ship->contents.at(i).size();j++){
-			int w =  ship->contents.at(i).at(j).origin.weight;
-			xnumerator += w*i;
-			ynumerator += w *j;
+			if(ship->contents.at(i).at(j).sprite != 0){
+				int w =  ship->contents.at(i).at(j).origin.weight;
+				xnumerator += w*i;
+				ynumerator += w *j;
+			}
 		}
 
 	}
-	int x = xnumerator / (ship->weight+1);
-	int y = ynumerator / (ship->weight+1);
-	ship->centerOfMass = Point(x,y);
-	cout << ship->centerOfMass.x << " , " << ship->centerOfMass.y << endl;
+	float x = xnumerator / (ship->weight+1);
+	float y = ynumerator / (ship->weight+1);
+
+	ship->centerOfMass = Point(round(x),round(y));
 
 	//	</center of mass>
 
 }
 void placePart(GameShip* ship, int x, int y, GamePart p) {
 
+	if(ship->contents.at(x).at(y).sprite !=0){
+		//remove old properties
+		ship->thrust -= ship->contents.at(x).at(y).origin.thrust;
+		ship->weight -= ship->contents.at(x).at(y).origin.weight;
+
+	}
+
 	ship->contents.at(x).at(y) = p;
+
 	ship->thrust += ship->contents.at(x).at(y).origin.thrust;
 	ship->weight += ship->contents.at(x).at(y).origin.weight;
 	setShipAttributes(ship);
 	ship->updated =false;
-
 }
 void placePart(GameShip* ship, int x, int y, int part, float r) {
 	GamePart p = gamePart(part);
@@ -85,7 +94,8 @@ GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen
 }
 
 void drawShip(SDL_Renderer* renderer, GameShip* ship) {
-
+	SDL_Rect r = getTextureRect(ship->texture);
+	quickFillRect(renderer, (width/4)-1,-1,r.w+1,r.h+1, color(255,255,255));
 	quickImage(renderer, ship->texture,width/4,0);
 
 }
@@ -108,7 +118,7 @@ void drawGameShip(SDL_Renderer* renderer, GameShip* ship) {
 	int sh = textDim.h;
 	int rotCentx = (SPRITE_DIM*ship->centerOfMass.x)+SPRITE_DIM/2;
 	int rotCenty = (SPRITE_DIM*ship->centerOfMass.y)+SPRITE_DIM/2;
-	quickImage(renderer, ship->texture,(width/2)-(rotCentx/2),(height/2)-(rotCenty/2),ship->rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
+	quickImage(renderer, ship->texture,(width/2)-(rotCentx),(height/2)-(rotCenty),ship->rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
 
 
 }

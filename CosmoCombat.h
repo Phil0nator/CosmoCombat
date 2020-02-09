@@ -19,6 +19,7 @@ const int DEFAULT_SHIP_DIM =11;
 extern int width;
 extern int height;
 extern gameState state;
+extern SDL_Renderer *renderer;
 void endGame();
 
 //assetHandling:

@@ -33,6 +33,7 @@ void MM_toShipView(){
 }
 void MM_toEditShip() {
 	state = BUILD_SHIP;
+	current_Part = part(0);
 }
 void BSP_toBack() {
 	state = MAIN_MENU;
