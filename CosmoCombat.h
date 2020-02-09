@@ -118,7 +118,8 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event);
 
 
 //animations
-void startAnimations();
+
+void handleAnimations();
 
 #include "Animations.cpp"
 

@@ -17,7 +17,7 @@ LIBRARY_PATHS =-L C:/mingw_dev_lib/lib -LC:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
 # -Wl,-subsystem,windows gets rid of the console window
-COMPILER_FLAGS = -w
+COMPILER_FLAGS = -Wreturn-type
 
 #LINKER_FLAGS specifies the libraries we're linking against
 LINKER_FLAGS = -l mingw32 -l SDL2main -l SDL2 -l SDL2_image -l SDL2_ttf

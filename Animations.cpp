@@ -1,83 +1,90 @@
-
 class Animation{
 
-private:
-    int count = 1;
+
 
 public:
   vector<SDL_Texture* > frames;
-  int delay =0 ;
-  int currentFrame = 0;
-  int lastTick = 0;
 
-  bool active = true;
-  gameState activeState = NONE_STATE;
-  Animation();
-  Animation(string path, int numFrames, int indelay);
-  SDL_Texture* get();
-  void tick();
-  void destroy();
+  int numberOfFrames = 1;
+
+  int delay = 0;
+  Animation::Animation();
+  Animation::Animation(string path, int numFrames, int indelay);
+  Animation::Animation( const Animation& a );
+  ~Animation();
 
 };
-vector<Animation *> animations;
-void removeFromVector(vector<Animation*> *e, Animation* t) {
-	e->erase(remove(e->begin(), e->end(), t));
-}
-void Animation::destroy(){
 
-  removeFromVector(&animations,this);
+Animation::~Animation(){
+
+
 
 
 }
 Animation::Animation(){
-  active=false;
 }
+Animation::Animation( const Animation& a ){
 
+
+
+  delay = a.delay;
+  numberOfFrames = a.numberOfFrames;
+  frames = a.frames;
+
+
+}
 Animation::Animation(string path, int numFrames, int indelay){
-  count = numFrames-1;
-  cout << "COUNT INIT AT: " << count << endl;
+  numberOfFrames = numFrames-1;
+  frames = vector<SDL_Texture* >(numFrames);
+  cout << "numberOfFrames INIT AT: " << numberOfFrames << "            " << &numberOfFrames << endl;
   for(int i = 1 ; i <= numFrames;i++){
     //assets\Animations\player\Shoulders1\1.png
     string file = path + to_string(i);
     file+=".png";
     cout << "loading: " << file << endl;
     SDL_Texture *f = loadImage(renderer, file.c_str());
-    frames.push_back(f);
-
+    frames.at(i-1)=f;
   }
+
   delay = indelay;
-  animations.push_back(this);
-
+  cout << "Delay starts @" << delay << endl;
 }
 
-SDL_Texture* Animation::get(){
-  return frames.at(currentFrame);
+class AnimationInstance{
 
-}
 
-void Animation::tick(){
-  if(state==activeState)active=true;
-  if(!active)return;
-  if(now()-lastTick > delay){
-    cout << count << endl;
-    currentFrame=(currentFrame+1)%count;
-    lastTick=now();
+public:
+  Animation origin;
+  int frame = 0;
+  int lastTick = now();
+  bool active = true;
+
+  AnimationInstance(){}
+
+  AnimationInstance(Animation o){
+
+    origin = o;
 
   }
-}
-void handleAnimations(void* ptr){
-  while(true){
-    SDL_Delay(1);
-    for(int i = 0 ; i < animations.size();i++){
+  void tick(){
 
-      animations.at(i)->tick();
+    if(!active)return;
+    if(now()-lastTick>origin.delay){
+      frame++;
+      if(frame>=origin.numberOfFrames){
+        frame=0;
+
+      }
+      lastTick = now();
 
     }
+
   }
 
-}
-void startAnimations(){
+  SDL_Texture* get(){
+    return origin.frames.at(frame);
 
-  SDL_CreateThread(&handleAnimations,"AnimationsThread",nullptr);
+  }
 
-}
+
+};
