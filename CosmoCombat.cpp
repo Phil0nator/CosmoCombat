@@ -1,3 +1,4 @@
+#include "linuxComp.h"
 #include "SDL_timer.h"
 #include "CosmoCombat.h"
 #undef main

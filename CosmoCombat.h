@@ -116,6 +116,10 @@ void root_Build_Ship(SDL_Renderer* renderer,SDL_Surface* screen,SDL_Event* event
 void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event);
 /*     */void UI_Ship_View(SDL_Renderer*renderer);
 
+
+//animations
+#include "Animations.cpp"
+
 #include "assetHandling.cpp"
 #include "ItemData.cpp"
 #include "Ship.cpp"
