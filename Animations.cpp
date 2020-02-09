@@ -69,6 +69,7 @@ public:
   void tick(){
 
     if(!active)return;
+
     if(now()-lastTick>origin.delay){
       frame++;
       if(frame>=origin.numberOfFrames){

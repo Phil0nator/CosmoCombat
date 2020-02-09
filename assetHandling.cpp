@@ -1,6 +1,7 @@
 #define FPS24 1000/24
 #define FPS60 1000/60
-
+#define FPS12 1000/12
+#define FPS6  1000/6
 
 
 vector<SDL_Texture* > sprites;
@@ -14,7 +15,7 @@ void loadSprites(SDL_Renderer *renderer) {
 		SDL_Texture* sp = loadImage(renderer,string("assets\\sprites\\").append(to_string(i).append(".PNG")).c_str());
 		sprites.push_back(sp);
 	}
-	Shoulders1 = Animation(file_fix("assets\\Animations\\player\\Shoulders1\\"),24,FPS24);
+	Shoulders1 = Animation(file_fix("assets\\Animations\\world\\fire1\\"),24,5000000);
 	s1 = AnimationInstance(Shoulders1);
 	anims.push_back(&s1);
 
