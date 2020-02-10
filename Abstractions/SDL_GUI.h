@@ -1,3 +1,5 @@
+//defines UIElement class and functions
+
 #pragma once
 
 using namespace std;
@@ -17,8 +19,14 @@ void defaultCallback(){}
 typedef void(__cdecl* Callback)(void); //Function Pointer typdef
 
 class UIElement {
+/*
+*single class which can be used to represent each of the UIElement_Types:
+			>UNKOWN, BUTTON, ENTRY, SLIDER, PROGRESS_BAR, PAGE
+*the type variable will determine its functionality
+
+*/
 private:
-	UIElement* parent;
+	UIElement* parent; //used for pages
 
 
 	Callback callback = defaultCallback; //defines function pointer for callbacks
@@ -80,7 +88,16 @@ UIElement Page(int x, int y, int w, int h);
 void SDL_GUI_DISPLAY(SDL_Renderer* renderer, SDL_Event* event);
 
 
+
+//masterlist of UIElements
+//each instanciated UIElement object is added here so that it can be updated each frame by SDL_GUI_DISPLAY()
+//															(see bottom of this document and CosmoCombat.cpp)
 vector<UIElement*> master = vector<UIElement*>();
+
+
+
+
+
 void UIElement::click() {
 
 	pressed = true;
@@ -275,7 +292,7 @@ UIElement Page(int x, int y, int w, int h) {
 
 
 
-void SDL_GUI_DISPLAY(SDL_Renderer*renderer,SDL_Event*event) {
+void SDL_GUI_DISPLAY(SDL_Renderer*renderer,SDL_Event*event) { //root function, called in main
 	for (int i = 0; i < master.size(); i++) {
 		master.at(i)->update(renderer,event);
 	}

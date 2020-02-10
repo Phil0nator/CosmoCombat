@@ -1,8 +1,14 @@
+//configure all the uielements for all various pages
+//also, defines their callback functions
+
 #define MAX_PARTS 128
 
 
-
+//fonts:
 TTF_Font *fontAstro[50];
+
+
+//buttons and pages:
 UIElement MM_ToGame;
 UIElement MM_ToSettings;
 UIElement MM_Quit;
@@ -16,8 +22,11 @@ UIElement mainPage;
 UIElement buildShipsPage;
 UIElement buildShipsPage_SideMenu;
 
-void loadFontAstro() {
 
+void loadFontAstro() {
+	/*
+	*fonts are loaded into arrays so that they can be accessed in different sizes and still look smooth
+	*/
 	for (int i = 0; i < 50; i++) {
 		fontAstro[i] = loadFont("assets\\Fonts\\arizone-unicase-font\\ArizoneUnicaseRegular-5dRZ.ttf", i);
 	}
@@ -28,7 +37,6 @@ void loadFontAstro() {
 //designated callbacks:
 void MM_toShipView(){
 	state = SHIP_VIEW;
-	//current_Ship = &bluePrints.at(0);
 
 }
 void MM_toEditShip() {
@@ -86,7 +94,7 @@ void fill_Build_Ship_Page(SDL_Renderer* renderer) {
 	cout << "Build Ships Page has " << buildShipsPage.elems.size() << " elements." << endl;
 }
 
-void configure_UI_Elements(SDL_Renderer* renderer) {
+void configure_UI_Elements(SDL_Renderer* renderer) { //root function, called in main. Does overall initiation process for the UI and fonts, and creates the pages and buttons, etc..
 
 	loadFontAstro();
 
@@ -142,7 +150,7 @@ void configure_UI_Elements(SDL_Renderer* renderer) {
 }
 
 
-
+//ui functions for gamestates:
 void UI_Build_Ship(SDL_Renderer* renderer) {
 
 	mainPage.hide();
@@ -162,9 +170,7 @@ void UI_Ship_View(SDL_Renderer*renderer){
 
 	mainPage.hide();
 	buildShipsPage.hide();
-	quickImage(renderer, renderText(renderer,to_string(current_Ship->centerOfMass.x).c_str(),fontAstro[15],color(255,255,255),SLOW), 0,0);
-	quickImage(renderer, renderText(renderer,to_string(current_Ship->centerOfMass.y).c_str(),fontAstro[15],color(255,255,255),SLOW), 0,150);
-	//quickImage(renderer, renderText(renderer,to_string(bluePrints.at(0).angularAcceleration).c_str(),fontAstro[15],color(255,255,255),SLOW), 0,300);
+	
 
 
 }

@@ -1,3 +1,4 @@
+//helpful misc functions for shorthand use
 #pragma once
 
 //misc

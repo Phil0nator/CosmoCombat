@@ -1,3 +1,6 @@
+//store, decalre, and assign all data about items and parts, etc...
+
+
 
 vector<Part> ALLPARTS;
 int numberOfParts;
@@ -13,7 +16,7 @@ Part TriArmor;
 Part ShellArmor;
 Part Engine;
 
-UIElement buttonFromPart(int index) {
+UIElement buttonFromPart(int index) { //use index of a part to create a UIElement@button
 
 	UIElement out = Button(0, 0, ICON_DIM, ICON_DIM);
 	Part p = part(index);
@@ -29,12 +32,12 @@ void addPart(Part part) {
 }
 
 
-Part part(int index) {
+Part part(int index) { //get a part based on its number
 
 	return ALLPARTS.at(index);
 
 }
-GamePart gamePart(int index) {
+GamePart gamePart(int index) { //get a gamepart based on its number (uses above function first)
 
 	Part p = part(index);
 	GamePart out;
@@ -46,7 +49,7 @@ GamePart gamePart(int index) {
 }
 
 
-void configureParts() {
+void configureParts() { //define all properties of all parts
 
 	Empty.sprite = 0;
 	addPart(Empty);

@@ -1,4 +1,4 @@
-class Animation{
+class Animation{ //storage class, only one made of each possuble animation
 
 
 
@@ -32,7 +32,7 @@ Animation::Animation( const Animation& a ){
   frames = a.frames;
 
 
-}
+} //copy contstructor
 Animation::Animation(string path, int numFrames, int indelay){
   numberOfFrames = numFrames-1;
   frames = vector<SDL_Texture* >(numFrames);
@@ -50,6 +50,14 @@ Animation::Animation(string path, int numFrames, int indelay){
   cout << "Delay starts @" << delay << endl;
 }
 
+
+//instance class-> used to create seperate instances of a single animation
+/*
+EX: multiple flames:
+  multiple AnimationInstance objects, all referencing one single flame animation
+  each one would tick independantly, and could be turned on and off independantly
+  but would all have the same set of images, stored in class Animtion -> AnimationObject.origin
+*/
 class AnimationInstance{
 
 

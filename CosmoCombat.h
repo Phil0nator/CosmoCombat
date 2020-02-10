@@ -1,32 +1,39 @@
 #include <iostream>
 #include <cstddef>
-#include "Abstractions\\SDL_Abstractions.h"
+#include "Abstractions\\SDL_Abstractions.h" //some simple functions to make SDL a little easier to work with shorthand
 
 #pragma once
-#define ICON_DIM 75
-#define SPRITE_DIM 100
-#define FSDIM 1000
+
+
+#define ICON_DIM 75 //dimention of icons
+#define SPRITE_DIM 100 // dimention of Sprites (the size of rooms in a ship for example)
+#define FSDIM 1000 //full-size-dimention: the original size of the images, used for playerView
  //will include "SDL_Abstractions.h", which includes the all the other libraries
 
+
+//definitions of different gamestates, each of which has a different set of functions to be called each frame
 enum gameState {
 
 	MAIN_MENU, BUILD_SHIP, SHIP_VIEW, PLAYER_VIEW, CUSTOMIZE_PLAYER, NONE_STATE
 
 };
 
-extern int numberOfParts;
-const int DEFAULT_SHIP_DIM =11;
-extern int width;
-extern int height;
-extern gameState state;
+//big global variables:
+extern int numberOfParts; //total number of existing rooms that can be added to a ship
+const int DEFAULT_SHIP_DIM =11; //default dimention of a ship
+extern int width; //screen width
+extern int height; // screen height
+extern gameState state; //current gamestate
 extern SDL_Renderer *renderer;
 void endGame();
 
 //assetHandling:
 
-struct Part {
+struct Part { //Part Structs store the game-mechanic information about parts, such as their weight and thrust, etc...
+	//This structure is NOT what goes in ships, as it stores more information than is necessary
 	int num = 0;
 	int sprite = 0;
+	int altSprite = 0;
 	int weight = 0;
 	int type = 0;
 	int price = 9;
@@ -36,18 +43,18 @@ struct Part {
 	int defence = 0;
 	float rot = 0;
 };
-struct GamePart {
+struct GamePart { //this is the type of part that goes on ships, it stores coordinates in terms of thier index
 	int x = 0;
 	int y = 0;
 	float rot = 0;
-	Part origin;
+	Part origin; //reference to the extra info from the above struct ^
 	int sprite = 0;
 
 
 
 };
 
-
+//classifications of parts for functionality
 enum PartType {
 
 	ARMOR, WEAPON, BRIDGE, HALL, ENGINE, STORAGE
@@ -82,6 +89,8 @@ struct GameShip {
 	int fuelConsumption = 0;
 	float thrust = 0;
 	SDL_Texture* texture;
+	SDL_Texture* overlayTexture;
+	bool needsOverlay;
 	SDL_Point centerOfMass;
 
 
@@ -105,6 +114,9 @@ void configure_UI_Elements(SDL_Renderer* renderer);
 
 
 //Game State Functions:
+//	each starting with "root_" will handle all necessary functions for that gamestate.
+//														and is called directly from main()
+//indented functions are the global sub-functions that each root will call
 void setCurrentPart(Part p);
 void root_Main_Menu();
 /*     */void UI_Main_Menu();
@@ -123,10 +135,10 @@ void handleAnimations();
 
 #include "Animations.cpp"
 
-#include "assetHandling.cpp"
-#include "ItemData.cpp"
-#include "Ship.cpp"
+#include "assetHandling.cpp" //load images, and store them
+#include "ItemData.cpp" //store and initialize data about items, rooms, etc...
+#include "Ship.cpp" //functions for the GameShip data structure
 
 
-#include "GameStates.cpp"
-#include "UIConfig.cpp"
+#include "GameStates.cpp" //handling for each of the root gamestate functions
+#include "UIConfig.cpp" //configure the UI, and callbacks, etc...

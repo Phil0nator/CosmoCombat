@@ -1,15 +1,16 @@
-
+//Shorthand functions for SDL:
 #define PI 3.141592
 #define TAO PI*2
 //Geometry
 	//drawing
-SDL_Rect getQuickRect(int x, int y, int w, int h);
-void quickCircle(SDL_Renderer* renderer, int32_t centerx, int32_t centery, int32_t r, Color color);
-void quickRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color color);
-void quickPoint(SDL_Renderer* renderer, SDL_Point p, Color color);
-void quickPoint(SDL_Renderer* renderer, int x, int y, Color color);
-void quickLine(SDL_Renderer* renderer, int sx, int sy, int fx, int fy, Color color);
-void quickFillRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color color);
+
+SDL_Rect getQuickRect(int x, int y, int w, int h); //create SDL_Rect object in one line
+void quickCircle(SDL_Renderer* renderer, int32_t centerx, int32_t centery, int32_t r, Color color); //draw an unfilled circle quickly
+void quickRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color color); //quckly draw an unfilled rectangle
+void quickPoint(SDL_Renderer* renderer, SDL_Point p, Color color); //draw a point
+void quickPoint(SDL_Renderer* renderer, int x, int y, Color color);//draw a point with x and y instead of a SDL_Point instance
+void quickLine(SDL_Renderer* renderer, int sx, int sy, int fx, int fy, Color color); //draw a line
+void quickFillRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color color); //draw a filled rectangle
 //math
 
 SDL_Point rotatePoint(SDL_Point p, SDL_Point center, float r);
@@ -20,11 +21,11 @@ Uint32 degrees(double r);
 
 //Images
 void image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect source, SDL_Rect dest);
-void image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect source, SDL_Rect dest, float r, SDL_Point center, SDL_RendererFlip flags);
-void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y);
-void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, float r, SDL_Point center, SDL_RendererFlip flags);
+void image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect source, SDL_Rect dest, float r, SDL_Point center, SDL_RendererFlip flags); //same as image, but takes rotation
+void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y); //draws an image at original size without crop for quick use
+void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, float r, SDL_Point center, SDL_RendererFlip flags); //same as quickImage above, but can rotate
 
-SDL_Point getTextureSize(SDL_Texture* texture);
+SDL_Point getTextureSize(SDL_Texture* texture); //get the dimentions of a texture in a SDL_Point instance
 SDL_Texture* loadImage(SDL_Renderer* renderer, const char* path);
 SDL_Rect getTextureRect(SDL_Texture* texture);
 

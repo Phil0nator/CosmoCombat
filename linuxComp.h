@@ -1,3 +1,6 @@
+//linux compatibility functions and features
+
+
 #include <iostream>
 #include <algorithm>
 #include <string>
@@ -8,7 +11,7 @@ using namespace std;
 //converts a windows file path to a linux file path when ran on linux, and vise-versa when on shit computers
 //examples :file_fix("a\\b\\c\\d") would return a/b/c
 
-char* file_fix(string file){
+char* file_fix(string file){ 
   #ifdef __linux__
     replace( file.begin(), file.end(), '\\', '/');
   #else

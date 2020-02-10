@@ -1,3 +1,7 @@
+//handling for all of the game states
+//lots of general purpose stuff
+
+
 
 Part current_Part; //part being held in the ship build menu
 GameShip *current_Ship;//ship that the player is currently flying (ship view)

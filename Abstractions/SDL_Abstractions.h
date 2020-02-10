@@ -1,8 +1,10 @@
+//combine all the headers in Abstractions/ to easily include in the correct order
+
 #pragma once
 #ifdef __linux__
 
 #endif
-#define SDL_MAIN_HANDLED
+#define SDL_MAIN_HANDLED //prevents interfearence from SDL_Main
 
 #include <iostream>
 #include <stdio.h>

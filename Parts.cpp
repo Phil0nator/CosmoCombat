@@ -1,2 +1,2 @@
+//depricated
 #include "CosmoCombat.h"
-
