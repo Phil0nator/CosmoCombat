@@ -59,7 +59,6 @@ void root_Build_Ship(SDL_Renderer* renderer, SDL_Surface* screen, SDL_Event* eve
 }
 
 
-//TODO make the ship move
 
 void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 	UI_Ship_View(renderer);
@@ -93,14 +92,18 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 		}
 
 		if (engineUsed) {
-			/*
+			/*   subtract fuel, create particles, etc...
+			*old java code:
+
 			current_Ship->fuel-=current_Ship->fuelConsumption;
 			for (int i = 0; i < current_Ship->engines.size(); i++) {
 				Particle p = new Particle(current_Ship->engines.get(i).getAbsolute());
 				p.setVelocity((int)current_Ship->velx+(int)random(-3, 3), (int) current_Ship->vely+(int)random(-3, 3));
 				particles.add(p);
 			}
+			
 			*/
+
 		}
 
 
@@ -113,6 +116,9 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 
 
 }
+
+
+//TODO
 void root_Player_View(){
 
 

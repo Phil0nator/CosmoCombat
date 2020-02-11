@@ -138,7 +138,7 @@ void handleAnimations();
 #include "assetHandling.cpp" //load images, and store them
 #include "ItemData.cpp" //store and initialize data about items, rooms, etc...
 #include "Ship.cpp" //functions for the GameShip data structure
-
+#include "GameObjects.cpp" //handles solid objects that exist in the world
 
 #include "GameStates.cpp" //handling for each of the root gamestate functions
 #include "UIConfig.cpp" //configure the UI, and callbacks, etc...
