@@ -32,8 +32,16 @@ void placePart(GameShip* ship, int x, int y, GamePart p) { //correctly add a par
 
 	if(ship->contents.at(x).at(y).sprite !=0){
 		//remove old properties
+
+		if(ship->contents.at(x).at(y).sprite == p.sprite){ //don't need to place a part if it is the same as the existing part
+			return;
+		}
+
 		ship->thrust -= ship->contents.at(x).at(y).origin.thrust;
 		ship->weight -= ship->contents.at(x).at(y).origin.weight;
+
+
+
 
 	}
 
@@ -43,6 +51,8 @@ void placePart(GameShip* ship, int x, int y, GamePart p) { //correctly add a par
 	ship->weight += ship->contents.at(x).at(y).origin.weight;
 	setShipAttributes(ship);
 	ship->updated =false;
+	bufferShip(renderer, screen,ship);
+
 }
 
 

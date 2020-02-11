@@ -37,7 +37,8 @@ void root_Build_Ship(SDL_Renderer* renderer, SDL_Surface* screen, SDL_Event* eve
 			int sx = width / 4;
 			if (mx > sx) {
 				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, current_Part.num,current_Part.rot);
-				bufferShip(renderer, screen, &bluePrints.at(0));
+
+
 			}
 
 
@@ -101,7 +102,7 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 				p.setVelocity((int)current_Ship->velx+(int)random(-3, 3), (int) current_Ship->vely+(int)random(-3, 3));
 				particles.add(p);
 			}
-			
+
 			*/
 
 		}

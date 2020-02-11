@@ -25,6 +25,8 @@ extern int width; //screen width
 extern int height; // screen height
 extern gameState state; //current gamestate
 extern SDL_Renderer *renderer;
+extern SDL_Surface *screen;
+extern SDL_Window *window;
 void endGame();
 
 //assetHandling:
