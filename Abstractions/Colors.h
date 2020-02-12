@@ -12,6 +12,7 @@ struct Color {
 };
 Color color(int r, int g, int b);
 Color color(int r, int g, int b, int a);
+Color color(int v);
 void setDefaultColor(Color color);
 Color getDefaultColor();
 Color randomColor();
@@ -27,7 +28,7 @@ void setDefaultColor(Color color){
 	defaultColor = color;
 }
 Color getDefaultColor() {
-	
+
 	return defaultColor;
 
 }
@@ -36,7 +37,7 @@ void resetRenderColor(SDL_Renderer* renderer) {
 }
 Color randomColor() {
 
-	
+
 	Color out;
 	out.r = randint(0, 255);
 	out.g = randint(0, 255);
@@ -46,6 +47,7 @@ Color randomColor() {
 
 
 }
+
 Color color(int r, int g, int b) {
 
 	Color out;
@@ -55,6 +57,11 @@ Color color(int r, int g, int b) {
 	out.b = b;
 
 	return out;
+
+}
+Color color(int v){
+
+	return color(v,v,v);
 
 }
 Color color(int r, int g, int b, int a) {
@@ -89,7 +96,7 @@ SDL_Color sdlColor(int r, int g, int b, int a) {
 }
 
 void print(Color inp) {
-	
+
 	cout << "Color @(" << inp.r << ", " << inp.g << ", " << inp.b;
 	if (inp.a != 0) {
 		cout << ", " << inp.a;

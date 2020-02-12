@@ -46,7 +46,7 @@ void MM_toEditShip() {
 void BSP_toBack() {
 	state = MAIN_MENU;
 	setShipAttributes(&bluePrints.at(0));
-	cout << bluePrints.at(0).angularAcceleration << endl;
+	print(BSP_Back.text_color);
 	current_Ship = &bluePrints.at(0);
 
 }
@@ -70,6 +70,7 @@ void fill_Build_Ship_Page(SDL_Renderer* renderer) {
 	BSP_Back = Button(0, 0, width / 10, height / 15);
 	BSP_Back.setColors(color(235, 235, 235), color(255, 235, 235), color(255, 0, 0));
 	BSP_Back.renderOwnText(renderer, "Back", fontAstro[20],SLOW);
+	BSP_Back.text_color = color(0);
 	buildShipsPage.add(&BSP_Back);
 
 
@@ -170,7 +171,7 @@ void UI_Ship_View(SDL_Renderer*renderer){
 
 	mainPage.hide();
 	buildShipsPage.hide();
-	
+
 
 
 }
