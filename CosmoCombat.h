@@ -77,6 +77,10 @@ GamePart gamePart(int index);
 struct GameShip {
 
 	vector<vector<GamePart>> contents = vector<vector<GamePart>>();
+	vector<SDL_Point> engines = vector<SDL_Point>();
+	vector<SDL_Point> weapons = vector<SDL_Point>();
+	int w = DEFAULT_SHIP_DIM;
+	int h = DEFAULT_SHIP_DIM;
 	int gx = 0;
 	int gy = 0;
 	int weight = 0;
@@ -95,6 +99,8 @@ struct GameShip {
 	bool needsOverlay;
 	SDL_Point centerOfMass;
 
+	//state-booleans
+	bool enginesOn = false;
 
 };
 

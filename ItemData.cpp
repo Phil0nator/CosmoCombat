@@ -107,6 +107,7 @@ void configureParts() { //define all properties of all parts
 	Engine.price = 50;
 	Engine.weight = 10;
 	Engine.sprite = 2;
+	Engine.altSprite = 15;
 	Engine.thrust = 10;
 	Engine.type = ENGINE;
 	addPart(Engine);

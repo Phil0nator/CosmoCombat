@@ -93,6 +93,7 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 		}
 
 		if (engineUsed) {
+			current_Ship->enginesOn =true;
 			/*   subtract fuel, create particles, etc...
 			*old java code:
 
@@ -104,6 +105,10 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 			}
 
 			*/
+
+		}else{
+
+			current_Ship->enginesOn=false;
 
 		}
 
