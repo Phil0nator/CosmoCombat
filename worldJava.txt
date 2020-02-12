@@ -1,0 +1,155 @@
+
+/*
+  handle:
+ ships (later)
+ 
+ draw:
+ background (genrate, draw)
+ */
+
+public class Astaroid
+{
+  private int posX;
+  private int posY;
+  private double radius;
+
+  Astaroid(int x, int y, int r)
+  {
+    posX = x;
+    posY = y;
+    radius = r;
+  }
+
+  public int getX()
+  {
+    return posX;
+  }
+  public int getY()
+  {
+    return posY;
+  }
+  public double getRadius()
+  {
+    return radius;
+  }
+  public double getR()
+  {
+    return radius;
+  }
+
+  public void display()
+  {
+    ellipse(float(posX), float(posY), (float)radius/2.0, (float)radius/2.0);
+  }
+}
+
+class Comet
+{
+}
+
+
+public class World 
+{
+
+
+  private int sizeX;
+  private int sizeY;
+
+  public PImage bigStar;
+  private PImage medStar;
+  private PImage smallStar;
+
+  private static final int SMALL_STAR_AMT = 1000;
+  private static final int MED_STAR_AMT = 1000;
+  private static final int BIG_STAR_AMT = 10;
+
+  private int[] smallStarX = new int[SMALL_STAR_AMT];
+  private int[] smallStarY = new int[SMALL_STAR_AMT];
+  private int[] medStarX = new int[MED_STAR_AMT];
+  private int[] medStarY = new int[MED_STAR_AMT];
+  private int[] bigStarX = new int[BIG_STAR_AMT];
+  private int[] bigStarY = new int[BIG_STAR_AMT];
+
+  public World(int sizeX, int sizeY)
+  {
+    this.sizeX = sizeX;
+    this.sizeY = sizeY;
+  }
+
+  public void generate()
+  {
+    bigStar = Sprite(7);
+    bigStar.resize(100, 100);
+    medStar = Icon(8);
+    medStar.resize(25, 25);
+    smallStar = Icon(9);
+    smallStar.resize(5, 5);
+
+    for (int i = 0; i < SMALL_STAR_AMT; i++)
+    {
+      smallStarX[i] = (int)random(0, sizeX);
+      smallStarY[i] = (int)random(0, sizeY);
+    }
+
+    for (int i = 0; i < MED_STAR_AMT; i++)
+    {
+      medStarX[i] = (int)random(0, sizeX);
+      medStarY[i] = (int)random(0, sizeY);
+    }
+
+    for (int i = 0; i < BIG_STAR_AMT; i++)
+    {
+      bigStarX[i] = (int)random(0, sizeX);
+      bigStarY[i] = (int)random(0, sizeY);
+    }
+
+
+    bigStarX[0] = 0;
+    bigStarY[0] = 0;
+  }
+
+  public void display(int playerX, int playerY)
+  {
+    /**
+     *
+     */
+    pushMatrix();
+
+    for (int i = 0; i < SMALL_STAR_AMT; i++)
+      image(smallStar, ((smallStarX[i] + playerX/10) % (width + 5)) - 5, ((smallStarY[i] + playerY/10) % (height + 5)) - 5 );
+
+    for (int i = 0; i < MED_STAR_AMT; i++)
+      image(medStar, medStarX[i] + playerX/8, medStarY[i] + playerY/8);
+
+    for (int i = 0; i < BIG_STAR_AMT; i++)
+      image(bigStar, bigStarX[i] + playerX/6, bigStarY[i] + playerY/6);
+
+    popMatrix();
+  }
+
+  public void displayPlayer(GameShip ship) {
+    display(ship.globalX, ship.globalY);
+  }
+
+  public void displayPlayer(GameShip ship, float rot) {
+    int playerX=ship.globalX;
+    int playerY=ship.globalY;
+    pushMatrix();
+    translate(width/2, height/2);
+    rotate(rot);
+
+
+    for (int i = 0; i < SMALL_STAR_AMT; i++)
+      image(smallStar, ((smallStarX[i] + playerX/1) % (width*2 + 5)) - 5 - width, ((smallStarY[i] + playerY/1) % (height*2 + 5)) - 5 - height );
+
+    for (int i = 0; i < MED_STAR_AMT; i++)
+      image(medStar, medStarX[i] + playerX/8, medStarY[i] + playerY/8);
+
+    for (int i = 0; i < BIG_STAR_AMT; i++)
+      image(bigStar, bigStarX[i] + playerX/6, bigStarY[i] + playerY/6);
+
+
+
+    popMatrix();
+  }
+}

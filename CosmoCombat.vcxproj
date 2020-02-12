@@ -166,10 +166,14 @@
     <ClCompile Include="CosmoCombat.cpp" />
     <ClCompile Include="ItemData.cpp" />
     <ClCompile Include="Parts.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Abstractions\SDL_Abstractions.h" />
     <ClInclude Include="CosmoCombat.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="worldJava.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

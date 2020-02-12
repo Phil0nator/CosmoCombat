@@ -1,12 +1,9 @@
 #pragma once
-#include "SDL_Abstractions.h";
-
-
+#include "Abstractions\SDL_Abstractions.h"
 
 #define SPRITE_DIM 100;
-int width;
-int height;
-
+extern int width;
+extern int height;
 
 //assetHandling:
 
@@ -18,6 +15,8 @@ struct Part {
 	int price = 9;
 
 };
+
+
 struct GamePart {
 	int x;
 	int y;
@@ -58,3 +57,9 @@ struct GameShip {
 
 
 };
+
+// World:
+void World_INIT(SDL_Renderer* r, int seed);
+void World_draw(SDL_Renderer* r, SDL_Point offset);
+struct Asteroid;
+Asteroid Asteroid_new(int x, int y, int r);
