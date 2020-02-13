@@ -6,7 +6,7 @@
 #define CAP_FRAMERATE true
 #define FRAME_CAP 120
 
-
+#define WORLD_DIV_FACTOR 10000
 
 
 
@@ -52,6 +52,7 @@ int main(int argc, char* argv[])
 	configureParts(); // sets up reference Part structures
 	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
 	configure_UI_Elements(renderer);
+	World_INIT(renderer, NULL);
 	time_t lastFrame = now();
 	//Game Loop:
 	SDL_Event event;
@@ -86,7 +87,7 @@ int main(int argc, char* argv[])
 			SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer
 			root_Build_Ship(renderer,screen,&event);
 		} else if (state == SHIP_VIEW){
-
+			World_draw(renderer, Point(-current_Ship->gx / WORLD_DIV_FACTOR,-current_Ship->gy / WORLD_DIV_FACTOR));
 			SDL_GUI_DISPLAY(renderer, &event);
 			root_Ship_View(renderer, &event);
 		}

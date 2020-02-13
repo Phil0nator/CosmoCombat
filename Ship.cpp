@@ -187,10 +187,10 @@ SDL_Point vDir(Direction d){
 
 	switch (d){
 		case UP:
-			return Point(0,1);
+			return Point(0,-1);
 			break;
 		case DOWN:
-			return Point(0,-1);
+			return Point(0,1);
 			break;
 		case LEFT:
 			return Point(-1,0);
@@ -221,7 +221,7 @@ void renderShipOverlay(GameShip* ship){
 			image(renderer, sprite(gp.origin.altSprite), source, dest, r, Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
 
 			//draw flame animation
-			Direction d = dir(ship->rot);
+			Direction d = dir(r);
 			SDL_Point v = vDir(d);
 			SDL_Rect dest2 = getQuickRect(dest.x+(v.x*SPRITE_DIM), dest.y+(v.y*SPRITE_DIM),dest.w,dest.h);
 			image(renderer, ship->exhaust->get(), source, dest2, r,  Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);

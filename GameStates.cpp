@@ -70,8 +70,8 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 		bool engineUsed = false;
 		if (event->key.state == SDLK_w) { //w
 			//degrees(current_Ship->acceleration)*spriteDimention
-			float dx = cos((current_Ship->rot)+90) * current_Ship->acceleration*SPRITE_DIM; // last = size
-			float dy = sin((current_Ship->rot)+90) * current_Ship->acceleration*SPRITE_DIM;
+			float dx = cos(radians((current_Ship->rot)+90)) * current_Ship->acceleration*SPRITE_DIM; // last = size
+			float dy = sin(radians((current_Ship->rot)+90)) * current_Ship->acceleration*SPRITE_DIM;
 
 			current_Ship->velx+=dx;
 			current_Ship->vely+=dy;

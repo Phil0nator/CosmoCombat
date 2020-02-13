@@ -13,8 +13,21 @@ int now(){
 
 	return chrono::system_clock::now().time_since_epoch().count();
 
+}
+
+int clamp(int val, int min, int max){
+
+	if(val<min){
+		return min;
+	}
+	if(val>max){
+		return max;
+	}
+	return val;
 
 }
+
+
 void smoothFinish(SDL_Window *window,SDL_Renderer*renderer) { //smoothly close and finish data buffers for the end of the program
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
