@@ -7,8 +7,8 @@
 
 vector<SDL_Texture* > sprites;
 vector<AnimationInstance* > anims;
-Animation Shoulders1;
-AnimationInstance s1;
+Animation Fire1;
+
 
 
 void loadSprites(SDL_Renderer *renderer)
@@ -19,15 +19,13 @@ void loadSprites(SDL_Renderer *renderer)
 		SDL_Texture* sp = loadImage(renderer,string("assets\\sprites\\").append(to_string(i).append(".PNG")).c_str());
 		sprites.push_back(sp);
 	}
-	Shoulders1 = Animation(file_fix("assets\\Animations\\world\\fire1\\"),24,FPS24);
-	s1 = AnimationInstance(Shoulders1);
-	anims.push_back(&s1);
+	Fire1 = Animation(file_fix("assets\\Animations\\world\\fire1\\"),24,FPS24);
+
 
 }
 
 //used each frame to tick all active animations
 void handleAnimations(){
-
 	for(int i = 0 ; i < anims.size();i++){
 
 		anims.at(i)->tick();

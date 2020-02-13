@@ -128,6 +128,10 @@ GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen
 	out.overlayTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w*SPRITE_DIM, h*SPRITE_DIM); //setup new texture
 	SDL_SetTextureBlendMode(out.overlayTexture, SDL_BLENDMODE_BLEND); //for transparency
 
+	//animations
+	out.exhaust = new AnimationInstance(Fire1);
+	anims.push_back(out.exhaust);
+
 	return out;
 }
 
@@ -155,22 +159,77 @@ void clearShipOverlay(GameShip* ship){
 	SDL_SetRenderTarget(renderer, NULL);
 }
 
+Direction dir(int rot){
+	rot=rot % 360; //bring back to earth
+
+	if(rot%45!=0)return NULL; //if not a snapping-rotation
+
+	switch (rot) {
+		case 0:
+			return UP;
+			break;
+		case 90:
+			return LEFT;
+			break;
+		case 180:
+			return DOWN;
+			break;
+	  case 270:
+		 	return RIGHT;
+			break;
+		default:
+			return NULL;
+			break;
+	}
+} //turn a float into the Direction enum
+
+SDL_Point vDir(Direction d){
+
+	switch (d){
+		case UP:
+			return Point(0,1);
+			break;
+		case DOWN:
+			return Point(0,-1);
+			break;
+		case LEFT:
+			return Point(-1,0);
+			break;
+		case RIGHT:
+			return Point(1,0);
+			break;
+
+	}
+
+
+} //turn a Direction enum into a translation vector
+
 void renderShipOverlay(GameShip* ship){
 
 	if(ship->enginesOn){
-
+		SDL_SetRenderTarget(renderer, ship->overlayTexture);
 		for(int i = 0 ; i < ship->engines.size();i++){
 
+			//draw engine light up copy
 			SDL_Rect source = getTextureRect(sprite(Engine.altSprite));
 			int x = ship->engines.at(i).x;
 			int y = ship->engines.at(i).y;
 			SDL_Rect dest = getQuickRect(x* SPRITE_DIM, y * SPRITE_DIM, SPRITE_DIM, SPRITE_DIM);
 			const float r = ship->contents.at(x).at(y).rot;
-			SDL_SetRenderTarget(renderer, ship->overlayTexture);
+
 			image(renderer, sprite(Engine.altSprite), source, dest, r, Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
-			SDL_SetRenderTarget(renderer, NULL);
+
+			//draw flame animation
+			Direction d = dir(ship->rot);
+			SDL_Point v = vDir(d);
+			SDL_Rect dest2 = getQuickRect(dest.x+(v.x*SPRITE_DIM), dest.y+(v.y*SPRITE_DIM),dest.w,dest.h);
+			image(renderer, ship->exhaust->get(), source, dest2, r,  Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
+
+
+
 
 		}
+		SDL_SetRenderTarget(renderer, NULL);
 	}
 
 }

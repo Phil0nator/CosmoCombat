@@ -72,7 +72,6 @@ public:
   AnimationInstance(Animation o){
 
     origin = o;
-
   }
   void tick(){
 

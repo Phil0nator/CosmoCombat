@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
 
 
 
-		handleAnimations(); //update the current frame for AnimationInstance objects. see Animations.cpp
+		handleAnimations(); //update the current frame for AnimationInstance objects. see assetHandling.cpp
 		//gamestates:
 		if (state == MAIN_MENU) {
 			root_Main_Menu();

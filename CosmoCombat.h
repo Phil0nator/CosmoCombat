@@ -18,6 +18,14 @@ enum gameState {
 
 };
 
+
+enum Direction{
+
+	UP ,DOWN,LEFT,RIGHT,UPLEFT,UPRIGHT,DOWNLEFT,DOWNRIGHT
+
+};
+
+
 //big global variables:
 extern int numberOfParts; //total number of existing rooms that can be added to a ship
 const int DEFAULT_SHIP_DIM =11; //default dimention of a ship
@@ -30,7 +38,7 @@ extern SDL_Window *window;
 void endGame();
 
 //assetHandling:
-
+#include "Animations.cpp"
 struct Part { //Part Structs store the game-mechanic information about parts, such as their weight and thrust, etc...
 	//This structure is NOT what goes in ships, as it stores more information than is necessary
 	int num = 0;
@@ -75,10 +83,14 @@ GamePart gamePart(int index);
 
 //Ships:
 struct GameShip {
-
+	//parts/contents:
 	vector<vector<GamePart>> contents = vector<vector<GamePart>>();
 	vector<SDL_Point> engines = vector<SDL_Point>();
 	vector<SDL_Point> weapons = vector<SDL_Point>();
+
+
+
+	//physical data
 	int w = DEFAULT_SHIP_DIM;
 	int h = DEFAULT_SHIP_DIM;
 	int gx = 0;
@@ -94,10 +106,16 @@ struct GameShip {
 	float angularAcceleration = 1.0;
 	int fuelConsumption = 0;
 	float thrust = 0;
+	SDL_Point centerOfMass;
+
+
+	//visuals
 	SDL_Texture* texture;
 	SDL_Texture* overlayTexture;
 	bool needsOverlay;
-	SDL_Point centerOfMass;
+	AnimationInstance *exhaust;
+
+
 
 	//state-booleans
 	bool enginesOn = false;
@@ -141,7 +159,7 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event);
 
 void handleAnimations();
 
-#include "Animations.cpp"
+
 
 #include "assetHandling.cpp" //load images, and store them
 #include "ItemData.cpp" //store and initialize data about items, rooms, etc...
