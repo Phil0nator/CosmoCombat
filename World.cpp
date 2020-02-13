@@ -2,7 +2,7 @@
 #define SIZE_X 20000
 #define SIZE_Y 20000
 
-#define SMALL_STAR_AMT 1000
+#define SMALL_STAR_AMT 10000
 #define MED_STAR_AMT 5
 #define BIG_STAR_AMT 1
 #define ASTEROID_AMT 10
