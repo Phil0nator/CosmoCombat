@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstddef>
-#include "Abstractions\\SDL_Abstractions.h" //some simple functions to make SDL a little easier to work with shorthand
+#include "Abstractions/SDL_Abstractions.h" //some simple functions to make SDL a little easier to work with shorthand
 
 #pragma once
 

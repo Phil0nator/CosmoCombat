@@ -214,10 +214,11 @@ void renderShipOverlay(GameShip* ship){
 			SDL_Rect source = getTextureRect(sprite(Engine.altSprite));
 			int x = ship->engines.at(i).x;
 			int y = ship->engines.at(i).y;
+			GamePart gp = ship->contents.at(x).at(y);
 			SDL_Rect dest = getQuickRect(x* SPRITE_DIM, y * SPRITE_DIM, SPRITE_DIM, SPRITE_DIM);
-			const float r = ship->contents.at(x).at(y).rot;
+			float r = gp.rot;
 
-			image(renderer, sprite(Engine.altSprite), source, dest, r, Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
+			image(renderer, sprite(gp.origin.altSprite), source, dest, r, Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
 
 			//draw flame animation
 			Direction d = dir(ship->rot);
