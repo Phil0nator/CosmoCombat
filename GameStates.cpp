@@ -8,7 +8,6 @@ GameShip *current_Ship;//ship that the player is currently flying (ship view)
 bool BSP_Rotated = false;
 time_t lastShipUpdate = 1;
 
-
 void root_Main_Menu() {
 
 	UI_Main_Menu();
@@ -32,16 +31,21 @@ void root_Build_Ship(SDL_Renderer* renderer, SDL_Surface* screen, SDL_Event* eve
 			SDL_Rect textRect = getTextureRect(sprite(current_Part.sprite));
 			image(renderer, sprite(current_Part.sprite), textRect, getQuickRect(mx-ICON_DIM/2, my- ICON_DIM / 2, ICON_DIM, ICON_DIM),current_Part.rot,Point(ICON_DIM/2,ICON_DIM/2),SDL_FLIP_NONE);
 		}
-
+		int sx = width / 4;
+		int ex = (width/4)+(bluePrints.at(0).w*SPRITE_DIM);
 		if (event->button.clicks == 1&&current_Part.num>0) {
-			int sx = width / 4;
-			if (mx > sx) {
+			if (mx > sx&&mx<ex) {
 				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, current_Part.num,current_Part.rot);
 
 
 			}
 
 
+		}else if(event->button.clicks == 1&&current_Part.num==0){//pick up existing parts
+			if(mx>sx){
+				current_Part = part(bluePrints.at(0).contents.at((mx - sx) / SPRITE_DIM).at(my / SPRITE_DIM).origin.num);
+				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, 0,0);
+			}
 		}
 
 

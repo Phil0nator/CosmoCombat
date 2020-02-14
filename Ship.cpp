@@ -33,7 +33,7 @@ void placePart(GameShip* ship, int x, int y, GamePart p) { //correctly add a par
 	if(ship->contents.at(x).at(y).sprite !=0){
 		//remove old properties
 
-		if(ship->contents.at(x).at(y).sprite == p.sprite){ //don't need to place a part if it is the same as the existing part
+		if(ship->contents.at(x).at(y).sprite == p.sprite&&ship->contents.at(x).at(y).rot==p.rot){ //don't need to place a part if it is the same as the existing part
 			return;
 		}
 
@@ -138,6 +138,7 @@ GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen
 void drawShip(SDL_Renderer* renderer, GameShip* ship) { //draw ship for a UI, not taking rotation into account
 	SDL_Rect r = getTextureRect(ship->texture);
 	quickFillRect(renderer, (width/4)-1,-1,r.w+1,r.h+1, color(255,255,255));
+	quickRect(renderer, (width/4),0,r.w,r.h,color(0));
 	quickImage(renderer, ship->texture,width/4,0);
 
 }
