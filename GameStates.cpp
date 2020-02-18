@@ -9,6 +9,7 @@ bool BSP_Rotated = false;
 time_t lastShipUpdate = 1;
 bool bsp_pickupClick = false;
 
+//event handlers
 void BSP_Events(SDL_Event* event){
 
 	int mx, my;
@@ -25,7 +26,6 @@ void BSP_Events(SDL_Event* event){
 		if (/*event->button.clicks == 1&&*/current_Part.num>0&&event->type==SDL_MOUSEBUTTONUP) {
 			if (mx > sx&&mx<ex) {
 				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, current_Part.num,current_Part.rot);
-				cout << "down" << endl;
 
 			}
 
@@ -34,7 +34,6 @@ void BSP_Events(SDL_Event* event){
 			if(mx>sx&&!bsp_pickupClick){
 				current_Part = part(bluePrints.at(0).contents.at((mx - sx) / SPRITE_DIM).at(my / SPRITE_DIM).origin.num);
 				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, 0,0);
-				cout << "up" << endl;
 				bsp_pickupClick=true;
 			}
 		}else if(event->type!=SDL_MOUSEBUTTONUP){
@@ -52,16 +51,67 @@ void BSP_Events(SDL_Event* event){
 	}
 
 }
+void Ship_View_Events(SDL_Event* event){
+	//handle key events:
 
+	bool engineUsed = false;
+	if (event->key.state == SDLK_w) { //w
+		//degrees(current_Ship->acceleration)*spriteDimention
+		float dx = cos(radians((current_Ship->rot)+90)) * current_Ship->acceleration*SPRITE_DIM; // last = size
+		float dy = sin(radians((current_Ship->rot)+90)) * current_Ship->acceleration*SPRITE_DIM;
+
+		current_Ship->velx+=dx;
+		current_Ship->vely+=dy;
+		engineUsed=true;
+	}
+	if (event->key.state == SDLK_a) {//a
+		current_Ship->rotvel-=current_Ship->angularAcceleration;
+		engineUsed=true;
+	}
+	if (event->key.state == SDLK_d) { //d
+		current_Ship->rotvel+=current_Ship->angularAcceleration;
+		engineUsed=true;
+	}
+	if (event->key.state == SDLK_s) { //s
+	}
+	if(event->key.keysym.sym == SDLK_ESCAPE){
+		state = MAIN_MENU;
+
+	}
+
+	if (engineUsed) {
+		current_Ship->enginesOn =true;
+		/*   subtract fuel, create particles, etc...
+		*old java code:
+
+		current_Ship->fuel-=current_Ship->fuelConsumption;
+		for (int i = 0; i < current_Ship->engines.size(); i++) {
+			Particle p = new Particle(current_Ship->engines.get(i).getAbsolute());
+			p.setVelocity((int)current_Ship->velx+(int)random(-3, 3), (int) current_Ship->vely+(int)random(-3, 3));
+			particles.add(p);
+		}
+
+		*/
+
+	}else{
+
+		current_Ship->enginesOn=false;
+
+	}
+
+}
 
 void eventHandler(SDL_Event* event){
 
 	if (state == BUILD_SHIP) {
 		BSP_Events(event);
+	}else if (state == SHIP_VIEW){
+		Ship_View_Events(event);
 	}
 
 }
 
+//root functions
 void root_Main_Menu() {
 
 	UI_Main_Menu();
@@ -100,50 +150,7 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 
 //draw/physiscs ships
 
-		bool engineUsed = false;
-		if (event->key.state == SDLK_w) { //w
-			//degrees(current_Ship->acceleration)*spriteDimention
-			float dx = cos(radians((current_Ship->rot)+90)) * current_Ship->acceleration*SPRITE_DIM; // last = size
-			float dy = sin(radians((current_Ship->rot)+90)) * current_Ship->acceleration*SPRITE_DIM;
 
-			current_Ship->velx+=dx;
-			current_Ship->vely+=dy;
-			engineUsed=true;
-		}
-		if (event->key.state == SDLK_a) {//a
-			current_Ship->rotvel-=current_Ship->angularAcceleration;
-			engineUsed=true;
- 		}
-		if (event->key.state == SDLK_d) { //d
-			current_Ship->rotvel+=current_Ship->angularAcceleration;
-			engineUsed=true;
-		}
-		if (event->key.state == SDLK_s) { //s
-		}
-		if(event->key.keysym.sym == SDLK_ESCAPE){
-			state = MAIN_MENU;
-
-		}
-
-		if (engineUsed) {
-			current_Ship->enginesOn =true;
-			/*   subtract fuel, create particles, etc...
-			*old java code:
-
-			current_Ship->fuel-=current_Ship->fuelConsumption;
-			for (int i = 0; i < current_Ship->engines.size(); i++) {
-				Particle p = new Particle(current_Ship->engines.get(i).getAbsolute());
-				p.setVelocity((int)current_Ship->velx+(int)random(-3, 3), (int) current_Ship->vely+(int)random(-3, 3));
-				particles.add(p);
-			}
-
-			*/
-
-		}else{
-
-			current_Ship->enginesOn=false;
-
-		}
 
 
 
