@@ -7,6 +7,60 @@ Part current_Part; //part being held in the ship build menu
 GameShip *current_Ship;//ship that the player is currently flying (ship view)
 bool BSP_Rotated = false;
 time_t lastShipUpdate = 1;
+bool bsp_pickupClick = false;
+
+void BSP_Events(SDL_Event* event){
+
+	int mx, my;
+	SDL_GetMouseState(&mx, &my);
+	if (&current_Part != nullptr) {
+
+
+		if (current_Part.sprite > 0) {
+			SDL_Rect textRect = getTextureRect(sprite(current_Part.sprite));
+			image(renderer, sprite(current_Part.sprite), textRect, getQuickRect(mx-ICON_DIM/2, my- ICON_DIM / 2, ICON_DIM, ICON_DIM),current_Part.rot,Point(ICON_DIM/2,ICON_DIM/2),SDL_FLIP_NONE);
+		}
+		int sx = width / 4;
+		int ex = (width/4)+(bluePrints.at(0).w*SPRITE_DIM);
+		if (/*event->button.clicks == 1&&*/current_Part.num>0&&event->type==SDL_MOUSEBUTTONUP) {
+			if (mx > sx&&mx<ex) {
+				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, current_Part.num,current_Part.rot);
+				cout << "down" << endl;
+
+			}
+
+
+		}else if(/*event->button.clicks == 1&&*/current_Part.num==0&&event->type==SDL_MOUSEBUTTONUP){//pick up existing parts
+			if(mx>sx&&!bsp_pickupClick){
+				current_Part = part(bluePrints.at(0).contents.at((mx - sx) / SPRITE_DIM).at(my / SPRITE_DIM).origin.num);
+				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, 0,0);
+				cout << "up" << endl;
+				bsp_pickupClick=true;
+			}
+		}else if(event->type!=SDL_MOUSEBUTTONUP){
+			bsp_pickupClick=false;
+		}
+
+
+	}
+	if (event->key.state == SDLK_r && !BSP_Rotated) {
+		current_Part.rot += 90;
+		BSP_Rotated = true; //used to slow down the rotation speed
+	}
+	else if (event->key.state != SDLK_r){
+		BSP_Rotated = false;
+	}
+
+}
+
+
+void eventHandler(SDL_Event* event){
+
+	if (state == BUILD_SHIP) {
+		BSP_Events(event);
+	}
+
+}
 
 void root_Main_Menu() {
 
@@ -31,31 +85,6 @@ void root_Build_Ship(SDL_Renderer* renderer, SDL_Surface* screen, SDL_Event* eve
 			SDL_Rect textRect = getTextureRect(sprite(current_Part.sprite));
 			image(renderer, sprite(current_Part.sprite), textRect, getQuickRect(mx-ICON_DIM/2, my- ICON_DIM / 2, ICON_DIM, ICON_DIM),current_Part.rot,Point(ICON_DIM/2,ICON_DIM/2),SDL_FLIP_NONE);
 		}
-		int sx = width / 4;
-		int ex = (width/4)+(bluePrints.at(0).w*SPRITE_DIM);
-		if (event->button.clicks == 1&&current_Part.num>0) {
-			if (mx > sx&&mx<ex) {
-				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, current_Part.num,current_Part.rot);
-
-
-			}
-
-
-		}else if(event->button.clicks == 1&&current_Part.num==0){//pick up existing parts
-			if(mx>sx){
-				current_Part = part(bluePrints.at(0).contents.at((mx - sx) / SPRITE_DIM).at(my / SPRITE_DIM).origin.num);
-				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, 0,0);
-			}
-		}
-
-
-	}
-	if (event->key.state == SDLK_r && !BSP_Rotated) {
-		current_Part.rot += 90;
-		BSP_Rotated = true; //used to slow down the rotation speed
-	}
-	else if (event->key.state != SDLK_r){
-		BSP_Rotated = false;
 	}
 
 

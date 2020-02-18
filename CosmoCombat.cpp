@@ -66,6 +66,8 @@ int main(int argc, char* argv[])
 				running = false;
 				break;
 			}
+			eventHandler(&event);
+
 
 		}
 		SDL_RenderClear(renderer); //clear last frame

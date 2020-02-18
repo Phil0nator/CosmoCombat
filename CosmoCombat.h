@@ -139,6 +139,8 @@ void setShipAttributes(GameShip *ship);
 void configure_UI_Elements(SDL_Renderer* renderer);
 
 
+//used to act on game events depending on gamestate
+void eventHandler(SDL_Event* event);
 //Game State Functions:
 //	each starting with "root_" will handle all necessary functions for that gamestate.
 //														and is called directly from main()
