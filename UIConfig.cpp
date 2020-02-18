@@ -28,7 +28,7 @@ void loadFontAstro() {
 	*fonts are loaded into arrays so that they can be accessed in different sizes and still look smooth
 	*/
 	for (int i = 0; i < 50; i++) {
-		fontAstro[i] = loadFont("assets\\Fonts\\arizone-unicase-font\\ArizoneUnicaseRegular-5dRZ.ttf", i);
+		fontAstro[i] = loadFont(file_fix("assets\\Fonts\\arizone-unicase-font\\ArizoneUnicaseRegular-5dRZ.ttf"), i);
 	}
 
 
