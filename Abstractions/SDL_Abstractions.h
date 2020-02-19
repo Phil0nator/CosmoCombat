@@ -28,3 +28,4 @@ using namespace std;
 #include "Images.h"
 #include "Text.h"
 #include "SDL_GUI.h"
+#include "video.h"
