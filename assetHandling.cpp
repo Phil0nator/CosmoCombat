@@ -1,3 +1,4 @@
+
 //quick FPS numbers
 #define FPS24 1000/24
 #define FPS60 1000/60
@@ -5,8 +6,6 @@
 #define FPS6  1000/6
 
 
-vector<SDL_Texture* > sprites;
-vector<AnimationInstance* > anims;
 
 //animations:
 	//world
@@ -23,8 +22,9 @@ void loadSprites(SDL_Renderer *renderer)
 //load all sprites in the "assets\sprites\" folder into a single vector, to be referenced later
 {
 	anims = vector<AnimationInstance* >(0);
+	sprites = vector<SDL_Texture* >(0);
 	for (int i = 0; i < 16; i++) {
-		SDL_Texture* sp = loadImage(renderer,string("assets\\sprites\\").append(to_string(i).append(".PNG")).c_str());
+		SDL_Texture* sp = loadImage(renderer,string(file_fix("assets\\sprites\\")).append(to_string(i).append(".PNG")).c_str());
 		sprites.push_back(sp);
 	}
 	//load animations

@@ -40,6 +40,11 @@ void endGame();
 
 //assetHandling:
 #include "Animations.cpp"
+
+vector<SDL_Texture* > sprites;
+vector<AnimationInstance* > anims;
+
+
 struct Part { //Part Structs store the game-mechanic information about parts, such as their weight and thrust, etc...
 	//This structure is NOT what goes in ships, as it stores more information than is necessary
 	int num = 0;
@@ -123,7 +128,7 @@ struct GameShip {
 
 };
 
-extern GameShip current_Ship;
+extern GameShip* current_Ship;
 
 extern vector<GameShip> bluePrints;
 SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* ship);
@@ -142,12 +147,12 @@ SDL_Point localToGlobalPlayer(int x, int y);
 
 SDL_Point globalToLocalShip(int x, int y){
 
-	return point(x-current_Ship.x,y-current_Ship.y);
+	return point(x-current_Ship->gx,y-current_Ship->gy);
 
 }
 SDL_Point localToGlobalShip(int x, int y){
 
-	return point(x+current_Ship.x,y+current_Ship.y);
+	return point(x+current_Ship->gx,y+current_Ship->gy);
 
 }
 
@@ -180,14 +185,13 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event);
 void handleAnimations();
 
 
-
+#include "Hitbox.h" //collition utilities
 #include "assetHandling.cpp" //load images, and store them
 #include "ItemData.cpp" //store and initialize data about items, rooms, etc...
 #include "Ship.cpp" //functions for the GameShip data structure
 #include "GameObjects.cpp" //handles solid objects that exist in the world
 
+#include "Player.cpp" //player class
 #include "GameStates.cpp" //handling for each of the root gamestate functions
 #include "UIConfig.cpp" //configure the UI, and callbacks, etc...
 #include "World.cpp" // handling of the world (Alex Harlan)
-#include "Hitbox.h" //collition utilities
-#include "Player.h" //player class

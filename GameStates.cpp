@@ -76,7 +76,9 @@ void Ship_View_Events(SDL_Event* event){
 	}
 	if(event->key.keysym.sym == SDLK_ESCAPE){
 		state = MAIN_MENU;
-
+	}
+	if(event->key.keysym.sym==SDLK_SPACE){
+		state = PLAYER_VIEW;
 	}
 
 	if (engineUsed) {

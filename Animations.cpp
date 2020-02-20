@@ -22,6 +22,7 @@ Animation::~Animation(){
 
 }
 Animation::Animation(){
+  frames = vector<SDL_Texture* >(0);
 }
 Animation::Animation( const Animation& a ){
 
@@ -41,6 +42,7 @@ Animation::Animation(string path, int numFrames, int indelay){
     string file = path + to_string(i);
     file+=".png";
     SDL_Texture *f = loadImage(renderer, file.c_str());
+    cout << "Loading: " << file << endl;
     frames.at(i-1)=f;
   }
 

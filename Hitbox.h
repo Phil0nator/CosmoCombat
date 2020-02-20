@@ -17,28 +17,19 @@ public:
 
 
   HitBox(int x, int y, int w, int h){
-    this.x=x;
-    this.y=y;
-    this.w=w;
-    this.h=h;
+    this->x=x;
+    this->y=y;
+    this->w=w;
+    this->h=h;
     rect={x,y,w,h};
   }
 
   HitBox copy(){
 
     HitBox out = HitBox(x,y,w,h);
-
+    return out;
   }
 
-  ~HitBox(){
-
-    delete x;
-    delete y;
-    delete w;
-    delete h;
-    delete rect;
-
-  }
 
   bool contains(SDL_Point q){
     return (q.x>x&&q.x<x+w&&q.y>y&&q.y<y+h);
@@ -50,13 +41,13 @@ public:
 
   bool simpleCollide(HitBox q){
 
-    return (contains(q.x,q.y)||contains(q.x+q.w,q.y)||contains(q.x+q.w+q.y+q.h)||contains(q.x,q.y+q.h));
+    return (contains(q.x,q.y)||contains(q.x+q.w,q.y)||contains(q.x+q.w,q.y+q.h)||contains(q.x,q.y+q.h));
 
   }
 
   bool sdlCollide(HitBox q){
 
-    return (SDL_HasIntersection(rect,q.rect)==SDL_TRUE);
+    return (SDL_HasIntersection(&rect,&q.rect)==SDL_TRUE);
 
   }
 

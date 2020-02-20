@@ -1,3 +1,6 @@
+//TODO : check for out of range errors in constructors pre-main.
+
+
 #include "linuxComp.h"
 #include "SDL_timer.h"
 #include "CosmoCombat.h"
@@ -42,18 +45,26 @@ void setup() {
 
 int main(int argc, char* argv[])
 {
+
+	SDL_Log("Main: ");
 	srand(time(NULL));//setup random seed
 	setDefaultColor(color(0, 0, 0)); //the background color of the window by default
 	SDL_Init(SDL_INIT_EVERYTHING); //setup SDL
 	quickInit(8,2); //setup SDL subsystems (SDL, Image, TTF), 8 = color depth, 2 = samples
 	setup(); //create window, and setup renderer and screen
 	setDefaultColor(color(255,255,255)); //sets default screen background color;
+	cout << "Pre-LoadSprites" << endl;
 	loadSprites(renderer);
+	cout << "Post Load Sprites" << endl;
 	configureParts(); // sets up reference Part structures
 	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
 	configure_UI_Elements(renderer);
-	World_INIT(renderer, NULL);
+	World_INIT(renderer, time(NULL));
 	time_t lastFrame = now();
+
+
+	//me = Player(); //client player object (see Player.h)
+
 	//Game Loop:
 	SDL_Event event;
 	cout << "Starting Game Loop" << endl;

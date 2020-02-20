@@ -201,7 +201,7 @@ SDL_Point vDir(Direction d){
 			break;
 
 	}
-
+	return Point(0,0);
 
 } //turn a Direction enum into a translation vector
 
