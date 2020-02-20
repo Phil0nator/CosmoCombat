@@ -35,6 +35,7 @@ extern gameState state; //current gamestate
 extern SDL_Renderer *renderer;
 extern SDL_Surface *screen;
 extern SDL_Window *window;
+
 void endGame();
 
 //assetHandling:
@@ -122,7 +123,7 @@ struct GameShip {
 
 };
 
-
+extern GameShip current_Ship;
 
 extern vector<GameShip> bluePrints;
 SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* ship);
@@ -133,6 +134,23 @@ void placePart(GameShip* ship, int x, int y, int part, float r);
 void shipPhysics(GameShip* ship);
 void drawGameShip(SDL_Renderer* renderer, GameShip* ship);
 void setShipAttributes(GameShip *ship);
+
+
+//Coordinates:
+SDL_Point globalToLocalPlayer(int x, int y);
+SDL_Point localToGlobalPlayer(int x, int y);
+
+SDL_Point globalToLocalShip(int x, int y){
+
+	return point(x-current_Ship.x,y-current_Ship.y);
+
+}
+SDL_Point localToGlobalShip(int x, int y){
+
+	return point(x+current_Ship.x,y+current_Ship.y);
+
+}
+
 
 
 //UIConfig
@@ -171,3 +189,5 @@ void handleAnimations();
 #include "GameStates.cpp" //handling for each of the root gamestate functions
 #include "UIConfig.cpp" //configure the UI, and callbacks, etc...
 #include "World.cpp" // handling of the world (Alex Harlan)
+#include "Hitbox.h" //collition utilities
+#include "Player.h" //player class

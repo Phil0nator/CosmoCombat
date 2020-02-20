@@ -1,5 +1,33 @@
-World Generation
 
--sectors
-	-chunks
+Alex::World:
 
+	Stars
+	asteroids
+	ambient animations?
+
+Alden::Rendering:
+	projectiles
+	particles
+	collision
+	other ships/objects
+
+Philo::Interior:
+
+	exist
+	Walking
+	animations
+	customization
+	sense making:
+		EX: cant fly ship without being in bridge etc...
+
+	Alden::Interior::Rendering:
+
+		interior projectiles
+		interior particles
+		interior other objects/people
+		interior physics
+
+	Alex::Interior::World:
+
+		way to show world from inside ship nicely
+		without damaging performance.
