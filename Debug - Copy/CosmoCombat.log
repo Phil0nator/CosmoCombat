@@ -1,0 +1,4 @@
+﻿  CosmoCombat.cpp
+C:\Users\s_AlexaHarla37955\Desktop\SDL Projects\CosmoCombat-Alex\Abstractions\SDL_Abstractions.h(71,23): warning C4215: nonstandard extension used: long float
+C:\Users\s_AlexaHarla37955\Desktop\SDL Projects\CosmoCombat-Alex\CosmoCombat.cpp(41,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  CosmoCombat.vcxproj -> C:\Users\s_AlexaHarla37955\Desktop\SDL Projects\CosmoCombat-Alex\Debug\CosmoCombat.exe
