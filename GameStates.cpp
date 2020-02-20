@@ -168,7 +168,6 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 void root_Player_View(){
 
 
-
-
+	me.drawLocal();
 
 }
