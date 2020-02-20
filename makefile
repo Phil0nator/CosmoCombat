@@ -9,7 +9,7 @@ OBJS = CosmoCombat.cpp
 CC = g++
 
 #INCLUDE_PATHS specifies the additional include paths we'll need
-INCLUDE_PATHS = -IC:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0.10/i686-w64-mingw32/include/SDL2 -I C:/SDL/SDL2_ttf-2.0.15/i686-w64-mingw32/include/SDL2 -I C:/SDL/SDL2_image-devel-2.0.5-mingw/SDL2_image-2.0.5/i686-w64-mingw32/include/SDL2 -I C:\SDL\ffmpeg-4.2.2\fftools -I C:\SDL\ffmpeg-4.2.2\libavformat
+INCLUDE_PATHS = -IC:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0.10/i686-w64-mingw32/include/SDL2 -I C:/SDL/SDL2_ttf-2.0.15/i686-w64-mingw32/include/SDL2 -I C:/SDL/SDL2_image-devel-2.0.5-mingw/SDL2_image-2.0.5/i686-w64-mingw32/include/SDL2
 
 #LIBRARY_PATHS specifies the additional library paths we'll need
 LIBRARY_PATHS =-L C:/mingw_dev_lib/lib -LC:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0.10/i686-w64-mingw32/lib -L C:/SDL/SDL2_image-devel-2.0.5-mingw/SDL2_image-2.0.5/i686-w64-mingw32/lib -L C:/SDL/SDL2_ttf-2.0.15/i686-w64-mingw32/lib
