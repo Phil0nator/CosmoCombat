@@ -7,9 +7,17 @@
 
 vector<SDL_Texture* > sprites;
 vector<AnimationInstance* > anims;
+
+//animations:
+	//world
 Animation Fire1;
 
+	//player
+Animation Shoulders1;
+Animation Arms1;
 
+
+// </animations>
 
 void loadSprites(SDL_Renderer *renderer)
 //load all sprites in the "assets\sprites\" folder into a single vector, to be referenced later
@@ -19,7 +27,10 @@ void loadSprites(SDL_Renderer *renderer)
 		SDL_Texture* sp = loadImage(renderer,string("assets\\sprites\\").append(to_string(i).append(".PNG")).c_str());
 		sprites.push_back(sp);
 	}
+	//load animations
 	Fire1 = Animation(file_fix("assets\\Animations\\world\\fire1\\"),24,FPS24);
+	Shoulders1 = Animation(file_fix("assets\\Animations\\player\\Shoulders1\\"), 24,FPS24);
+	Arms1 = Animation(file_fix("assets\\Animations\\player\\Arms1\\"),24,FPS24);
 
 
 }

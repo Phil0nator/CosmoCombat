@@ -36,18 +36,15 @@ Animation::Animation( const Animation& a ){
 Animation::Animation(string path, int numFrames, int indelay){
   numberOfFrames = numFrames-1;
   frames = vector<SDL_Texture* >(numFrames);
-  cout << "numberOfFrames INIT AT: " << numberOfFrames << "            " << &numberOfFrames << endl;
   for(int i = 1 ; i <= numFrames;i++){
     //assets\Animations\player\Shoulders1\1.png
     string file = path + to_string(i);
     file+=".png";
-    cout << "loading: " << file << endl;
     SDL_Texture *f = loadImage(renderer, file.c_str());
     frames.at(i-1)=f;
   }
 
   delay = indelay;
-  cout << "Delay starts @" << delay << endl;
 }
 
 

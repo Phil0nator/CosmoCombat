@@ -36,6 +36,7 @@ public:
     delete y;
     delete w;
     delete h;
+    delete rect;
 
   }
 
