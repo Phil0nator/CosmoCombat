@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 	configure_UI_Elements(renderer);
 	World_INIT(renderer, NULL);
 	time_t lastFrame = now();
-	//me = Player();
+	me = Player();
 
 	//Game Loop:
 	SDL_Event event;
@@ -94,6 +94,10 @@ int main(int argc, char* argv[])
 			World_draw(renderer, Point(-current_Ship->gx / WORLD_DIV_FACTOR,-current_Ship->gy / WORLD_DIV_FACTOR));
 			SDL_GUI_DISPLAY(renderer, &event);
 			root_Ship_View(renderer, &event);
+		} else if (state == PLAYER_VIEW){
+			SDL_GUI_DISPLAY(renderer, &event);
+
+			root_Player_View();
 		}
 
 

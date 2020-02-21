@@ -29,3 +29,4 @@ using namespace std;
 #include "Text.h"
 #include "SDL_GUI.h"
 #include "video.h"
+extern const char* clearLine = "\r"; //some escape sequences used to clear a line in the console

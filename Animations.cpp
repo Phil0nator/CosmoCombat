@@ -37,7 +37,7 @@ Animation::Animation(string path, int numFrames, int indelay){
   numberOfFrames = numFrames-1;
   frames = vector<SDL_Texture* >(numFrames);
   for(int i = 1 ; i <= numFrames;i++){
-    //assets\Animations\player\Shoulders1\1.png
+    cout << clearLine <<"Load_Animation: " << i << "/" << numFrames<<"                ";
     string file = path + to_string(i);
     file+=".png";
     SDL_Texture *f = loadImage(renderer, file.c_str());

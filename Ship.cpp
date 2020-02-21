@@ -76,11 +76,37 @@ void placePart(GameShip* ship, int x, int y, int part, float r) { //place a part
 	ship->updated =false;
 }
 
+void bufferShip_mapTexture(GameShip* ship){
+
+	SDL_Texture* out;
+	out = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, ship->w*FSDIM, ship->h*FSDIM); //setup new texture
+	SDL_SetTextureBlendMode(out, SDL_BLENDMODE_BLEND); //for transparency
+	SDL_SetRenderTarget(renderer, out);
+
+	//loop though all the parts and draw them onto the buffer:
+	for (int i = 0; i < ship->contents.size(); i++) {
+		for (int j = 0; j < ship->contents.at(i).size(); j++) {
+
+			if (ship->contents.at(i).at(j).sprite == 0)continue;
+
+			SDL_Rect source = getTextureRect(sprite(ship->contents.at(i).at(j).sprite));
+			SDL_Rect dest = getQuickRect(i * FSDIM, j * FSDIM, FSDIM, FSDIM);
+			const float r = ship->contents.at(i).at(j).rot;
+			image(renderer, sprite(ship->contents.at(i).at(j).sprite), source, dest, r, Point(FSDIM/2,FSDIM/2), SDL_FLIP_NONE);
+		}
+
+
+	}
+	SDL_SetRenderTarget(renderer, NULL);
+
+	ship->mapTexture = out;
+
+}
 
 SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* ship) { //draws the parts of a ship onto a graphics buffer. Only called when parts change
 	SDL_Texture* out;
 
-		out = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, DEFAULT_SHIP_DIM*SPRITE_DIM, DEFAULT_SHIP_DIM*SPRITE_DIM); //setup new texture
+		out = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, ship->w*SPRITE_DIM, ship->h*SPRITE_DIM); //setup new texture
 		SDL_SetTextureBlendMode(out, SDL_BLENDMODE_BLEND); //for transparency
 
 	SDL_SetRenderTarget(renderer, out);
@@ -100,11 +126,11 @@ SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* s
 
 	}
 	SDL_SetRenderTarget(renderer, NULL);
-
 	ship->texture = out;
 	ship->updated = true;
 	return out;
 }
+
 
 GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen) {
 
@@ -140,7 +166,6 @@ void drawShip(SDL_Renderer* renderer, GameShip* ship) { //draw ship for a UI, no
 	quickFillRect(renderer, (width/4)-1,-1,r.w+1,r.h+1, color(255,255,255));
 	quickRect(renderer, (width/4),0,r.w,r.h,color(0));
 	quickImage(renderer, ship->texture,width/4,0);
-
 }
 
 void shipPhysics(GameShip* ship){ //update ship's geometric variables based on it's velocities
@@ -248,4 +273,14 @@ void drawGameShip(SDL_Renderer* renderer, GameShip* ship) { //draw ship for inga
 	renderShipOverlay(ship);
 	quickImage(renderer, ship->overlayTexture,(width/2)-(rotCentx),(height/2)-(rotCenty),ship->rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
 
+}
+
+void drawShipMap(GameShip* ship){
+
+	SDL_Rect source = {me.x,me.y,width,height};
+
+	SDL_Rect dest = {0,0,width,height};
+	image(renderer,ship->mapTexture,source,dest);
+	//quickImage(renderer, ship->mapTexture, 0,0);
+	//quickFillRect(renderer, 50,50,50,50,color(255,0,255));
 }

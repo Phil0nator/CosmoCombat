@@ -8,7 +8,6 @@
 #define ICON_DIM 75 //dimention of icons
 #define SPRITE_DIM 100 // dimention of Sprites (the size of rooms in a ship for example)
 #define FSDIM 1000 //full-size-dimention: the original size of the images, used for playerView
- //will include "SDL_Abstractions.h", which includes the all the other libraries
 
 
 //definitions of different gamestates, each of which has a different set of functions to be called each frame
@@ -35,6 +34,10 @@ extern gameState state; //current gamestate
 extern SDL_Renderer *renderer;
 extern SDL_Surface *screen;
 extern SDL_Window *window;
+
+//zoom
+extern float playerView_ZoomFactor = 1.0;
+
 
 void endGame();
 
@@ -113,6 +116,8 @@ struct GameShip {
 	//visuals
 	SDL_Texture* texture;
 	SDL_Texture* overlayTexture;
+	SDL_Texture* mapTexture;
+
 	bool needsOverlay;
 	AnimationInstance *exhaust;
 
@@ -181,15 +186,17 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event);
 
 void handleAnimations();
 
-
+bool keyPressed(SDL_Keycode keyCode);
 
 #include "assetHandling.cpp" //load images, and store them
 #include "ItemData.cpp" //store and initialize data about items, rooms, etc...
-#include "Ship.cpp" //functions for the GameShip data structure
 #include "Hitbox.h" //collition utilities
 #include "GameObjects.cpp" //handles solid objects that exist in the world
 
 #include "Player.h" //player class
+#include "Ship.cpp" //functions for the GameShip data structure
+
 #include "GameStates.cpp" //handling for each of the root gamestate functions
 #include "UIConfig.cpp" //configure the UI, and callbacks, etc...
 #include "World.cpp" // handling of the world (Alex Harlan)
+#include "EventHandling.cpp" // smooth keyboard input, mouse scrolling, general event stuff etc...

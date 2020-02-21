@@ -54,7 +54,7 @@ void Ship_View_Events(SDL_Event* event){
 	//handle key events:
 
 	bool engineUsed = false;
-	if (event->key.state == SDLK_w) { //w
+	if (keyPressed(SDLK_w)) { //w
 		//degrees(current_Ship->acceleration)*spriteDimention
 		float dx = cos(radians((current_Ship->rot)+90)) * current_Ship->acceleration*SPRITE_DIM; // last = size
 		float dy = sin(radians((current_Ship->rot)+90)) * current_Ship->acceleration*SPRITE_DIM;
@@ -63,18 +63,23 @@ void Ship_View_Events(SDL_Event* event){
 		current_Ship->vely+=dy;
 		engineUsed=true;
 	}
-	if (event->key.state == SDLK_a) {//a
+	if (keyPressed(SDLK_a)) {//a
 		current_Ship->rotvel-=current_Ship->angularAcceleration;
 		engineUsed=true;
 	}
-	if (event->key.state == SDLK_d) { //d
+	if (keyPressed( SDLK_d)) { //d
 		current_Ship->rotvel+=current_Ship->angularAcceleration;
 		engineUsed=true;
 	}
-	if (event->key.state == SDLK_s) { //s
+	if (keyPressed(SDLK_s)) { //s
 	}
-	if(event->key.keysym.sym == SDLK_ESCAPE){
+	if(keyPressed(SDLK_ESCAPE)){
 		state = MAIN_MENU;
+
+	}
+	if(keyPressed(SDLK_SPACE)){
+
+		state=PLAYER_VIEW;
 
 	}
 
@@ -99,13 +104,38 @@ void Ship_View_Events(SDL_Event* event){
 	}
 
 }
+void Player_View_Events(SDL_Event* event){
+	if(keyPressed(SDLK_SPACE)){
 
-void eventHandler(SDL_Event* event){
+		//state=SHIP_VIEW;
+
+	}
+	if (keyPressed(SDLK_w)) { //w
+		me.vely-=5;
+	}
+	if (keyPressed(SDLK_a)) {//a
+		me.velx-=5;
+	}
+	if (keyPressed(SDLK_d)) { //d
+		me.velx+=5;
+	}
+	if (keyPressed(SDLK_s)) { //s
+		me.vely+=5;
+	}
+	if(keyPressed(SDLK_ESCAPE)){
+		state = SHIP_VIEW;
+
+	}
+}
+
+void GameStateEventHandler(SDL_Event* event){
 
 	if (state == BUILD_SHIP) {
 		BSP_Events(event);
 	}else if (state == SHIP_VIEW){
 		Ship_View_Events(event);
+	}else if (state == PLAYER_VIEW){
+		Player_View_Events(event);
 	}
 
 }
@@ -166,7 +196,7 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 //TODO
 void root_Player_View(){
 
-
-	//me.drawLocal();
+	drawShipMap(current_Ship);
+	me.drawLocal();
 
 }
