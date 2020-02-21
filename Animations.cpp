@@ -76,7 +76,7 @@ public:
 
     if(now()-lastTick>origin.delay){
       frame++;
-      if(frame>=origin.numberOfFrames){
+      if(frame>=origin.numberOfFrames||frame>=origin.frames.size()){
         frame=0;
 
       }

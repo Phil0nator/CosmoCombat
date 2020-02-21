@@ -29,6 +29,8 @@ public:
 
     shouldersAnimation = AnimationInstance(Shoulders1);
     armsAnimation=AnimationInstance(Arms1);
+    anims.push_back(&shouldersAnimation);
+    anims.push_back(&armsAnimation);
     this->x=x;
     this->y=y;
 
@@ -57,7 +59,7 @@ public:
     physics();
     //shoulders,arms,head
     //image(renderer, shouldersAnimation.get(), textureRect, getQuickRect(width/2-SPRITE_DIM/2,height/2-SPRITE_DIM/2,SPRITE_DIM,SPRITE_DIM));
-    //image(renderer, armsAnimation.get(), textureRect,getQuickRect(width/2-SPRITE_DIM/2,height/2-SPRITE_DIM/2,SPRITE_DIM,SPRITE_DIM));
+    //image(renderer, Arms1.frames.at(0), textureRect,getQuickRect(width/2-SPRITE_DIM/2,height/2-SPRITE_DIM/2,SPRITE_DIM,SPRITE_DIM));
     image(renderer, sprite(12),getTextureRect(sprite(12)),getQuickRect(width/2-PLAYER_DIM/2,height/2-PLAYER_DIM/2,PLAYER_DIM,PLAYER_DIM));
 
   }
