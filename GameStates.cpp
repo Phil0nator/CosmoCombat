@@ -126,7 +126,6 @@ void setCurrentPart(Part p) {
 void root_Build_Ship(SDL_Renderer* renderer, SDL_Surface* screen, SDL_Event* event) {
 
 	UI_Build_Ship(renderer);
-
 	drawShip(renderer,&bluePrints.at(0));
 	int mx, my;
 	SDL_GetMouseState(&mx, &my);

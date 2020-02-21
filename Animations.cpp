@@ -45,7 +45,7 @@ Animation::Animation(string path, int numFrames, int indelay){
     cout << "Loading: " << file << endl;
     frames.at(i-1)=f;
   }
-
+  cout << endl;
   delay = indelay;
 }
 

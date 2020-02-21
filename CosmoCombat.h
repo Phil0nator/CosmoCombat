@@ -14,7 +14,7 @@
 //definitions of different gamestates, each of which has a different set of functions to be called each frame
 enum gameState {
 
-	MAIN_MENU, BUILD_SHIP, SHIP_VIEW, PLAYER_VIEW, CUSTOMIZE_PLAYER, NONE_STATE
+	MAIN_MENU, BUILD_SHIP, SHIP_VIEW, PLAYER_VIEW, CUSTOMIZE_PLAYER, NONE_STATE, LOADING
 
 };
 
