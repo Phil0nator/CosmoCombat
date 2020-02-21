@@ -54,6 +54,8 @@ int main(int argc, char* argv[])
 	configure_UI_Elements(renderer);
 	World_INIT(renderer, NULL);
 	time_t lastFrame = now();
+	//me = Player();
+
 	//Game Loop:
 	SDL_Event event;
 	cout << "Starting Game Loop" << endl;

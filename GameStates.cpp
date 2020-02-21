@@ -3,8 +3,7 @@
 
 
 
-Part current_Part; //part being held in the ship build menu
-GameShip *current_Ship;//ship that the player is currently flying (ship view)
+
 bool BSP_Rotated = false;
 time_t lastShipUpdate = 1;
 bool bsp_pickupClick = false;
@@ -168,6 +167,6 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 void root_Player_View(){
 
 
-	me.drawLocal();
+	//me.drawLocal();
 
 }

@@ -14,6 +14,7 @@ void quickFillRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color col
 
 SDL_Point rotatePoint(SDL_Point p, SDL_Point center, float r);
 SDL_Point Point(int x, int y);
+SDL_Point point(int x,int y);
 float radians(Uint32 degrees);
 Uint32 degrees(double r);
 
@@ -138,6 +139,13 @@ SDL_Point Point(int x, int y) {
 	p.y = y;
 	return p;
 }
+SDL_Point point(int x,int y){
+
+	SDL_Point p = {x,y};
+	return p;
+
+}
+
 float radians(Uint32 degrees) {
 
 	return degrees * M_PI / 180;
