@@ -27,7 +27,7 @@ public:
   HitBox copy(){
 
     HitBox out = HitBox(x,y,w,h);
-
+    return out;
   }
 
 

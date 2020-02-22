@@ -14,6 +14,7 @@
 //#include "SDL_main.h"
 #include "SDL_ttf.h"
 #include "SDL_image.h"
+#include "SDL_thread.h"
 #include <time.h>
 #include <algorithm>
 #include <cmath>

@@ -23,6 +23,85 @@ enum Direction{
 	UP ,DOWN,LEFT,RIGHT,UPLEFT,UPRIGHT,DOWNLEFT,DOWNRIGHT
 
 };
+Direction dir(int rot){
+	rot=rot % 360; //bring back to earth
+
+	if(rot%45!=0)return NULL; //if not a snapping-rotation
+
+	switch (rot) {
+		case 0:
+			return UP;
+			break;
+		case 90:
+			return LEFT;
+			break;
+		case 180:
+			return DOWN;
+			break;
+	  case 270:
+		 	return RIGHT;
+			break;
+		default:
+			return NULL;
+			break;
+	}
+	return NULL;
+} //turn a float into the Direction enum
+
+float rotFromDir(Direction dir){
+
+	switch(dir){
+		case UP:
+			return 0;
+			break;
+		case DOWN:
+			return 180;
+			break;
+		case LEFT:
+			return 270;
+			break;
+		case RIGHT:
+			return 90;
+			break;
+		case UPRIGHT:
+			return 45;
+			break;
+		case DOWNRIGHT:
+			return 135;
+			break;
+		case DOWNLEFT:
+			return 215;
+			break;
+		case UPLEFT:
+			return 315;
+			break;
+		default:
+			return 0;
+	}
+	return 0;
+
+}
+
+SDL_Point vDir(Direction d){
+
+	switch (d){
+		case UP:
+			return Point(0,-1);
+			break;
+		case DOWN:
+			return Point(0,1);
+			break;
+		case LEFT:
+			return Point(-1,0);
+			break;
+		case RIGHT:
+			return Point(1,0);
+			break;
+
+	}
+	return Point(0,0);
+
+} //turn a Direction enum into a translation vector
 
 
 //big global variables:
@@ -119,7 +198,7 @@ struct GameShip {
 	SDL_Texture* mapTexture;
 
 	bool needsOverlay;
-	AnimationInstance *exhaust;
+	AnimationInstance exhaust;
 
 
 

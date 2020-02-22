@@ -112,16 +112,31 @@ void Player_View_Events(SDL_Event* event){
 	}
 	if (keyPressed(SDLK_w)) { //w
 		me.vely-=5;
+		me.rot = UP;
 	}
 	if (keyPressed(SDLK_a)) {//a
 		me.velx-=5;
+		me.rot = LEFT;
 	}
 	if (keyPressed(SDLK_d)) { //d
 		me.velx+=5;
+		me.rot = RIGHT;
 	}
 	if (keyPressed(SDLK_s)) { //s
 		me.vely+=5;
+		me.rot = DOWN;
 	}
+
+	if(keyPressed(SDLK_s)&&keyPressed(SDLK_d)){
+		me.rot = DOWNRIGHT;
+	}else if (keyPressed(SDLK_s)&&keyPressed(SDLK_a)){
+		me.rot = DOWNLEFT;
+	}else if (keyPressed(SDLK_w)&&keyPressed(SDLK_d)){
+		me.rot = UPRIGHT;
+	}else if (keyPressed(SDLK_w)&&keyPressed(SDLK_a)){
+		me.rot = UPLEFT;
+	}
+
 	if(keyPressed(SDLK_ESCAPE)){
 		state = SHIP_VIEW;
 

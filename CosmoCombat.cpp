@@ -103,7 +103,9 @@ int main(int argc, char* argv[])
 
 		SDL_SetRenderDrawColor(renderer,0,0,0,255); //reset to black background
 
+		quickImage(renderer, me.armsAnimation.get(),0,0);
 
+		cout << me.armsAnimation.frame << endl;
 		SDL_RenderPresent(renderer); //update display
 		SDL_Delay(0);
 
@@ -112,7 +114,6 @@ int main(int argc, char* argv[])
 
 
 	}
-
 	smoothFinish(window, renderer); //clear memory buffers, and smoothly shutdown program correctly
 	cout << " GOODBYE " << endl;
 

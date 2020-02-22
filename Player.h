@@ -6,6 +6,7 @@ public:
   int y = 0;
   int velx = 0;
   int vely = 0;
+  Direction rot = UP;
   int shoulders = 0;
   int arms = 0;
   int head = 0;
@@ -20,15 +21,18 @@ public:
     //place in center by default
     x=width/2 + (DEFAULT_SHIP_DIM*FSDIM)/2;
     y=width/2 + (DEFAULT_SHIP_DIM*FSDIM)/2;
-    //shouldersAnimation = AnimationInstance(Shoulders1);
-    //armsAnimation=AnimationInstance(Arms1);
-    //textureRect = getTextureRect(armsAnimation.get());
+    shouldersAnimation = AnimationInstance(&Shoulders1);
+    armsAnimation=AnimationInstance(&Arms1);
+    cout << "ShouldersAnimation size:" << shouldersAnimation.origin->frames.size() << endl;
+    anims.push_back(&shouldersAnimation);
+    anims.push_back(&armsAnimation);
   }
 
   Player(int x, int y){
 
-    shouldersAnimation = AnimationInstance(Shoulders1);
-    armsAnimation=AnimationInstance(Arms1);
+    shouldersAnimation = AnimationInstance(&Shoulders1);
+    armsAnimation=AnimationInstance(&Arms1);
+    cout << "ShouldersAnimation size:" << shouldersAnimation.origin->frames.size() << endl;
     anims.push_back(&shouldersAnimation);
     anims.push_back(&armsAnimation);
     this->x=x;
@@ -55,12 +59,17 @@ public:
 
   }
 
+
+
   void drawLocal(){
+    cout << armsAnimation.frame << endl;
+    cout << shouldersAnimation.frame  << endl;
+    armsAnimation.tick();
     physics();
     //shoulders,arms,head
-    //image(renderer, shouldersAnimation.get(), textureRect, getQuickRect(width/2-SPRITE_DIM/2,height/2-SPRITE_DIM/2,SPRITE_DIM,SPRITE_DIM));
-    //image(renderer, Arms1.frames.at(0), textureRect,getQuickRect(width/2-SPRITE_DIM/2,height/2-SPRITE_DIM/2,SPRITE_DIM,SPRITE_DIM));
-    image(renderer, sprite(12),getTextureRect(sprite(12)),getQuickRect(width/2-PLAYER_DIM/2,height/2-PLAYER_DIM/2,PLAYER_DIM,PLAYER_DIM));
+    image(renderer,armsAnimation.get(), getTextureRect(armsAnimation.get()),getQuickRect(width/2-PLAYER_DIM/2,height/2-PLAYER_DIM/2,PLAYER_DIM,PLAYER_DIM),rotFromDir(rot),point(PLAYER_DIM/2,PLAYER_DIM/2),SDL_FLIP_NONE);
+    image(renderer, shouldersAnimation.get(), getTextureRect(shouldersAnimation.get()), getQuickRect(width/2-PLAYER_DIM/2,height/2-PLAYER_DIM/2,PLAYER_DIM,PLAYER_DIM),rotFromDir(rot),point(PLAYER_DIM/2,PLAYER_DIM/2),SDL_FLIP_NONE);
+    image(renderer, sprite(12),getTextureRect(sprite(12)),getQuickRect(width/2-PLAYER_DIM/2,height/2-PLAYER_DIM/2,PLAYER_DIM,PLAYER_DIM),rotFromDir(rot),point(PLAYER_DIM/2,PLAYER_DIM/2),SDL_FLIP_NONE);
 
   }
 

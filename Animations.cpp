@@ -36,10 +36,13 @@ Animation::Animation( const Animation& a ){
 Animation::Animation(string path, int numFrames, int indelay){
   numberOfFrames = numFrames-1;
   frames = vector<SDL_Texture* >(numFrames);
+  frames.resize(numFrames);
+  cout << "NUMFRAMES: " << numFrames << endl;
   for(int i = 1 ; i <= numFrames;i++){
     cout << clearLine <<"Load_Animation: " << i << "/" << numFrames<<"                ";
     string file = path + to_string(i);
     file+=".png";
+    //cout << "\r" << file << endl;
     SDL_Texture *f = loadImage(renderer, file.c_str());
     frames.at(i-1)=f;
   }
@@ -59,25 +62,30 @@ class AnimationInstance{
 
 
 public:
-  Animation origin;
+  Animation *origin;
+
   int frame = 0;
   int lastTick = now();
   bool active = true;
 
   AnimationInstance(){}
 
-  AnimationInstance(Animation o){
+  AnimationInstance(Animation *o){
 
     origin = o;
+
   }
   void tick(){
-
     if(!active)return;
 
-    if(now()-lastTick>origin.delay){
+    if(now()-lastTick>origin->delay){
       frame++;
-      if(frame>=origin.numberOfFrames||frame>=origin.frames.size()){
+      cout << "tick : frame : " << frame << endl;
+      if(frame>=origin->frames.size()){
+
         frame=0;
+
+
 
       }
       lastTick = now();
@@ -87,7 +95,8 @@ public:
   }
 
   SDL_Texture* get(){
-    return origin.frames.at(frame);
+    cout << "get : frame : " <<frame << endl;
+    return origin->frames.at(frame);
 
   }
 

@@ -6,7 +6,7 @@
 
 
 vector<SDL_Texture* > sprites;
-vector<AnimationInstance* > anims;
+vector<AnimationInstance *> anims;
 
 //animations:
 	//world
@@ -23,7 +23,7 @@ void loadSprites(SDL_Renderer *renderer)
 //load all sprites in the "assets\sprites\" folder into a single vector, to be referenced later
 {
 	cout << "Loading Assets: " << endl;
-	anims = vector<AnimationInstance* >(0);
+	anims = vector<AnimationInstance *>(0);
 	for (int i = 0; i < 16; i++) {
 		SDL_Texture* sp = loadImage(renderer,string("assets\\sprites\\").append(to_string(i).append(".PNG")).c_str());
 		cout << clearLine << i << "/" << 16<<"                ";
