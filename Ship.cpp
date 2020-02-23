@@ -170,6 +170,9 @@ void drawShip(SDL_Renderer* renderer, GameShip* ship) { //draw ship for a UI, no
 
 void shipPhysics(GameShip* ship){ //update ship's geometric variables based on it's velocities
 
+	ship->velx = fclamp(ship->velx, -2,2);
+	ship->vely = fclamp(ship->vely, -2,2);
+
 	ship->gx+=ship->velx;
 	ship->gy+=ship->vely;
 	ship->rot+=ship->rotvel;
@@ -189,6 +192,7 @@ void clearShipOverlay(GameShip* ship){
 void renderShipOverlay(GameShip* ship){
 
 	if(ship->enginesOn){
+		ship->exhaust.tick();
 		SDL_SetRenderTarget(renderer, ship->overlayTexture);
 		for(int i = 0 ; i < ship->engines.size();i++){
 

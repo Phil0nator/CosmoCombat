@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 	configureParts(); // sets up reference Part structures
 	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
 	configure_UI_Elements(renderer);
-	World_INIT(renderer, NULL);
+	World_INIT(renderer, time(NULL));
 	time_t lastFrame = now();
 	me = Player();
 
@@ -91,9 +91,11 @@ int main(int argc, char* argv[])
 			SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer
 			root_Build_Ship(renderer,screen,&event);
 		} else if (state == SHIP_VIEW){
-			World_draw(renderer, Point(-current_Ship->gx / WORLD_DIV_FACTOR,-current_Ship->gy / WORLD_DIV_FACTOR));
+			World_draw(renderer, Point(-current_Ship->gx,-current_Ship->gy));
 			SDL_GUI_DISPLAY(renderer, &event);
 			root_Ship_View(renderer, &event);
+			cout << clearLine << current_Ship->gx << " : "<<current_Ship->gy << "                             ";
+
 		} else if (state == PLAYER_VIEW){
 			SDL_GUI_DISPLAY(renderer, &event);
 
@@ -103,9 +105,7 @@ int main(int argc, char* argv[])
 
 		SDL_SetRenderDrawColor(renderer,0,0,0,255); //reset to black background
 
-		quickImage(renderer, me.armsAnimation.get(),0,0);
 
-		cout << me.armsAnimation.frame << endl;
 		SDL_RenderPresent(renderer); //update display
 		SDL_Delay(0);
 

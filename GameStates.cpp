@@ -2,8 +2,6 @@
 //lots of general purpose stuff
 
 
-
-
 bool BSP_Rotated = false;
 time_t lastShipUpdate = 1;
 bool bsp_pickupClick = false;
@@ -56,8 +54,8 @@ void Ship_View_Events(SDL_Event* event){
 	bool engineUsed = false;
 	if (keyPressed(SDLK_w)) { //w
 		//degrees(current_Ship->acceleration)*spriteDimention
-		float dx = cos(radians((current_Ship->rot)+90)) * current_Ship->acceleration*SPRITE_DIM; // last = size
-		float dy = sin(radians((current_Ship->rot)+90)) * current_Ship->acceleration*SPRITE_DIM;
+		float dx = cos(radians((current_Ship->rot)+90)) * .05; // last = size
+		float dy = sin(radians((current_Ship->rot)+90)) * .05;
 
 		current_Ship->velx+=dx;
 		current_Ship->vely+=dy;

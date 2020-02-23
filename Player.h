@@ -62,9 +62,16 @@ public:
 
 
   void drawLocal(){
-    cout << armsAnimation.frame << endl;
-    cout << shouldersAnimation.frame  << endl;
-    armsAnimation.tick();
+
+    //if moving, tick animations
+    if(velx!=0||vely!=0){
+      armsAnimation.tick();
+      shouldersAnimation.tick();
+    }else{
+      armsAnimation.frame=0;
+      armsAnimation.frame=0;
+    }
+
     physics();
     //shoulders,arms,head
     image(renderer,armsAnimation.get(), getTextureRect(armsAnimation.get()),getQuickRect(width/2-PLAYER_DIM/2,height/2-PLAYER_DIM/2,PLAYER_DIM,PLAYER_DIM),rotFromDir(rot),point(PLAYER_DIM/2,PLAYER_DIM/2),SDL_FLIP_NONE);

@@ -80,7 +80,6 @@ public:
 
     if(now()-lastTick>origin->delay){
       frame++;
-      cout << "tick : frame : " << frame << endl;
       if(frame>=origin->frames.size()){
 
         frame=0;
@@ -95,7 +94,6 @@ public:
   }
 
   SDL_Texture* get(){
-    cout << "get : frame : " <<frame << endl;
     return origin->frames.at(frame);
 
   }
