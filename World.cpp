@@ -4,27 +4,25 @@
 
 #define SIZE_X 20000
 #define SIZE_Y 20000
+#define CHUNK_SIZE 500
+#define CHUNK_AMT_FG 20
+#define CHUNK_AMT_BG 10
 
-#define SMALL_STAR_AMT 1000
+#define SMALL_STAR_AMT 100
 #define MED_STAR_AMT 5
 #define BIG_STAR_AMT 1
 #define ASTEROID_AMT 10
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///	TODO:
-///		make textures smaller
-///		make stuff move slower
-///		make the star chunks static
-///		make asteroid chuk
-///		make smaller framerate
-///
+///		make asteroids have velocity
+///		make asteroid chuks
+///		
+///		
+///	
+///		
 ///
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
 
 
 
@@ -80,8 +78,9 @@ bool onScreen(int x, int y)
 
 
 SDL_Point dimensions;
-Chunk chunks[SIZE_X / 2000 + 1][SIZE_Y / 2000 + 1];
-Chunk chunksBack[SIZE_X / 2000 + 1][SIZE_Y / 2000 + 1];
+Chunk fGroundChunks[CHUNK_AMT_FG][CHUNK_AMT_FG]; // 1/2 size of the world
+Chunk bGroundChunks[CHUNK_AMT_BG][CHUNK_AMT_BG]; // 1/4 size of the world
+
 
 SDL_Rect smallStarSource;
 SDL_Texture *smallStarTexture;
@@ -123,53 +122,36 @@ void World_INIT(SDL_Renderer *r, int seed)
 	asteroidTexture = loadImage(r, "assets\\sprites\\7.PNG");
 
 
-	for (size_t y = 0; y < SIZE_Y / 2000 + 1; y++)
-		for (size_t x = 0; x < SIZE_X / 2000 + 1; x++)
+	for (size_t y = 0; y < CHUNK_AMT_FG; y++)
+		for (size_t x = 0; x < CHUNK_AMT_FG; x++)
 		{
-			Chunk* chunk = &chunks[x][y];
-			Asteroid bufferAsteroid;
+			Chunk* chunk = &fGroundChunks[x][y];
 
-			chunk->pos = Point(x * 2000, y * 2000);
-			chunk->drawTexture = SDL_CreateTexture(r, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 2000, 2000);
+			chunk->pos = Point(x * CHUNK_SIZE, y * CHUNK_SIZE);
+			chunk->drawTexture = SDL_CreateTexture(r, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, CHUNK_SIZE, CHUNK_SIZE);
 
 			SDL_SetTextureBlendMode(chunk->drawTexture, SDL_BLENDMODE_BLEND);
 			SDL_SetRenderTarget(r, chunk->drawTexture);
 
-			for (size_t i = 0; i < SMALL_STAR_AMT/2; i++)
-				SDL_RenderCopy(r, smallStarTexture, &smallStarSource, &getQuickRect(rand() % 2000, rand() % 2000, 5, 5));
-			
+			for (size_t i = 0; i < SMALL_STAR_AMT / 2; i++)
+				SDL_RenderCopy(r, smallStarTexture, &smallStarSource, &getQuickRect(rand() % CHUNK_SIZE, rand() % CHUNK_SIZE, 3, 3));
 
-			for (size_t i = 0; i < ASTEROID_AMT; i++)
-			{
-				bufferAsteroid = Asteroid_new(rand() % 2000, rand() % 2000, (rand() % 25) + 25);
-				chunk->asteroids.push_back(bufferAsteroid);
-				Asteroid_draw(r, bufferAsteroid, Point(0, 0));
-			}
+			//SDL_LockTexture(chunk->drawTexture, NULL, NULL, NULL);
 		}
 
-	
-
-	for (size_t y = 0; y < SIZE_Y / 2000 + 1; y++)
-		for (size_t x = 0; x < SIZE_X / 2000 + 1; x++)
+	for (size_t y = 0; y < CHUNK_AMT_BG; y++)
+		for (size_t x = 0; x < CHUNK_AMT_BG; x++)
 		{
-			Chunk* chunk = &chunksBack[x][y];
-			
-			chunk->pos = Point(x * 1000, y * 1000);
-			chunk->drawTexture = SDL_CreateTexture(r, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1000, 1000);
+			Chunk* chunk = &bGroundChunks[x][y];
+
+			chunk->pos = Point(x * CHUNK_SIZE, y * CHUNK_SIZE);
+			chunk->drawTexture = SDL_CreateTexture(r, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, CHUNK_SIZE, CHUNK_SIZE);
 
 			SDL_SetTextureBlendMode(chunk->drawTexture, SDL_BLENDMODE_BLEND);
 			SDL_SetRenderTarget(r, chunk->drawTexture);
-			
-			for (size_t i = 0; i < SMALL_STAR_AMT/2; i++)
-				SDL_RenderCopy(r, smallStarTexture, &smallStarSource, &getQuickRect(rand() % 1000, rand() % 1000, 2, 3));
 
-			/*
-			Debug stuff:
-			quickRect(r, 0, 0, 100, 100, color(255, 0, 0));
-			quickFillRect(r, 0, 0, 100 * (x / (SIZE_X / 2000.f)), 100, color(255, 0, 0));
-			quickFillRect(r, 0, 0, 100, 100 * (y / (SIZE_X / 2000.f)), color(255, 0, 0));
-			quickFillRect(r, 900, 900, 100, 100, color(255, 0, 0));
-			*/
+			for (size_t i = 0; i < SMALL_STAR_AMT / 2; i++)
+				SDL_RenderCopy(r, smallStarTexture, &smallStarSource, &getQuickRect(rand() % CHUNK_SIZE, rand() % CHUNK_SIZE, 3, 3));
 		}
 
 	SDL_SetRenderTarget(r, NULL);
@@ -198,78 +180,33 @@ void World_draw(SDL_Renderer *r, SDL_Point offset)
 	//r = render - the index of the chunk we are rendering
 	//i = index - index buffer for neiboring chunks
 
-	int rx = offset.x / 2000;
-	int ry = offset.y / 2000;
+	offset.x = clamp(offset.x, CHUNK_SIZE, CHUNK_AMT_FG * CHUNK_SIZE);
+	offset.y = clamp(offset.y, CHUNK_SIZE, CHUNK_AMT_FG * CHUNK_SIZE);
 
-	int ix = clamp(rx, 0, SIZE_X / 2000 - 1);
-	int iy = clamp(ry, 0, SIZE_X / 2000 - 1);
+	int rx = offset.x / CHUNK_SIZE;
+	int ry = offset.y / CHUNK_SIZE;
 
-	//cout << ix << ":" << iy << ", " << (ix * 2000) + offset.x << ":" << (iy * 2000) + offset.y << endl;
+	int rfx = offset.x / CHUNK_SIZE / 2;
+	int rfy = offset.y / CHUNK_SIZE / 2;
 
-	quickImage(r, chunks[ix][iy].drawTexture, ix * 2000 - offset.x, iy * 2000 - offset.y);
-	quickImage(r, chunksBack[ix][iy].drawTexture, ix * 1000 - offset.x / 2, iy * 1000 - offset.y / 2);
+	int rbx = offset.x / CHUNK_SIZE / 4;
+	int rby = offset.y / CHUNK_SIZE / 4;
 
-	ix = clamp(rx - 1, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunks[ix][iy].drawTexture, chunks[ix][iy].pos.x - offset.x, chunks[ix][iy].pos.y - offset.y);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
+	int ix = clamp(rx, 0, CHUNK_AMT_BG);
+	int iy = clamp(ry, 0, CHUNK_AMT_BG);
 
-	ix = clamp(rx + 1, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunks[ix][iy].drawTexture, chunks[ix][iy].pos.x - offset.x, chunks[ix][iy].pos.y - offset.y);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
+	//cout << ix << ":" << iy << ", " << (ix * CHUNK_SIZE) + offset.x << ":" << (iy * CHUNK_SIZE) + offset.y << endl;
 
-	ix = clamp(rx + 2, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
+	for (size_t y = 0; y < 4; y++)
+		for (size_t x = 0; x < 5; x++)
+		{
+			ix = clamp(rbx + x, 0, CHUNK_AMT_BG);
+			iy = clamp(rby + y, 0, CHUNK_AMT_BG);
+			quickImage(r, bGroundChunks[ix][iy].drawTexture, ix * CHUNK_SIZE - offset.x/4, iy * CHUNK_SIZE - offset.y/4);
+			ix = clamp(rfx + x, 0, CHUNK_AMT_FG);
+			iy = clamp(rfy + y, 0, CHUNK_AMT_FG);
+			quickImage(r, fGroundChunks[ix][iy].drawTexture, ix * CHUNK_SIZE - offset.x/2, iy * CHUNK_SIZE - offset.y/2);
+		}
 
-	ix = clamp(rx, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry - 1, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunks[ix][iy].drawTexture, chunks[ix][iy].pos.x - offset.x, chunks[ix][iy].pos.y - offset.y);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
-
-	ix = clamp(rx - 1, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry - 1, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunks[ix][iy].drawTexture, chunks[ix][iy].pos.x - offset.x, chunks[ix][iy].pos.y - offset.y);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
-
-	ix = clamp(rx + 1, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry - 1, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunks[ix][iy].drawTexture, chunks[ix][iy].pos.x - offset.x, chunks[ix][iy].pos.y - offset.y);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
-
-	ix = clamp(rx + 2, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry - 1, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
-
-	ix = clamp(rx, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry + 1, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunks[ix][iy].drawTexture, chunks[ix][iy].pos.x - offset.x, chunks[ix][iy].pos.y - offset.y);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
-
-	ix = clamp(rx - 1, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry + 1, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunks[ix][iy].drawTexture, chunks[ix][iy].pos.x - offset.x, chunks[ix][iy].pos.y - offset.y);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
-
-	ix = clamp(rx + 1, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry + 1, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunks[ix][iy].drawTexture, chunks[ix][iy].pos.x - offset.x, chunks[ix][iy].pos.y - offset.y);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
-
-	ix = clamp(rx + 2, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry + 1, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
-
-	ix = clamp(rx, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry + 2, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
-
-	ix = clamp(rx + 1, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry + 2, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
-
-	ix = clamp(rx + 2, 0, SIZE_X / 2000 - 1);
-	iy = clamp(ry + 2, 0, SIZE_X / 2000 - 1);
-	quickImage(r, chunksBack[ix][iy].drawTexture, chunksBack[ix][iy].pos.x - offset.x / 2, chunksBack[ix][iy].pos.y - offset.y / 2);
+	
 }
