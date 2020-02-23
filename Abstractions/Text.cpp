@@ -1,5 +1,6 @@
-#include "SDL_Abstractions.h"
+//load, render, and handle fonts
 
+#pragma once
 
 
 TTF_Font *loadFont(const char* path, Uint32 size) {
@@ -8,8 +9,11 @@ TTF_Font *loadFont(const char* path, Uint32 size) {
 
 }
 
-SDL_Texture* renderText(SDL_Renderer *renderer,const char *text, TTF_Font* font, Color c, TextQuality flags) {
-
+SDL_Texture* renderText(SDL_Renderer *renderer,const char *text, TTF_Font* font, Color c, TextQuality flags) { //will render a string through a font onto a SDL_Surface
+	//flags will determine the quality of the render:
+					//>SLOW - smooth edges, looks nice but renders very slowly
+					//>MEDIUM - less smooth edges, looks decent but renders a little faster
+					//>FAST - accelerated rendering, blocky looking, often blurry if large
 	SDL_Texture* out;
 	SDL_Surface* primary;
 	if (flags == FAST) {
