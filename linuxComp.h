@@ -11,7 +11,7 @@ using namespace std;
 //converts a windows file path to a linux file path when ran on linux, and vise-versa when on shit computers
 //examples :file_fix("a\\b\\c\\d") would return a/b/c
 
-char* file_fix(string file){ 
+char* file_fix(string file){
   #ifdef __linux__
     replace( file.begin(), file.end(), '\\', '/');
   #else
@@ -24,4 +24,14 @@ char* file_fix(string file){
   strcpy(char_array, file.c_str());
   //cout << char_array <<"\n";
   return(char_array);
+}
+
+int getRendererFlags(){
+  #ifdef __linux__
+    return SDL_RENDERER_ACCELERATED||SDL_RENDERER_TARGETTEXTURE;
+  #else
+    return SDL_RENDERER_ACCELERATED;
+  #endif
+  return SDL_RENDERER_ACCELERATED;
+
 }

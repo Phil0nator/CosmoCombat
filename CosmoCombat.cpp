@@ -1,4 +1,3 @@
-#include "linuxComp.h"
 #include "SDL_timer.h"
 #include "CosmoCombat.h"
 #undef main
@@ -32,7 +31,7 @@ void setup() {
 	//fullscreen, opengl window
 	window = SDL_CreateWindow("--CosmoCombat--", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, SDL_WINDOW_OPENGL || SDL_WINDOW_FULLSCREEN);
 	SDL_GetWindowSize(window, &width, &height); //setup window size variables
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	renderer = SDL_CreateRenderer(window, -1, getRendererFlags());
 	screen = SDL_GetWindowSurface(window);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND); //allows for transparency
 }

@@ -16,7 +16,7 @@ enum UIElement_Type {
 
 void defaultCallback(){}
 
-typedef void(__cdecl* Callback)(void); //Function Pointer typdef
+typedef void(*Callback)(void); //Function Pointer typdef
 
 class UIElement {
 /*
