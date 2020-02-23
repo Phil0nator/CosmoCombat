@@ -17,8 +17,12 @@ SDL_Surface* screen;
 bool running = true;
 int width;
 int height;
-gameState state = MAIN_MENU;
+gameState state = LOADING;
 using namespace std;
+
+
+
+
 //Global Variables
 void endGame() {
 
@@ -36,7 +40,24 @@ void setup() {
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND); //allows for transparency
 }
 
+int startup(void* ptr){
 
+	loadSprites(renderer);
+	loadingMessage = "Configuring Parts...";
+	configureParts(); // sets up reference Part structures
+	configure_UI_Elements(renderer); //setup all the various ui pages, and fonts
+	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
+
+	loadingMessage = "Initializing World...";
+	World_INIT(renderer, time(NULL));
+	loadingMessage = "Creating Player....";
+	me = Player();
+	//preAllocateShips();
+	state = MAIN_MENU;
+	//SDL_DestroyTexture(startup_message_texture);
+
+	return 0;
+}
 
 
 int main(int argc, char* argv[])
@@ -47,19 +68,35 @@ int main(int argc, char* argv[])
 	quickInit(8,2); //setup SDL subsystems (SDL, Image, TTF), 8 = color depth, 2 = samples
 	setup(); //create window, and setup renderer and screen
 	setDefaultColor(color(255,255,255)); //sets default screen background color;
-	loadSprites(renderer);
-	configureParts(); // sets up reference Part structures
-	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
-	configure_UI_Elements(renderer);
-	World_INIT(renderer, time(NULL));
-	time_t lastFrame = now();
-	me = Player();
+
+	//texture used to display loading messages on startup:
+	startup_message_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,width,height);
+	SDL_SetTextureBlendMode(startup_message_texture,SDL_BLENDMODE_BLEND);
+
+	startup(nullptr);
+
+
+	//TODO: To make the startup thread work, images must first be loaded to surfaces in the seperate thread
+	//      , then converted to textures in the main thread, as accelerated rendering must be done in the main thread.
+	//			Load all images to a vector, then after everthing is loaded, go through the vector in the main thread and
+	//			properly create the textures.
+	//			Note: reading images from the disk is much slower than converting between surface and texture.
+	/*
+
+	Threading For later...
+
+	SDL_Thread *startupThread = SDL_CreateThread(startup, "startupThread", (void *)NULL);
+	if(startupThread == NULL){
+		cout << "isNull" << endl;
+	}
+	*/
+
+
+
 
 	//Game Loop:
 	SDL_Event event;
-	cout << "Starting Game Loop" << endl;
 	while (running) {
-		lastFrame = now();
 		//event loop:
 
 		while(SDL_PollEvent(&event)){
@@ -99,6 +136,9 @@ int main(int argc, char* argv[])
 			SDL_GUI_DISPLAY(renderer, &event);
 
 			root_Player_View();
+		} else if (state == LOADING){
+
+			root_loading_startup();
 		}
 
 

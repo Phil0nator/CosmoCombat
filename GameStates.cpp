@@ -5,6 +5,7 @@
 bool BSP_Rotated = false;
 time_t lastShipUpdate = 1;
 bool bsp_pickupClick = false;
+SDL_Texture* startup_message_texture;
 
 //event handlers
 void BSP_Events(SDL_Event* event){
@@ -154,6 +155,17 @@ void GameStateEventHandler(SDL_Event* event){
 }
 
 //root functions
+void root_loading_startup(){
+	clearTexture(renderer, startup_message_texture);
+	SDL_SetRenderTarget(renderer, startup_message_texture);
+
+	renderText(renderer, startup_message_texture, loadingMessage.c_str(),fontAstro[25],color(255,255,255),SLOW);
+	cout << clearLine<< loadingMessage.c_str() << "                                                                                                     ";
+
+	SDL_SetRenderTarget(renderer,NULL);
+	quickImage(renderer, startup_message_texture, width/2,height/2);
+
+}
 void root_Main_Menu() {
 
 	UI_Main_Menu();

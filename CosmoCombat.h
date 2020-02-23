@@ -2,7 +2,7 @@
 #include <cstddef>
 #include "Abstractions/SDL_Abstractions.h" //some simple functions to make SDL a little easier to work with shorthand
 #include "linuxComp.h"
-
+string loadingMessage = "Loading";
 #pragma once
 
 
@@ -11,10 +11,14 @@
 #define FSDIM 1000 //full-size-dimention: the original size of the images, used for playerView
 
 
+//fonts:
+TTF_Font *fontAstro[50];
+
+
 //definitions of different gamestates, each of which has a different set of functions to be called each frame
 enum gameState {
 
-	MAIN_MENU, BUILD_SHIP, SHIP_VIEW, PLAYER_VIEW, CUSTOMIZE_PLAYER, NONE_STATE
+	LOADING, MAIN_MENU, BUILD_SHIP, SHIP_VIEW, PLAYER_VIEW, CUSTOMIZE_PLAYER, NONE_STATE
 
 };
 

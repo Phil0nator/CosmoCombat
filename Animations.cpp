@@ -37,12 +37,11 @@ Animation::Animation(string path, int numFrames, int indelay){
   numberOfFrames = numFrames-1;
   frames = vector<SDL_Texture* >(numFrames);
   frames.resize(numFrames);
-  cout << "NUMFRAMES: " << numFrames << endl;
+
   for(int i = 1 ; i <= numFrames;i++){
-    cout << clearLine <<"Load_Animation: " << i << "/" << numFrames<<"                ";
+    loadingMessage = "Load_Animation: " + to_string(i) + "/" + to_string(numFrames);
     string file = path + to_string(i);
     file+=".png";
-    //cout << "\r" << file << endl;
     SDL_Texture *f = loadImage(renderer, file.c_str());
     frames.at(i-1)=f;
   }

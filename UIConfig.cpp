@@ -4,8 +4,6 @@
 #define MAX_PARTS 128
 
 
-//fonts:
-TTF_Font *fontAstro[50];
 
 
 //buttons and pages:

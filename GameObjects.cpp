@@ -1,3 +1,21 @@
+#define MAX_OTHER_SHIPS 1024
+
+GameShip otherShips[MAX_OTHER_SHIPS];
+
+
+
+void preAllocateShips(){
+  loadingMessage = "Allocating Ships";
+  for(int i = 0 ; i < MAX_OTHER_SHIPS;i++){
+    otherShips[i] = createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer, screen);
+  }
+
+}
+
+
+
+
+
 enum Particle_Type{
 
   SMOKE, FLAME, DEAD_ROOM, DEAD_DERELECT_ROOM
