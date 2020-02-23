@@ -35,7 +35,15 @@ void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, floa
 	SDL_RenderCopyEx(renderer, texture, NULL, &getQuickRect(x, y, w, h), r, &center, flags);
 
 }
+void clearTexture(SDL_Renderer* renderer, SDL_Texture* texture){
 
+	SDL_SetRenderTarget(renderer,texture);
+	SDL_SetRenderDrawColor(renderer, 0,0,0,0);
+	SDL_RenderClear(renderer);
+	//quickFillRect(renderer, 0,0,ship->w,ship->h,color(0,0,0,0));
+	SDL_SetRenderTarget(renderer, NULL);
+
+}
 
 SDL_Point getTextureSize(SDL_Texture* texture) {
 

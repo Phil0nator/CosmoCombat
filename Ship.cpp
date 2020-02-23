@@ -102,6 +102,23 @@ void bufferShip_mapTexture(GameShip* ship){
 	ship->mapTexture = out;
 
 }
+void bufferShipOverlay(GameShip *ship){
+	SDL_SetRenderTarget(renderer, ship->overlayTexture);
+	for(int i = 0 ; i < ship->engines.size();i++){
+
+		//draw engine light up copy
+		SDL_Rect source = getTextureRect(sprite(Engine.altSprite));
+		int x = ship->engines.at(i).x;
+		int y = ship->engines.at(i).y;
+		GamePart gp = ship->contents.at(x).at(y);
+		SDL_Rect dest = getQuickRect(x* SPRITE_DIM, y * SPRITE_DIM, SPRITE_DIM, SPRITE_DIM);
+		float r = gp.rot;
+
+		image(renderer, sprite(gp.origin.altSprite), source, dest, r, Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
+	}
+	SDL_SetRenderTarget(renderer, NULL);
+
+}
 
 SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* ship) { //draws the parts of a ship onto a graphics buffer. Only called when parts change
 	SDL_Texture* out;
@@ -126,6 +143,7 @@ SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* s
 
 	}
 	SDL_SetRenderTarget(renderer, NULL);
+
 	ship->texture = out;
 	ship->updated = true;
 	return out;
@@ -153,7 +171,10 @@ GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen
 
 	out.overlayTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w*SPRITE_DIM, h*SPRITE_DIM); //setup new texture
 	SDL_SetTextureBlendMode(out.overlayTexture, SDL_BLENDMODE_BLEND); //for transparency
-
+	clearTexture(renderer, out.overlayTexture); //fill in trasparent
+	out.animationsTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w*SPRITE_DIM, h*SPRITE_DIM); //setup new texture
+	SDL_SetTextureBlendMode(out.animationsTexture, SDL_BLENDMODE_BLEND); //for transparency
+	clearTexture(renderer, out.animationsTexture);
 	//animations
 	out.exhaust = AnimationInstance(&Fire1);
 	anims.push_back(&out.exhaust);
@@ -181,19 +202,18 @@ void shipPhysics(GameShip* ship){ //update ship's geometric variables based on i
 }
 
 void clearShipOverlay(GameShip* ship){
-	SDL_SetRenderTarget(renderer,ship->overlayTexture);
+	SDL_SetRenderTarget(renderer,ship->animationsTexture);
 	SDL_SetRenderDrawColor(renderer, 0,0,0,0);
 	SDL_RenderClear(renderer);
 	//quickFillRect(renderer, 0,0,ship->w,ship->h,color(0,0,0,0));
 	SDL_SetRenderTarget(renderer, NULL);
 }
 
-
 void renderShipOverlay(GameShip* ship){
 
 	if(ship->enginesOn){
 		ship->exhaust.tick();
-		SDL_SetRenderTarget(renderer, ship->overlayTexture);
+		SDL_SetRenderTarget(renderer, ship->animationsTexture);
 		for(int i = 0 ; i < ship->engines.size();i++){
 
 			//draw engine light up copy
@@ -203,9 +223,10 @@ void renderShipOverlay(GameShip* ship){
 			GamePart gp = ship->contents.at(x).at(y);
 			SDL_Rect dest = getQuickRect(x* SPRITE_DIM, y * SPRITE_DIM, SPRITE_DIM, SPRITE_DIM);
 			float r = gp.rot;
-
+			/*
+			 --  moved to bufferShipOverlay --
 			image(renderer, sprite(gp.origin.altSprite), source, dest, r, Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
-
+			*/
 			//draw flame animation
 			Direction d = dir(r);
 			SDL_Point v = vDir(d);
@@ -231,7 +252,13 @@ void drawGameShip(SDL_Renderer* renderer, GameShip* ship) { //draw ship for inga
 	quickImage(renderer, ship->texture,(width/2)-(rotCentx),(height/2)-(rotCenty),ship->rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
 	clearShipOverlay(ship);
 	renderShipOverlay(ship);
-	quickImage(renderer, ship->overlayTexture,(width/2)-(rotCentx),(height/2)-(rotCenty),ship->rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
+
+	if(ship->enginesOn){
+
+		quickImage(renderer, ship->overlayTexture,(width/2)-(rotCentx),(height/2)-(rotCenty),ship->rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
+		quickImage(renderer, ship->animationsTexture,(width/2)-(rotCentx),(height/2)-(rotCenty),ship->rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
+
+	}
 
 }
 

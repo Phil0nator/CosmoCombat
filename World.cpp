@@ -2,8 +2,8 @@
 #include "Abstractions/SDL_Abstractions.h"
 #include "CosmoCombat.h"
 
-#define SIZE_X 20000
-#define SIZE_Y 20000
+#define SIZE_X 100000
+#define SIZE_Y 100000
 #define CHUNK_SIZE 500
 #define CHUNK_AMT_FG 20
 #define CHUNK_AMT_BG 10

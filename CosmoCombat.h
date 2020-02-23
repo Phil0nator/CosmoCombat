@@ -197,6 +197,7 @@ struct GameShip {
 	SDL_Texture* texture;
 	SDL_Texture* overlayTexture;
 	SDL_Texture* mapTexture;
+	SDL_Texture* animationsTexture;
 
 	bool needsOverlay;
 	AnimationInstance exhaust;

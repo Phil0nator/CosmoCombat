@@ -49,6 +49,7 @@ void BSP_toBack() {
 	print(BSP_Back.text_color);
 	current_Ship = &bluePrints.at(0);
 	bufferShip_mapTexture(current_Ship);
+	bufferShipOverlay(current_Ship);
 }
 void BSP_setCurrentPart() {
 	int mx, my;
