@@ -43,10 +43,13 @@ SDL_Point getTextureSize(SDL_Texture* texture) {
 	SDL_QueryTexture(texture, NULL, NULL, &w,&h);
 	return Point(w,h);
 }
+
+
+
 SDL_Texture* loadImage(SDL_Renderer*renderer,const char* path) {
 
 	SDL_Surface* s = IMG_Load(path);
-	SDL_Texture* out = SDL_CreateTextureFromSurface(renderer, s);
+	SDL_Texture*out = SDL_CreateTextureFromSurface(renderer, s);
 	return out;
 
 }

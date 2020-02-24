@@ -2,6 +2,11 @@
 #include <cstddef>
 #include "Abstractions/SDL_Abstractions.h" //some simple functions to make SDL a little easier to work with shorthand
 
+<<<<<<< Updated upstream
+=======
+#include "linuxComp.h"
+string loadingMessage = "Loading";
+>>>>>>> Stashed changes
 #pragma once
 
 
@@ -116,10 +121,19 @@ struct GameShip {
 
 
 	//visuals
+<<<<<<< Updated upstream
 	SDL_Texture* texture;
 	SDL_Texture* overlayTexture;
+=======
+	Sprite texture;
+	Sprite overlayTexture;
+	Sprite mapTexture;
+	Sprite animationsTexture;
+
+>>>>>>> Stashed changes
 	bool needsOverlay;
 	AnimationInstance *exhaust;
+
 
 
 

@@ -7,6 +7,7 @@
 #define SDL_MAIN_HANDLED //prevents interfearence from SDL_Main
 
 #include <iostream>
+#include <stdlib.h>
 #include <stdio.h>
 #include <vector>
 #include <string>
@@ -24,6 +25,11 @@ using namespace std;
 #pragma comment(lib, "SDL2_image.lib")
 #pragma comment(lib, "SDL2_ttf.lib")
 #include "Misc.h"
+#include "TextureHandling.cpp"//Specific operations needed to deal with textures (multithreading, re-buffering, queueing, etc...)
+using namespace TextureHandling;
+TextureHandler textureHandler = TextureHandler();
+
+
 #include "Colors.h"
 #include "Geometry.h"
 #include "Images.h"

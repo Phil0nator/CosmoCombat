@@ -22,7 +22,13 @@ bool running = true;
 int width;
 int height;
 gameState state = LOADING;
+<<<<<<< Updated upstream
 bool loaded = false;
+=======
+using namespace std;
+bool loaded = false;
+
+>>>>>>> Stashed changes
 
 
 using namespace std;
@@ -50,6 +56,7 @@ static int startup(void*p){
 
 	setDefaultColor(color(255,255,255)); //sets default screen background color;
 
+	cout << "Startup Thread" << endl;
 	loadSprites(renderer);
 
 	configureParts(); // sets up reference Part structures
@@ -57,8 +64,15 @@ static int startup(void*p){
 	configure_UI_Elements(renderer);
 	//World_INIT(renderer, NULL);
 	me = Player();
+<<<<<<< Updated upstream
 	loaded = true;
 
+=======
+	//preAllocateShips();
+	loaded = true;
+	//SDL_DestroyTexture(startup_message_texture);
+	return 0;
+>>>>>>> Stashed changes
 }
 
 int main(int argc, char* argv[])
@@ -66,9 +80,38 @@ int main(int argc, char* argv[])
 	SDL_Init(SDL_INIT_EVERYTHING); //setup SDL
 	quickInit(8,2); //setup SDL subsystems (SDL, Image, TTF), 8 = color depth, 2 = samples
 	setup(); //create window, and setup renderer and screen
+<<<<<<< Updated upstream
 	SDL_RaiseWindow(window);
 	SDL_Thread *startupThread;
 	startupThread = SDL_CreateThread(startup, "Startup", (void *)NULL);
+=======
+	setDefaultColor(color(255,255,255)); //sets default screen background color;
+
+	//texture used to display loading messages on startup:
+	startup_message_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,width,height);
+	SDL_SetTextureBlendMode(startup_message_texture,SDL_BLENDMODE_BLEND);
+	textureHandler = TextureHandler(renderer,screen,window);
+	startup(nullptr);
+
+
+	//TODO: To make the startup thread work, images must first be loaded to surfaces in the seperate thread
+	//      , then converted to textures in the main thread, as accelerated rendering must be done in the main thread.
+	//			Load all images to a vector, then after everthing is loaded, go through the vector in the main thread and
+	//			properly create the textures.
+	//			Note: reading images from the disk is much slower than converting between surface and texture.
+	/*
+
+	Threading For later...
+	*/
+	//SDL_Thread *startupThread = SDL_CreateThread(startup, "startupThread", (void *)NULL);
+	//if(startupThread == NULL){
+	//	cout << "isNull" << endl;
+	//}
+
+
+
+
+>>>>>>> Stashed changes
 
 	//Game Loop:
 	SDL_Event event;
@@ -124,6 +167,14 @@ int main(int argc, char* argv[])
 			quickFillRect(renderer, 50,height/2,width-100,50,color(255,255,255));
 			quickFillRect(renderer, 55,height/2+5,55+(sprites.size()*((width-100)/16)),45,color(10,255,10));
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+			root_loading_startup();
+			if(loaded==true){
+				state=MAIN_MENU;
+
+			}
 >>>>>>> Stashed changes
 		}
 
