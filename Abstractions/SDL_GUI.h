@@ -127,7 +127,7 @@ void tickButton(UIElement* b, SDL_Event* event) {
 	int my;
 	SDL_GetMouseState(&mx, &my);
 
-	b->currentColor = &b->getColor();
+	b->currentColor = &b->color;
 	b->currentTexture = b->texture;
 
 	if (mx > x&& my > y&& mx < x + w && my < y + h) { //if in bounds
@@ -169,7 +169,7 @@ void drawButton(UIElement* b, SDL_Renderer* renderer) {
 
 }
 void drawPage(UIElement* p, SDL_Renderer* renderer, SDL_Event* event) {
-	quickFillRect(renderer, p->x, p->y, p->w, p->h, p->getColor());
+	quickFillRect(renderer, p->x, p->y, p->w, p->h, p->color);
 	for (int i = 0; i < p->elems.size(); i++) {
 		p->elems.at(i)->update(renderer,event); //draw each sub element
 
@@ -301,7 +301,7 @@ UIElement Page(int x, int y, int w, int h) {
 	out.w = w;
 	out.h = h;
 	out.type = PAGE;
-	out.currentColor =&color(0,0,0);
+	out.currentColor =&color(255,255,255);
 	return out;
 }
 

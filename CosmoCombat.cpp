@@ -49,7 +49,7 @@ int startup(void* ptr){
 	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
 
 	loadingMessage = "Initializing World...";
-	World_INIT(renderer, time(NULL));
+	//World_INIT(renderer, time(NULL));
 	loadingMessage = "Creating Player....";
 	me = Player();
 	//preAllocateShips();
