@@ -5,7 +5,7 @@
 #define FPS6  1000/6
 #define ASSET_NUMBER 16
 
-vector<SDL_Texture* > sprites;
+vector<Sprite> sprites;
 vector<AnimationInstance *> anims;
 
 //animations:
@@ -25,7 +25,7 @@ void loadSprites(SDL_Renderer *renderer)
 	loadingMessage = "Loading Assets...";
 	anims = vector<AnimationInstance *>(0);
 	for (int i = 0; i < ASSET_NUMBER; i++) {
-		SDL_Texture* sp = loadImage(renderer,string("assets\\sprites\\").append(to_string(i).append(".PNG")).c_str());
+		Sprite sp = loadImage(renderer,string("assets\\sprites\\").append(to_string(i).append(".PNG")).c_str());
 		loadingMessage =  to_string(i) + "/" + to_string(ASSET_NUMBER);
 		sprites.push_back(sp);
 	}
@@ -50,6 +50,6 @@ void handleAnimations(){
 
 SDL_Texture* sprite(int index) {//quick access to a sprite by its index number
 
-	return sprites.at(index);
+	return sprites.at(index).texture;
 
 }

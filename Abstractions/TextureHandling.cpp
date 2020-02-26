@@ -44,7 +44,6 @@ namespace TextureHandling{
     }
 
     void addCreateQueue(Sprite* sp){
-      allSprites.push_back(sp);
       queueCreate.push_back(sp);
     }
 
@@ -67,8 +66,11 @@ namespace TextureHandling{
   TextureHandler textureHandler = TextureHandler();
 
   //Sprite class definitions
-  Sprite::Sprite(){}
+  Sprite::Sprite(){
+    textureHandler.allSprites.push_back(this);
+  }
   Sprite::Sprite(SDL_Surface* src, bool thread){
+    textureHandler.allSprites.push_back(this);
 
     if(thread){
 

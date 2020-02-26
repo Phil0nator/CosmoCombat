@@ -8,7 +8,7 @@ void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y);
 void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, float r, SDL_Point center, SDL_RendererFlip flags);
 
 SDL_Point getTextureSize(SDL_Texture* texture);
-SDL_Texture* loadImage(SDL_Renderer* renderer, const char* path);
+Sprite loadImage(SDL_Renderer* renderer, const char* path);
 SDL_Rect getTextureRect(SDL_Texture* texture);
 
 void image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect source, SDL_Rect dest) {
@@ -51,11 +51,12 @@ SDL_Point getTextureSize(SDL_Texture* texture) {
 	SDL_QueryTexture(texture, NULL, NULL, &w,&h);
 	return Point(w,h);
 }
-SDL_Texture* loadImage(SDL_Renderer*renderer,const char* path) {
+Sprite loadImage(SDL_Renderer*renderer,const char* path) {
 
 	SDL_Surface* s = IMG_Load(path);
-	SDL_Texture* out = SDL_CreateTextureFromSurface(renderer, s);
-	SDL_FreeSurface(s);
+	//SDL_Texture* out = SDL_CreateTextureFromSurface(renderer, s);
+	//SDL_FreeSurface(s);
+	Sprite out = Sprite(s,true);
 	return out;
 
 }
