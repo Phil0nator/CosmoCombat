@@ -97,7 +97,6 @@ void fill_Build_Ship_Page(SDL_Renderer* renderer) {
 void configure_UI_Elements(SDL_Renderer* renderer) { //root function, called in main. Does overall initiation process for the UI and fonts, and creates the pages and buttons, etc..
 
 	loadFontAstro();
-
 	mainPage = Page(0,0,width,height);
 	mainPage.setColors(color(0,0,0),color(0,0,0),color(0,0,0));
 
@@ -137,7 +136,6 @@ void configure_UI_Elements(SDL_Renderer* renderer) { //root function, called in 
 
 
 	mainPage.init();
-
 
 	fill_Build_Ship_Page(renderer);
 	BSP_Back = Button(0,0, width / 10, height / 15);

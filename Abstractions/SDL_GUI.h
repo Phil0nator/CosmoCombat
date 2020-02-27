@@ -49,12 +49,12 @@ public:
 	bool visible = true;
 	int x, y, w, h;
 	Color text_color;
-	SDL_Texture* texture = nullptr;
-	SDL_Texture* mouseOverTexture = nullptr;
-	SDL_Texture* mouseDownTexture = nullptr;
-	SDL_Texture* currentTexture = nullptr; // works like currentColor
+	Sprite* texture = new Sprite();
+	Sprite* mouseOverTexture = new Sprite();
+	Sprite* mouseDownTexture = new Sprite();
+	Sprite* currentTexture = new Sprite(); // works like currentColor
 
-	SDL_Texture* text_texture = nullptr;
+	Sprite* text_texture = new Sprite();
 	UIElement_Type type = UNKOWN;
 	Color* currentColor;
 	//getters
@@ -68,7 +68,7 @@ public:
 	void setMouseOverColor(Color c);
 	void setMouseDownColor(Color c);
 	void setColors(Color a, Color b, Color c);
-	void setTextures(SDL_Texture* nat, SDL_Texture* mover, SDL_Texture* mdwn);
+	void setTextures(SDL_Texture * nat, SDL_Texture * mover, SDL_Texture * mdwn);
 	void click();
 	void release();
 	void renderOwnText(SDL_Renderer* renderer, string text, TTF_Font* f, TextQuality q);
@@ -151,19 +151,19 @@ void tickButton(UIElement* b, SDL_Event* event) {
 
 }
 void drawButton(UIElement* b, SDL_Renderer* renderer) {
-	if (b->texture == nullptr) {
+	if (b->texture->texture == nullptr) {
 
 		quickFillRect(renderer, b->x, b->y, b->w, b->h, *b->currentColor);
 
 	}
 	else {
 		quickFillRect(renderer, b->x - 1, b->y - 1, b->w + 2, b->h + 2, *b->currentColor);
-		image(renderer,b->currentTexture,getTextureRect(b->texture),getQuickRect(b->x,b->y,b->w,b->h));
+		image(renderer,b->currentTexture->texture,getTextureRect(b->texture->texture),getQuickRect(b->x,b->y,b->w,b->h));
 	}
 
-	if(b->text_texture!=nullptr){
+	if(b->text_texture->texture!=nullptr){
 
-		quickImage(renderer,b->text_texture, b->x+b->w/10,b->y+b->h/2);
+		quickImage(renderer,b->text_texture->texture, b->x+b->w/10,b->y+b->h/2);
 
 	}
 
@@ -233,11 +233,11 @@ void UIElement::setColors(Color normal, Color mouseOver, Color mouseDown) {
 	setMouseOverColor(mouseOver);
 	setMouseDownColor(mouseDown);
 }
-void UIElement::setTextures(SDL_Texture* nat, SDL_Texture* mover, SDL_Texture* mdwn){
+void UIElement::setTextures(SDL_Texture * nat, SDL_Texture * mover, SDL_Texture * mdwn){
 
-	texture = nat;
-	mouseOverTexture = mover;
-	mouseDownTexture = mdwn;
+	texture->texture = nat;
+	mouseOverTexture->texture = mover;
+	mouseDownTexture->texture = mdwn;
 	textured=true;
 
 }
@@ -246,9 +246,11 @@ void UIElement::init() {
 	master.push_back(this);
 }
 void UIElement::renderOwnText(SDL_Renderer* renderer, string text, TTF_Font *f, TextQuality q) {
+	cout << "rotStop" << endl;
 
-	text_texture = renderText(renderer,text.c_str(),f,text_color,q);
+	text_texture->texture = renderText(renderer,text.c_str(),f,text_color,q);
 
+	cout << "rotSucc" << endl;
 }
 void UIElement::show() {
 	visible = true;

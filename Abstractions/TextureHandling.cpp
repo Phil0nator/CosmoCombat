@@ -11,10 +11,16 @@ namespace TextureHandling{
     Sprite(SDL_Surface* src, bool thread);
     Sprite(SDL_Texture* inp);
     Sprite();
+    Sprite(bool thread);
+    //Sprite& operator=(Sprite other);
     SDL_Texture* get(){
+      if(texture==nullptr){
+        cout <<"Texture == nullptr" << endl;
+        system("pause");
+      }
       return texture;
     }
-
+    Sprite(const Sprite& sp);
     ~Sprite(){
       SDL_DestroyTexture(texture);
       SDL_FreeSurface(source);
@@ -54,8 +60,10 @@ namespace TextureHandling{
       cout << "\t<POP>" << endl;
       queueCreate.at(0)->texture = SDL_CreateTextureFromSurface(renderer, queueCreate.at(0)->source);
       //queueRender.push_back(queueCreate.at(0));
-      SDL_FreeSurface(queueCreate.at(0)->source);
+
+      //SDL_FreeSurface(queueCreate.at(0)->source);
       queueCreate.erase(queueCreate.begin());
+
       cout << "\t </POP>" << endl;
     }
 
@@ -74,9 +82,36 @@ namespace TextureHandling{
   TextureHandler textureHandler = TextureHandler();
 
   //Sprite class definitions
+  /*
+  Sprite& operator=(Sprite other){
+
+    swap(texture, other.texture);
+    swap(surface, other.surface);
+    return *this;
+
+  }
+  */
+  Sprite::Sprite(const Sprite& sp){
+
+    texture=sp.texture;
+    source =sp.source;
+    w=sp.w;
+    h=sp.h;
+
+  }
+
   Sprite::Sprite(){
+
+    new Sprite(this);
+
     //textureHandler.allSprites.push_back(this);
   }
+  Sprite::Sprite(bool thread){
+    if(thread){
+    }else{
+    }
+  }
+
   Sprite::Sprite(SDL_Surface* src, bool thread){
     //textureHandler.allSprites.push_back(this);
     cout << "\t\t" << "a" << endl;

@@ -28,7 +28,7 @@ SDL_Texture* renderText(SDL_Renderer *renderer,const char *text, TTF_Font* font,
 	}
 
 	out = SDL_CreateTextureFromSurface(renderer, primary);
-	SDL_FreeSurface(primary);
+	//SDL_FreeSurface(primary);
 	return out;
 }
 SDL_Texture* renderText(SDL_Renderer* renderer, SDL_Texture* dest, const char *text, TTF_Font* font, Color c, TextQuality flags){
@@ -48,7 +48,7 @@ SDL_Texture* renderText(SDL_Renderer* renderer, SDL_Texture* dest, const char *t
 		primary = TTF_RenderText_Solid(font, text, color(c));
 	}
 	intermediary = SDL_CreateTextureFromSurface(renderer, primary);
-	SDL_FreeSurface(primary);
+	//SDL_FreeSurface(primary);
 	SDL_RenderCopy(renderer,intermediary, NULL, &getTextureRect(intermediary));
 	SDL_DestroyTexture(intermediary);
 }

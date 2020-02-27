@@ -44,10 +44,13 @@ void setup() {
 int startup(void* ptr){
 
 	loadSprites(renderer);
+	textureHandler.doQueue();
 	cout << "Loaded Sprites" << endl;
 	loadingMessage = "Configuring Parts...";
 	configureParts(); // sets up reference Part structures
+	cout << " Configured Parts " << endl;
 	configure_UI_Elements(renderer); //setup all the various ui pages, and fonts
+	cout << " Configured UI Elements" << endl;
 	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
 
 	loadingMessage = "Initializing World...";
