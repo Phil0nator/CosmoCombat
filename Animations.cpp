@@ -4,7 +4,7 @@ class Animation{ //storage class, only one made of each possuble animation
 
 public:
 
-  vector<Sprite> frames;
+  vector<Sprite *> frames;
   int numberOfFrames = 1;
 
   int delay = 0;
@@ -22,6 +22,7 @@ Animation::~Animation(){
 
 }
 Animation::Animation(){
+  frames = vector<Sprite *>(0);
 }
 Animation::Animation( const Animation& a ){
 
@@ -35,17 +36,18 @@ Animation::Animation( const Animation& a ){
 } //copy contstructor
 Animation::Animation(string path, int numFrames, int indelay){
   numberOfFrames = numFrames-1;
-  frames = vector<Sprite >(numFrames);
-  frames.resize(numFrames);
+  frames = vector<Sprite *>(0);
+  //frames.resize(numFrames);
 
   for(int i = 1 ; i <= numFrames;i++){
+    cout << "LAMIN: " << i << endl;
     loadingMessage = "Load_Animation: " + to_string(i) + "/" + to_string(numFrames);
     string file = path + to_string(i);
     file+=".png";
-    Sprite f = loadImage(renderer, file.c_str());
-    frames.at(i-1)=f;
+    Sprite * f = loadImage(renderer, file.c_str());
+    frames.push_back(f);
   }
-
+  cout << "A:DONE" << endl;
   delay = indelay;
 }
 
@@ -93,7 +95,7 @@ public:
   }
 
   SDL_Texture* get(){
-    return origin->frames.at(frame).texture;
+    return origin->frames.at(frame)->texture;
 
   }
 

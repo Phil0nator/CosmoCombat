@@ -5,7 +5,7 @@
 #define FPS6  1000/6
 #define ASSET_NUMBER 16
 
-vector<Sprite> sprites;
+vector<Sprite *> sprites;
 vector<AnimationInstance *> anims;
 
 //animations:
@@ -24,10 +24,14 @@ void loadSprites(SDL_Renderer *renderer)
 {
 	loadingMessage = "Loading Assets...";
 	anims = vector<AnimationInstance *>(0);
+	sprites = vector<Sprite *>(0);
+	cout << "la" << endl;
 	for (int i = 0; i < ASSET_NUMBER; i++) {
-		Sprite sp = loadImage(renderer,string("assets\\sprites\\").append(to_string(i).append(".PNG")).c_str());
+		cout << "\t" << i << endl;
+		Sprite * sp = loadImage(renderer,string("assets\\sprites\\").append(to_string(i).append(".PNG")).c_str());
 		loadingMessage =  to_string(i) + "/" + to_string(ASSET_NUMBER);
 		sprites.push_back(sp);
+		cout << "\t\t" << "d" <<endl;
 	}
 	//load animations
 	loadingMessage= "Loading Animations: ";
@@ -50,6 +54,6 @@ void handleAnimations(){
 
 SDL_Texture* sprite(int index) {//quick access to a sprite by its index number
 
-	return sprites.at(index).texture;
+	return sprites.at(index)->texture;
 
 }

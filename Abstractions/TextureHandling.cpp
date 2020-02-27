@@ -34,6 +34,9 @@ namespace TextureHandling{
     SDL_Surface* screen;
 
     TextureHandler(){
+      vector<Sprite *> allSprites = vector<Sprite *>(0);
+      vector<Sprite *> queueCreate=vector<Sprite *>(0);
+      vector<Sprite *> queueRender=vector<Sprite *>(0);
 
     }
 
@@ -48,17 +51,22 @@ namespace TextureHandling{
     }
 
     void popCreateQueue(){
+      cout << "\t<POP>" << endl;
       queueCreate.at(0)->texture = SDL_CreateTextureFromSurface(renderer, queueCreate.at(0)->source);
       //queueRender.push_back(queueCreate.at(0));
       SDL_FreeSurface(queueCreate.at(0)->source);
       queueCreate.erase(queueCreate.begin());
+      cout << "\t </POP>" << endl;
     }
 
     void doQueue(){
+      cout << "DOING QUEUE: " << endl;
+      int count = 0;
       while(queueCreate.size()>0){
         popCreateQueue();
+        count++;
       }
-
+      cout << "POPED " << count << " Images" << endl;
     }
 
   };
@@ -67,29 +75,32 @@ namespace TextureHandling{
 
   //Sprite class definitions
   Sprite::Sprite(){
-    textureHandler.allSprites.push_back(this);
+    //textureHandler.allSprites.push_back(this);
   }
   Sprite::Sprite(SDL_Surface* src, bool thread){
-    textureHandler.allSprites.push_back(this);
-
+    //textureHandler.allSprites.push_back(this);
+    cout << "\t\t" << "a" << endl;
     if(thread){
-
+      cout << "\t\t" << "b" << endl;
       textureHandler.addCreateQueue(this);
-      this->source=src;
-      this->w=src->w;
-      this->h=src->h;
+      source=src;
+      w=src->w;
+      h=src->h;
+      cout << "\t\t" << "c" << endl;
     }else{
 
-      this->texture = SDL_CreateTextureFromSurface(textureHandler.renderer,src);
-      this->w=src->w;
-      this->h=src->h;
+      texture = SDL_CreateTextureFromSurface(textureHandler.renderer,src);
+      w=src->w;
+      h=src->h;
 
     }
 
   }
 
 
-
+  Sprite * TH_CreateSpriteForLoad(SDL_Surface* src){
+    return new Sprite(src,true);
+  }
 
 
 

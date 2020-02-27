@@ -18,6 +18,7 @@
 #include <time.h>
 #include <algorithm>
 #include <cmath>
+#include <memory>
 using namespace std;
 #pragma comment(lib, "SDL2main.lib")
 #pragma comment(lib, "SDL2.lib")

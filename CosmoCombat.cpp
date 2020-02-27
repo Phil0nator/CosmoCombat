@@ -38,11 +38,13 @@ void setup() {
 	renderer = SDL_CreateRenderer(window, -1, getRendererFlags());
 	screen = SDL_GetWindowSurface(window);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND); //allows for transparency
+	textureHandler.setup(renderer,window,screen);
 }
 
 int startup(void* ptr){
 
 	loadSprites(renderer);
+	cout << "Loaded Sprites" << endl;
 	loadingMessage = "Configuring Parts...";
 	configureParts(); // sets up reference Part structures
 	configure_UI_Elements(renderer); //setup all the various ui pages, and fonts
@@ -74,7 +76,7 @@ int main(int argc, char* argv[])
 	SDL_SetTextureBlendMode(startup_message_texture,SDL_BLENDMODE_BLEND);
 
 	startup(nullptr);
-
+	textureHandler.doQueue();
 
 	//TODO: To make the startup thread work, images must first be loaded to surfaces in the seperate thread
 	//      , then converted to textures in the main thread, as accelerated rendering must be done in the main thread.
