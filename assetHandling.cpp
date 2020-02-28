@@ -53,10 +53,7 @@ void handleAnimations(){
 }
 
 SDL_Texture* sprite(int index) {//quick access to a sprite by its index number
-	if( sprites.at(index)->texture == nullptr){
-		cout << " bruh " << endl;
-	}
-	cout <<sprites.at(index)->texture<<endl; 
+
 	return sprites.at(index)->texture;
 
 }

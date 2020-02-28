@@ -14,10 +14,7 @@ namespace TextureHandling{
     Sprite(bool thread);
     //Sprite& operator=(Sprite other);
     SDL_Texture* get(){
-      if(texture==nullptr){
-        cout <<"Texture == nullptr" << endl;
-        system("pause");
-      }
+
       return texture;
     }
     Sprite(const Sprite& sp);
