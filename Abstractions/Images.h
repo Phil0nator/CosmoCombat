@@ -56,7 +56,6 @@ Sprite * loadImage(SDL_Renderer*renderer,const char* path) {
 	SDL_Surface* s = IMG_Load(path);
 	//SDL_Texture* out = SDL_CreateTextureFromSurface(renderer, s);
 
-	cout << "\t\t\t\t\t" << "IMGLD" << endl;
 	Sprite * out = new Sprite();
 	out->source= s;
 	out->texture = SDL_CreateTextureFromSurface(renderer, s);

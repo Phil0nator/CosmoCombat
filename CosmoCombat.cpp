@@ -21,7 +21,7 @@ gameState state = LOADING;
 using namespace std;
 
 
-
+bool loaded = false;
 
 //Global Variables
 void endGame() {
@@ -52,7 +52,6 @@ int startup(void* ptr){
 	configure_UI_Elements(renderer); //setup all the various ui pages, and fonts
 	cout << " Configured UI Elements" << endl;
 	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
-
 	loadingMessage = "Initializing World...";
 	//World_INIT(renderer, time(NULL));
 	loadingMessage = "Creating Player....";
@@ -60,8 +59,42 @@ int startup(void* ptr){
 	//preAllocateShips();
 	state = MAIN_MENU;
 	//SDL_DestroyTexture(startup_message_texture);
+	loaded = true;
 
 	return 0;
+}
+
+void SplashScreen(void *a){
+	//SDL_Init(SDL_INIT_EVERYTHING);
+	//quickInit(8,2);
+	SDL_Window* splash = SDL_CreateWindow("CCLoad", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_ALWAYS_ON_TOP);
+	SDL_Renderer* sRenderer = SDL_CreateRenderer(splash,-1, SDL_RENDERER_SOFTWARE|SDL_RENDERER_PRESENTVSYNC);
+	SDL_Surface* sScreen = SDL_GetWindowSurface(splash);
+
+	SDL_ShowWindow(splash);
+
+	SDL_RaiseWindow(splash);
+	SDL_Event event;
+	while(true){
+
+		while(SDL_PollEvent(&event)){
+			if (event.type == SDL_QUIT) {
+				running = false;
+				break;
+			}
+		}
+		cout << "SPLASHSCREEN" << endl;
+		SDL_RenderClear(sRenderer);
+
+		quickFillRect(sRenderer, 0,0,500,500,color(255,0,255));
+
+		SDL_RenderPresent(sRenderer); //update display
+
+
+		if(loaded)break;
+	}
+	SDL_DestroyWindow(splash);
+
 }
 
 
@@ -78,27 +111,16 @@ int main(int argc, char* argv[])
 	startup_message_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,width,height);
 	SDL_SetTextureBlendMode(startup_message_texture,SDL_BLENDMODE_BLEND);
 
+	//begin opengl context for real
+	SDL_RenderClear(renderer);
+	SDL_RenderPresent(renderer);
+	SDL_HideWindow(window);
+	SDL_Thread *splashThread = SDL_CreateThread(SplashScreen, "splashscreen",nullptr);
+
 	startup(nullptr);
-	textureHandler.doQueue();
-
-	//TODO: To make the startup thread work, images must first be loaded to surfaces in the seperate thread
-	//      , then converted to textures in the main thread, as accelerated rendering must be done in the main thread.
-	//			Load all images to a vector, then after everthing is loaded, go through the vector in the main thread and
-	//			properly create the textures.
-	//			Note: reading images from the disk is much slower than converting between surface and texture.
-	/*
-
-	Threading For later...
-
-	SDL_Thread *startupThread = SDL_CreateThread(startup, "startupThread", (void *)NULL);
-	if(startupThread == NULL){
-		cout << "isNull" << endl;
-	}
-	*/
-
-
-
-
+	SDL_ShowWindow(window);
+	SDL_RaiseWindow(window);
+	SDL_SetWindowInputFocus(window);
 	//Game Loop:
 	SDL_Event event;
 	while (running) {

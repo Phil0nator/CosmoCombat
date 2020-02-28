@@ -25,13 +25,10 @@ void loadSprites(SDL_Renderer *renderer)
 	loadingMessage = "Loading Assets...";
 	anims = vector<AnimationInstance *>(0);
 	sprites = vector<Sprite *>(0);
-	cout << "la" << endl;
 	for (int i = 0; i < ASSET_NUMBER; i++) {
-		cout << "\t" << i << endl;
 		Sprite * sp = loadImage(renderer,string("assets\\sprites\\").append(to_string(i).append(".PNG")).c_str());
 		loadingMessage =  to_string(i) + "/" + to_string(ASSET_NUMBER);
 		sprites.push_back(sp);
-		cout << "\t\t" << "d" <<endl;
 	}
 	//load animations
 	loadingMessage= "Loading Animations: ";

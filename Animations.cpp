@@ -40,14 +40,12 @@ Animation::Animation(string path, int numFrames, int indelay){
   //frames.resize(numFrames);
 
   for(int i = 1 ; i <= numFrames;i++){
-    cout << "LAMIN: " << i << endl;
     loadingMessage = "Load_Animation: " + to_string(i) + "/" + to_string(numFrames);
     string file = path + to_string(i);
     file+=".png";
     Sprite * f = loadImage(renderer, file.c_str());
     frames.push_back(f);
   }
-  cout << "A:DONE" << endl;
   delay = indelay;
 }
 
