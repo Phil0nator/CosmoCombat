@@ -33,7 +33,10 @@ void endGame() {
 //configure necessary SDL stuffs
 void setup() {
 	//fullscreen, opengl window
-	window = SDL_CreateWindow("--CosmoCombat--", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, SDL_WINDOW_OPENGL || SDL_WINDOW_FULLSCREEN);
+	SDL_DisplayMode dispmode;
+	SDL_GetDesktopDisplayMode(0,&dispmode);
+	cout << "WINDOW: "<< dispmode.w << " : " << dispmode.h << endl;
+	window = SDL_CreateWindow("--CosmoCombat--", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, SDL_WINDOW_OPENGL || SDL_WINDOW_FULLSCREEN );
 	SDL_GetWindowSize(window, &width, &height); //setup window size variables
 	renderer = SDL_CreateRenderer(window, -1, getRendererFlags());
 	screen = SDL_GetWindowSurface(window);
@@ -53,7 +56,7 @@ int startup(void* ptr){
 	cout << " Configured UI Elements" << endl;
 	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
 	loadingMessage = "Initializing World...";
-	//World_INIT(renderer, time(NULL));
+	World_INIT(renderer, time(NULL));
 	loadingMessage = "Creating Player....";
 	me = Player();
 	//preAllocateShips();
@@ -65,8 +68,8 @@ int startup(void* ptr){
 }
 
 void SplashScreen(void *a){
-	//SDL_Init(SDL_INIT_EVERYTHING);
-	//quickInit(8,2);
+	SDL_Init(SDL_INIT_EVERYTHING);
+	quickInit(8,2);
 	SDL_Window* splash = SDL_CreateWindow("CCLoad", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_ALWAYS_ON_TOP);
 	SDL_Renderer* sRenderer = SDL_CreateRenderer(splash,-1, SDL_RENDERER_SOFTWARE|SDL_RENDERER_PRESENTVSYNC);
 	SDL_Surface* sScreen = SDL_GetWindowSurface(splash);
@@ -111,15 +114,15 @@ int main(int argc, char* argv[])
 	SDL_SetTextureBlendMode(startup_message_texture,SDL_BLENDMODE_BLEND);
 
 	//begin opengl context for real
-	//SDL_RenderClear(renderer);
+	SDL_RenderClear(renderer);
 	//SDL_RenderPresent(renderer);
 	//SDL_HideWindow(window);
 	//SDL_Thread *splashThread = SDL_CreateThread(SplashScreen, "splashscreen",nullptr);
 
 	startup(nullptr);
-	SDL_ShowWindow(window);
-	SDL_RaiseWindow(window);
-	SDL_SetWindowInputFocus(window);
+	//SDL_ShowWindow(window);
+	//SDL_RaiseWindow(window);
+	//SDL_SetWindowInputFocus(window);
 	//Game Loop:
 	SDL_Event event;
 	while (running) {
