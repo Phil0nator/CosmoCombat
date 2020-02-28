@@ -58,7 +58,7 @@ namespace TextureHandling{
       queueCreate.at(0)->texture = SDL_CreateTextureFromSurface(renderer, queueCreate.at(0)->source);
       //queueRender.push_back(queueCreate.at(0));
 
-      //SDL_FreeSurface(queueCreate.at(0)->source);
+      SDL_FreeSurface(queueCreate.at(0)->source);
       queueCreate.erase(queueCreate.begin());
 
       cout << "\t </POP>" << endl;

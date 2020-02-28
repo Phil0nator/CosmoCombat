@@ -83,7 +83,6 @@ void SplashScreen(void *a){
 				break;
 			}
 		}
-		cout << "SPLASHSCREEN" << endl;
 		SDL_RenderClear(sRenderer);
 
 		quickFillRect(sRenderer, 0,0,500,500,color(255,0,255));
@@ -94,7 +93,7 @@ void SplashScreen(void *a){
 		if(loaded)break;
 	}
 	SDL_DestroyWindow(splash);
-
+	SDL_DestroyRenderer(sRenderer);
 }
 
 
@@ -112,10 +111,10 @@ int main(int argc, char* argv[])
 	SDL_SetTextureBlendMode(startup_message_texture,SDL_BLENDMODE_BLEND);
 
 	//begin opengl context for real
-	SDL_RenderClear(renderer);
-	SDL_RenderPresent(renderer);
-	SDL_HideWindow(window);
-	SDL_Thread *splashThread = SDL_CreateThread(SplashScreen, "splashscreen",nullptr);
+	//SDL_RenderClear(renderer);
+	//SDL_RenderPresent(renderer);
+	//SDL_HideWindow(window);
+	//SDL_Thread *splashThread = SDL_CreateThread(SplashScreen, "splashscreen",nullptr);
 
 	startup(nullptr);
 	SDL_ShowWindow(window);

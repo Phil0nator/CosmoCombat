@@ -57,8 +57,10 @@ Sprite * loadImage(SDL_Renderer*renderer,const char* path) {
 	//SDL_Texture* out = SDL_CreateTextureFromSurface(renderer, s);
 
 	Sprite * out = new Sprite();
-	out->source= s;
+	//out->source= s;
 	out->texture = SDL_CreateTextureFromSurface(renderer, s);
+	SDL_FreeSurface(s);
+	SDL_UnlockTexture(out->texture);
 	return out;
 
 }
