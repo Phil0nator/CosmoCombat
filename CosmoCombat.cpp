@@ -105,6 +105,7 @@ int main(int argc, char* argv[])
 {
 	srand(time(NULL));//setup random seed
 	setDefaultColor(color(0, 0, 0)); //the background color of the window by default
+	SDL_SetHint(SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
 	SDL_Init(SDL_INIT_EVERYTHING); //setup SDL
 	quickInit(8,2); //setup SDL subsystems (SDL, Image, TTF), 8 = color depth, 2 = samples
 	setup(); //create window, and setup renderer and screen
@@ -121,6 +122,7 @@ int main(int argc, char* argv[])
 	//SDL_Thread *splashThread = SDL_CreateThread(SplashScreen, "splashscreen",nullptr);
 
 	startup(nullptr);
+	
 	//SDL_ShowWindow(window);
 	//SDL_RaiseWindow(window);
 	//SDL_SetWindowInputFocus(window);
@@ -176,7 +178,7 @@ int main(int argc, char* argv[])
 
 
 		SDL_RenderPresent(renderer); //update display
-		SDL_Delay(0);
+		//SDL_Delay(0);
 
 		//Sleep the remaining frame time
 		//SDL_Delay((1000 / FRAME_CAP ));

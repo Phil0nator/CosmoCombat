@@ -28,6 +28,7 @@ namespace TextureHandling{
 
   class TextureHandler{
   public:
+  //TODO: Make array of pointers, not vector (max textures for device)
     vector<Sprite *> allSprites;
     vector<Sprite *> queueCreate;
     vector<Sprite *> queueRender;

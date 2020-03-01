@@ -19,6 +19,12 @@ Animation Arms1;
 
 // </animations>
 
+// UI Element Standards
+Sprite *UI_B1;
+Sprite *UI_B2;
+Sprite *UI_B3;
+
+// </UI>
 void loadSprites(SDL_Renderer *renderer)
 //load all sprites in the "assets\sprites\" folder into a single vector, to be referenced later
 {
@@ -37,7 +43,10 @@ void loadSprites(SDL_Renderer *renderer)
 	Shoulders1 = Animation(file_fix("assets\\Animations\\player\\Shoulders1\\"), 24,FPS12);
 	Arms1 = Animation(file_fix("assets\\Animations\\player\\Arms1\\"),24,FPS12);
 
-
+	//Load UI specifics
+	UI_B1 = loadImage(renderer,"assets\\UI\\b1.png");
+	UI_B1 = loadImage(renderer,"assets\\UI\\b2.png");
+	UI_B1 = loadImage(renderer,"assets\\UI\\b3.png");
 }
 
 //used each frame to tick all active animations

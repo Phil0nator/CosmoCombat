@@ -25,14 +25,14 @@ void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y) {
 
 	int w, h;
 	SDL_QueryTexture(texture, NULL,NULL,&w,&h);
-	SDL_RenderCopy(renderer, texture, NULL, &getQuickRect(x,y,w,h));
+	SDL_RenderCopy(renderer, texture, NULL, &(SDL_Rect){x,y,w,h});
 
 }
 void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, float r, SDL_Point center, SDL_RendererFlip flags) {
 
 	int w, h;
 	SDL_QueryTexture(texture, NULL, NULL, &w, &h);
-	SDL_RenderCopyEx(renderer, texture, NULL, &getQuickRect(x, y, w, h), r, &center, flags);
+	SDL_RenderCopyEx(renderer, texture, NULL, &(SDL_Rect){x,y,w,h}, r, &center, flags);
 
 }
 void clearTexture(SDL_Renderer* renderer, SDL_Texture* texture){
@@ -51,7 +51,7 @@ SDL_Point getTextureSize(SDL_Texture* texture) {
 	if(texture==nullptr){
 		return Point(0,0);
 	} //prevent seg fault for null pointers
-	cout << texture << endl;
+	//cout << texture << endl;
 	SDL_QueryTexture(texture, NULL, NULL, &w,&h);
 	return Point(w,h);
 }
@@ -69,7 +69,6 @@ Sprite * loadImage(SDL_Renderer*renderer,const char* path) {
 
 }
 SDL_Rect getTextureRect(SDL_Texture* texture) {
-	cout << "GETTING TEXTURE: " << texture << endl;
 	SDL_Point dims = getTextureSize(texture);
-	return getQuickRect(0,0,dims.x,dims.y);
+	return (SDL_Rect){0,0,dims.x,dims.y};
 }

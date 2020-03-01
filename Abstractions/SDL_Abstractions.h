@@ -5,6 +5,13 @@
 
 #endif
 #define SDL_MAIN_HANDLED //prevents interfearence from SDL_Main
+
+
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+
 #include <stdlib.h>     /* srand, rand */
 #include <iostream>
 #include <stdio.h>

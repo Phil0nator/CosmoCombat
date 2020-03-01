@@ -210,7 +210,7 @@ void clearShipOverlay(GameShip* ship){
 }
 
 void renderShipOverlay(GameShip* ship){
-
+	//TODO make updated bool for animations, make engines an array 
 	if(ship->enginesOn){
 		ship->exhaust.tick();
 		SDL_SetRenderTarget(renderer, ship->animationsTexture);

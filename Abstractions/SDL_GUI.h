@@ -52,7 +52,7 @@ public:
 	Sprite* texture = new Sprite();
 	Sprite* mouseOverTexture = new Sprite();
 	Sprite* mouseDownTexture = new Sprite();
-	Sprite* currentTexture = new Sprite(); // works like currentColor
+	Sprite* currentTexture = nullptr; // works like currentColor
 
 	Sprite* text_texture = new Sprite();
 	UIElement_Type type = UNKOWN;
@@ -68,7 +68,7 @@ public:
 	void setMouseOverColor(Color c);
 	void setMouseDownColor(Color c);
 	void setColors(Color a, Color b, Color c);
-	void setTextures(SDL_Texture * nat, SDL_Texture * mover, SDL_Texture * mdwn);
+	void setTextures(Sprite * nat, Sprite * mover, Sprite * mdwn);
 	void click();
 	void release();
 	void renderOwnText(SDL_Renderer* renderer, string text, TTF_Font* f, TextQuality q);
@@ -151,14 +151,22 @@ void tickButton(UIElement* b, SDL_Event* event) {
 
 }
 void drawButton(UIElement* b, SDL_Renderer* renderer) {
-	if (b->texture->texture == nullptr) {
+	if (b->currentTexture == nullptr) {
 
 		quickFillRect(renderer, b->x, b->y, b->w, b->h, *b->currentColor);
 
 	}
 	else {
 		quickFillRect(renderer, b->x - 1, b->y - 1, b->w + 2, b->h + 2, *b->currentColor);
-		image(renderer,b->currentTexture->texture,(SDL_Rect){0,0,b->w,b->h},(SDL_Rect){b->x,b->y,b->w,b->h});
+		int w = 0, h = 0;
+		if(SDL_QueryTexture(b->currentTexture->texture, NULL, NULL, &w, &h) < 0)  {
+  			cout << "Error on texture query: "<< SDL_GetError() << endl;
+			
+		}
+		SDL_Rect source = (SDL_Rect){0,0,w,h};
+		SDL_Rect dest =(SDL_Rect){b->x,b->y,b->w,b->h};
+		
+		image(renderer,b->currentTexture->texture,source,dest);
 	}
 
 	if(b->text_texture->texture!=nullptr){
@@ -233,11 +241,11 @@ void UIElement::setColors(Color normal, Color mouseOver, Color mouseDown) {
 	setMouseOverColor(mouseOver);
 	setMouseDownColor(mouseDown);
 }
-void UIElement::setTextures(SDL_Texture * nat, SDL_Texture * mover, SDL_Texture * mdwn){
+void UIElement::setTextures(Sprite * nat, Sprite * mover, Sprite * mdwn){
 
-	texture->texture = nat;
-	mouseOverTexture->texture = mover;
-	mouseDownTexture->texture = mdwn;
+	texture = nat;
+	mouseOverTexture = mover;
+	mouseDownTexture = mdwn;
 	textured=true;
 
 }
@@ -284,7 +292,8 @@ Callback UIElement::getCallback() {
 
 UIElement Button(int x, int y, int w, int h) {
 
-	UIElement out;
+	UIElement *alloc = new UIElement();
+	UIElement out = *alloc; 
 	out.x = x;
 	out.y = y;
 	out.w = w;

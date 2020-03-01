@@ -117,9 +117,10 @@ void World_INIT(SDL_Renderer *r, int seed)
 	asteroidSource.y = 0;
 	asteroidTexture = sprite(7);
 
+	SDL_Rect rect = (SDL_Rect){rand() % CHUNK_SIZE, rand() % CHUNK_SIZE, 3, 3};
 
-	for (size_t y = 0; y < CHUNK_AMT_FG; y++)
-		for (size_t x = 0; x < CHUNK_AMT_FG; x++)
+	for (std::size_t y = 0; y < CHUNK_AMT_FG; y++)
+		for (std::size_t x = 0; x < CHUNK_AMT_FG; x++)
 		{
 			Chunk* chunk = &fGroundChunks[x][y];
 
@@ -129,14 +130,14 @@ void World_INIT(SDL_Renderer *r, int seed)
 			SDL_SetTextureBlendMode(chunk->drawTexture, SDL_BLENDMODE_BLEND);
 			SDL_SetRenderTarget(r, chunk->drawTexture);
 
-			for (size_t i = 0; i < SMALL_STAR_AMT / 2; i++)
-				SDL_RenderCopy(r, smallStarTexture, &smallStarSource, &getQuickRect(rand() % CHUNK_SIZE, rand() % CHUNK_SIZE, 3, 3));
+			for (std::size_t i = 0; i < SMALL_STAR_AMT / 2; i++)
+				SDL_RenderCopy(r, smallStarTexture, &smallStarSource, &rect);
 
 			//SDL_LockTexture(chunk->drawTexture, NULL, NULL, NULL);
 		}
 
-	for (size_t y = 0; y < CHUNK_AMT_BG; y++)
-		for (size_t x = 0; x < CHUNK_AMT_BG; x++)
+	for (std::size_t y = 0; y < CHUNK_AMT_BG; y++)
+		for (std::size_t x = 0; x < CHUNK_AMT_BG; x++)
 		{
 			Chunk* chunk = &bGroundChunks[x][y];
 
@@ -146,8 +147,8 @@ void World_INIT(SDL_Renderer *r, int seed)
 			SDL_SetTextureBlendMode(chunk->drawTexture, SDL_BLENDMODE_BLEND);
 			SDL_SetRenderTarget(r, chunk->drawTexture);
 
-			for (size_t i = 0; i < SMALL_STAR_AMT / 2; i++)
-				SDL_RenderCopy(r, smallStarTexture, &smallStarSource, &getQuickRect(rand() % CHUNK_SIZE, rand() % CHUNK_SIZE, 3, 3));
+			for (std::size_t i = 0; i < SMALL_STAR_AMT / 2; i++)
+				SDL_RenderCopy(r, smallStarTexture, &smallStarSource, &rect);
 		}
 
 	SDL_SetRenderTarget(r, NULL);
@@ -192,8 +193,8 @@ void World_draw(SDL_Renderer *r, SDL_Point offset)
 
 	//cout << ix << ":" << iy << ", " << (ix * CHUNK_SIZE) + offset.x << ":" << (iy * CHUNK_SIZE) + offset.y << endl;
 
-	for (size_t y = 0; y < 4; y++)
-		for (size_t x = 0; x < 5; x++)
+	for (std::size_t y = 0; y < 4; y++)
+		for (std::size_t x = 0; x < 5; x++)
 		{
 			ix = clamp(rbx + x, 0, CHUNK_AMT_BG);
 			iy = clamp(rby + y, 0, CHUNK_AMT_BG);

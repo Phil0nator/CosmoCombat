@@ -110,6 +110,7 @@ void configure_UI_Elements(SDL_Renderer* renderer) { //root function, called in 
 	MM_ToGame.text_color = color(0, 0, 0, 255);
 	MM_ToGame.renderOwnText(renderer,"Play Game", fontAstro[20],SLOW);
 	MM_ToGame.setCallback(&MM_toShipView);
+	MM_ToGame.setTextures(UI_B1,UI_B1,UI_B1);
 	mainPage.add(&MM_ToGame);
 
 	MM_ToSettings = Button(width / 2 - width / 6, height / 2+height/15+10, width / 3, height / 15);

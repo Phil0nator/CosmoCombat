@@ -49,6 +49,8 @@ SDL_Texture* renderText(SDL_Renderer* renderer, SDL_Texture* dest, const char *t
 	}
 	intermediary = SDL_CreateTextureFromSurface(renderer, primary);
 	//SDL_FreeSurface(primary);
+	
+	
 	SDL_RenderCopy(renderer,intermediary, NULL, &getTextureRect(intermediary));
 	SDL_DestroyTexture(intermediary);
 	return dest;

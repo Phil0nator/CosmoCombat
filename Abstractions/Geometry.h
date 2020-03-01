@@ -31,12 +31,7 @@ Uint32 degrees(double r);
 //drawing
 SDL_Rect getQuickRect(int x, int y, int w, int h) {
 
-	SDL_Rect *out = new SDL_Rect();
-	out->x = x;
-	out->y = y;
-	out->w = w;
-	out->h = h;
-	return *out;
+	return (SDL_Rect){x,y,w,h};
 
 }
 void quickRect(SDL_Rect* rect, int x, int y, int w, int h){
@@ -149,17 +144,12 @@ SDL_Point rotatePoint(SDL_Point p, SDL_Point center, float r) {
 	return p;
 }
 SDL_Point Point(int x, int y) {
-	SDL_Point *p = new SDL_Point();
-	p->x=x;
-	p->y=y;
-	return *p;
+	return (SDL_Point){x,y};
 }
 SDL_Point point(int x,int y){
 
-	SDL_Point *p = new SDL_Point();
-	p->x=x;
-	p->y=y;
-	return *p;
+	
+	return (SDL_Point){x,y};
 
 }
 

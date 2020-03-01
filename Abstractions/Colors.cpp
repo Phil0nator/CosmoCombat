@@ -25,13 +25,13 @@ Color randomColor() {
 
 Color color(int r, int g, int b) {
 
-	Color out;
+	Color *out = new Color();
 
-	out.r = r;
-	out.g = g;
-	out.b = b;
+	out->r = r;
+	out->g = g;
+	out->b = b;
 
-	return out;
+	return *out;
 
 }
 Color color(int v){
@@ -41,14 +41,14 @@ Color color(int v){
 }
 Color color(int r, int g, int b, int a) {
 
-	Color out;
+	Color *out = new Color();
 
-	out.r = r;
-	out.g = g;
-	out.b = b;
-	out.a = a;
+	out->r = r;
+	out->g = g;
+	out->b = b;
+	out->a = a;
 
-	return out;
+	return *out;
 
 
 
