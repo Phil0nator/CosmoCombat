@@ -9,98 +9,41 @@ struct Color {
 	Uint8 a = 255;
 
 
-};
-Color color(int r, int g, int b);
+}; 
+/**
+*\brief easy-access data structure for rgba data
+*\warning uses unsigned 8 bit integers
+**/
+
+Color color(int r, int g, int b); 
+/**
+*\brief constructor for a Color struct, with default (255) alpha value
+**/
+
+
 Color color(int r, int g, int b, int a);
+/**
+*\brief constructor for a Color struct
+**/
 Color color(int v);
+/**
+*\brief constructor for a Color struct, setting r,g, and b to the input
+**/
 void setDefaultColor(Color color);
 Color getDefaultColor();
 Color randomColor();
+/**
+*\brief get a color struct with random values (will always be valid)
+**/
 void resetRenderColor(SDL_Renderer* renderer);
 SDL_Color color(Color color);
 SDL_Color sdlColor(int r, int g, int b);
 SDL_Color sdlColor(int r, int g, int b, int a);
 void print(Color inp);
-
-
-Color defaultColor;
-void setDefaultColor(Color color){
-	defaultColor = color;
-}
-Color getDefaultColor() {
-
-	return defaultColor;
-
-}
-void resetRenderColor(SDL_Renderer* renderer) {
-	SDL_SetRenderDrawColor(renderer, defaultColor.r, defaultColor.g, defaultColor.b, defaultColor.a);
-}
-Color randomColor() {
-
-
-	Color out;
-	out.r = randint(0, 255);
-	out.g = randint(0, 255);
-	out.b = randint(0, 255);
-	out.a = 255;
-	return out;
-
-
-}
-
-Color color(int r, int g, int b) {
-
-	Color out;
-
-	out.r = r;
-	out.g = g;
-	out.b = b;
-
-	return out;
-
-}
-Color color(int v){
-
-	return color(v,v,v);
-
-}
-Color color(int r, int g, int b, int a) {
-
-	Color out;
-
-	out.r = r;
-	out.g = g;
-	out.b = b;
-	out.a = a;
-
-	return out;
+/**
+*\brief pretty print for a color struct
+**/
 
 
 
-}
-SDL_Color color(Color color){
-
-	SDL_Color c;
-	c.r = color.r;
-	c.g = color.g;
-	c.b = color.b;
-	c.a = color.a;
-	return c;
-
-}
-SDL_Color sdlColor(int r, int g, int b) {
-	return color(color(r, g, b));
-}
-SDL_Color sdlColor(int r, int g, int b, int a) {
-	return color(color(r, g, b,a));
-}
-
-void print(Color inp) {
-
-	cout << "Color @(" << inp.r << ", " << inp.g << ", " << inp.b;
-	if (inp.a != 0) {
-		cout << ", " << inp.a;
-	}
-	cout << ")" << endl;
-
-}
+#include "Colors.cpp"

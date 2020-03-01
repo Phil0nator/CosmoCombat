@@ -45,6 +45,9 @@ public:
     x+=velx;
     y+=vely;
 
+    velx=clamp(velx,-2,2);
+    vely=clamp(vely,-2,2);
+
     if(velx>0){
       velx--;
     }else if (velx<0){

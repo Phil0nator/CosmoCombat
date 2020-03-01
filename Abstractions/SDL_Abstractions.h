@@ -5,17 +5,19 @@
 
 #endif
 #define SDL_MAIN_HANDLED //prevents interfearence from SDL_Main
-
+#include <stdlib.h>     /* srand, rand */
 #include <iostream>
 #include <stdio.h>
 #include <vector>
 #include <string>
+#include <chrono>
 #include "SDL.h"
 //#include "SDL_main.h"
 #include "SDL_ttf.h"
 #include "SDL_image.h"
 #include "SDL_thread.h"
 #include <time.h>
+#include <random>
 #include <algorithm>
 #include <cmath>
 #include <memory>
@@ -29,6 +31,7 @@ using namespace std;
 using namespace TextureHandling;
 
 #include "Misc.h"
+#include "Misc.cpp"
 #include "Colors.h"
 #include "Geometry.h"
 #include "Images.h"

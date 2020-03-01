@@ -48,6 +48,10 @@ void clearTexture(SDL_Renderer* renderer, SDL_Texture* texture){
 SDL_Point getTextureSize(SDL_Texture* texture) {
 
 	int w, h;
+	if(texture==nullptr){
+		return Point(0,0);
+	} //prevent seg fault for null pointers
+	cout << texture << endl;
 	SDL_QueryTexture(texture, NULL, NULL, &w,&h);
 	return Point(w,h);
 }
@@ -65,7 +69,7 @@ Sprite * loadImage(SDL_Renderer*renderer,const char* path) {
 
 }
 SDL_Rect getTextureRect(SDL_Texture* texture) {
-
+	cout << "GETTING TEXTURE: " << texture << endl;
 	SDL_Point dims = getTextureSize(texture);
 	return getQuickRect(0,0,dims.x,dims.y);
 }

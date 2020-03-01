@@ -3,7 +3,14 @@
 #define TAO PI*2
 //Geometry
 	//drawing
-SDL_Rect getQuickRect(int x, int y, int w, int h);
+SDL_Rect getQuickRect(int x, int y, int w, int h); //depricated
+
+void quickRect(SDL_Rect* rect, int x, int y, int w, int h);
+/**
+* \param rect reference to the destination of the rect information 
+**/
+
+
 void quickCircle(SDL_Renderer* renderer, int32_t centerx, int32_t centery, int32_t r, Color color);
 void quickRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color color);
 void quickPoint(SDL_Renderer* renderer, SDL_Point p, Color color);
@@ -24,17 +31,25 @@ Uint32 degrees(double r);
 //drawing
 SDL_Rect getQuickRect(int x, int y, int w, int h) {
 
-	SDL_Rect out;
-	out.x = x;
-	out.y = y;
-	out.w = w;
-	out.h = h;
-	return out;
+	SDL_Rect *out = new SDL_Rect();
+	out->x = x;
+	out->y = y;
+	out->w = w;
+	out->h = h;
+	return *out;
 
 }
+void quickRect(SDL_Rect* rect, int x, int y, int w, int h){
+	rect->x=x;
+	rect->y=y;
+	rect->w=w;
+	rect->h=h;
+}
+
+
 void quickFillRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color color) {
 
-	SDL_Rect r = getQuickRect(x, y, w, h);
+	SDL_Rect r = (SDL_Rect){x,y,w,h};
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderFillRect(renderer, &r);
 	Color defaultColor = getDefaultColor();
@@ -42,7 +57,7 @@ void quickFillRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color col
 }
 void quickRect(SDL_Renderer *renderer,int x, int y, int w, int h, Color color) {
 
-	SDL_Rect r = getQuickRect(x,y,w,h);
+	SDL_Rect r = (SDL_Rect){x,y,w,h};
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b,color.a);
 	SDL_RenderDrawRect(renderer,&r);
 	Color defaultColor = getDefaultColor();
@@ -134,15 +149,17 @@ SDL_Point rotatePoint(SDL_Point p, SDL_Point center, float r) {
 	return p;
 }
 SDL_Point Point(int x, int y) {
-	SDL_Point p;
-	p.x = x;
-	p.y = y;
-	return p;
+	SDL_Point *p = new SDL_Point();
+	p->x=x;
+	p->y=y;
+	return *p;
 }
 SDL_Point point(int x,int y){
 
-	SDL_Point p = {x,y};
-	return p;
+	SDL_Point *p = new SDL_Point();
+	p->x=x;
+	p->y=y;
+	return *p;
 
 }
 

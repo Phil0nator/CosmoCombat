@@ -1,3 +1,4 @@
+
 #include "SDL_timer.h"
 #include "CosmoCombat.h"
 #undef main
@@ -25,7 +26,7 @@ bool loaded = false;
 
 //Global Variables
 void endGame() {
-
+	
 	running = false;
 
 }
@@ -114,7 +115,7 @@ int main(int argc, char* argv[])
 	SDL_SetTextureBlendMode(startup_message_texture,SDL_BLENDMODE_BLEND);
 
 	//begin opengl context for real
-	SDL_RenderClear(renderer);
+	//SDL_RenderClear(renderer);
 	//SDL_RenderPresent(renderer);
 	//SDL_HideWindow(window);
 	//SDL_Thread *splashThread = SDL_CreateThread(SplashScreen, "splashscreen",nullptr);
@@ -146,7 +147,7 @@ int main(int argc, char* argv[])
 
 
 
-		handleAnimations(); //update the current frame for AnimationInstance objects. see assetHandling.cpp
+		//handleAnimations(); //update the current frame for AnimationInstance objects. see assetHandling.cpp
 		//gamestates:
 		if (state == MAIN_MENU) {
 			root_Main_Menu();
@@ -178,7 +179,7 @@ int main(int argc, char* argv[])
 		SDL_Delay(0);
 
 		//Sleep the remaining frame time
-		SDL_Delay((1000 / FRAME_CAP ));
+		//SDL_Delay((1000 / FRAME_CAP ));
 
 
 	}

@@ -134,8 +134,8 @@ SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* s
 
 			if (ship->contents.at(i).at(j).sprite == 0)continue;
 
-			SDL_Rect source = getTextureRect(sprite(ship->contents.at(i).at(j).sprite));
-			SDL_Rect dest = getQuickRect(i * SPRITE_DIM, j * SPRITE_DIM, SPRITE_DIM, SPRITE_DIM);
+			SDL_Rect source = (SDL_Rect){0,0,SPRITE_ASSET_DIMENTION,SPRITE_ASSET_DIMENTION};
+			SDL_Rect dest = (SDL_Rect){i * SPRITE_DIM, j * SPRITE_DIM, SPRITE_DIM, SPRITE_DIM};
 			const float r = ship->contents.at(i).at(j).rot;
 			image(renderer, sprite(ship->contents.at(i).at(j).sprite), source, dest, r, Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
 		}

@@ -31,10 +31,11 @@ void loadSprites(SDL_Renderer *renderer)
 		sprites.push_back(sp);
 	}
 	//load animations
+	cout << "loadingAnimations " << endl;
 	loadingMessage= "Loading Animations: ";
 	Fire1 = Animation(file_fix("assets\\Animations\\world\\fire1\\"),24,FPS24);
-	Shoulders1 = Animation(file_fix("assets\\Animations\\player\\Shoulders1\\"), 24,FPS24);
-	Arms1 = Animation(file_fix("assets\\Animations\\player\\Arms1\\"),24,FPS24);
+	Shoulders1 = Animation(file_fix("assets\\Animations\\player\\Shoulders1\\"), 24,FPS12);
+	Arms1 = Animation(file_fix("assets\\Animations\\player\\Arms1\\"),24,FPS12);
 
 
 }
@@ -43,7 +44,7 @@ void loadSprites(SDL_Renderer *renderer)
 void handleAnimations(){
 	for(int i = 0 ; i < anims.size();i++){
 
-		anims.at(i)->tick();
+		//anims.at(i)->tick();
 
 	}
 

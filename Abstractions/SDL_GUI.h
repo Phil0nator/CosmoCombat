@@ -158,7 +158,7 @@ void drawButton(UIElement* b, SDL_Renderer* renderer) {
 	}
 	else {
 		quickFillRect(renderer, b->x - 1, b->y - 1, b->w + 2, b->h + 2, *b->currentColor);
-		image(renderer,b->currentTexture->texture,getTextureRect(b->texture->texture),getQuickRect(b->x,b->y,b->w,b->h));
+		image(renderer,b->currentTexture->texture,(SDL_Rect){0,0,b->w,b->h},(SDL_Rect){b->x,b->y,b->w,b->h});
 	}
 
 	if(b->text_texture->texture!=nullptr){

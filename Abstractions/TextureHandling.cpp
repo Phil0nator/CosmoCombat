@@ -1,5 +1,5 @@
 namespace TextureHandling{
-
+  bool txhInit = false;
 
   class Sprite{
   public:
@@ -40,7 +40,7 @@ namespace TextureHandling{
       vector<Sprite *> allSprites = vector<Sprite *>(0);
       vector<Sprite *> queueCreate=vector<Sprite *>(0);
       vector<Sprite *> queueRender=vector<Sprite *>(0);
-
+      txhInit=true;
     }
 
     void setup(SDL_Renderer*r, SDL_Window*w, SDL_Surface*s){
@@ -74,6 +74,8 @@ namespace TextureHandling{
       cout << "POPED " << count << " Images" << endl;
     }
 
+
+
   };
 
   TextureHandler textureHandler = TextureHandler();
@@ -95,13 +97,16 @@ namespace TextureHandling{
     w=sp.w;
     h=sp.h;
 
+
   }
 
   Sprite::Sprite(){
 
     new Sprite(this);
+    if(txhInit){
+        textureHandler.allSprites.push_back(this);
+    }
 
-    //textureHandler.allSprites.push_back(this);
   }
   Sprite::Sprite(bool thread){
     if(thread){

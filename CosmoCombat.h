@@ -9,7 +9,7 @@ string loadingMessage = "Loading";
 #define ICON_DIM 75 //dimention of icons
 #define SPRITE_DIM 100 // dimention of Sprites (the size of rooms in a ship for example)
 #define FSDIM 1000 //full-size-dimention: the original size of the images, used for playerView
-
+#define SPRITE_ASSET_DIMENTION 1920
 
 //fonts:
 TTF_Font *fontAstro[50];
@@ -25,13 +25,13 @@ enum gameState {
 
 enum Direction{
 
-	UP ,DOWN,LEFT,RIGHT,UPLEFT,UPRIGHT,DOWNLEFT,DOWNRIGHT
+	UP ,DOWN,LEFT,RIGHT,UPLEFT,UPRIGHT,DOWNLEFT,DOWNRIGHT,NONE_DIRECTION
 
 };
 Direction dir(int rot){
 	rot=rot % 360; //bring back to earth
 
-	if(rot%45!=0)return NULL; //if not a snapping-rotation
+	if(rot%45!=0)return NONE_DIRECTION; //if not a snapping-rotation
 
 	switch (rot) {
 		case 0:
@@ -47,10 +47,10 @@ Direction dir(int rot){
 		 	return RIGHT;
 			break;
 		default:
-			return NULL;
+			return NONE_DIRECTION;
 			break;
 	}
-	return NULL;
+	return NONE_DIRECTION;
 } //turn a float into the Direction enum
 
 float rotFromDir(Direction dir){
