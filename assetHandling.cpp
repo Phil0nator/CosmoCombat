@@ -23,6 +23,7 @@ Animation Arms1;
 Sprite *UI_B1;
 Sprite *UI_B2;
 Sprite *UI_B3;
+Sprite *UI_B_BG1;
 
 // </UI>
 void loadSprites(SDL_Renderer *renderer)
@@ -45,8 +46,9 @@ void loadSprites(SDL_Renderer *renderer)
 
 	//Load UI specifics
 	UI_B1 = loadImage(renderer,"assets\\UI\\b1.png");
-	UI_B1 = loadImage(renderer,"assets\\UI\\b2.png");
-	UI_B1 = loadImage(renderer,"assets\\UI\\b3.png");
+	UI_B2 = loadImage(renderer,"assets\\UI\\b2.png");
+	UI_B3 = loadImage(renderer,"assets\\UI\\b3.png");
+	UI_B_BG1 = loadImage(renderer, "assets,\\UI\\bg.png");
 }
 
 //used each frame to tick all active animations

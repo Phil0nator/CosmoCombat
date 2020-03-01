@@ -10,7 +10,7 @@ SDL_Texture* renderText(SDL_Renderer* renderer, const char* text, TTF_Font* font
 //UI Elements:
 enum UIElement_Type {
 
-	UNKOWN, BUTTON, ENTRY, SLIDER, PROGRESS_BAR, PAGE
+	UNKOWN, BUTTON, ENTRY, SLIDER, PROGRESS_BAR, PAGE, PERIF
 
 };
 
@@ -45,6 +45,8 @@ public:
 	bool holdable;
 	bool textured;
 	bool expander;
+
+	bool perifDir;
 
 	bool visible = true;
 	int x, y, w, h;
@@ -85,7 +87,7 @@ public:
 	void init();
 
 	void destroy();
-
+	void createBgElements();
 
 };
 UIElement Button(int x, int y, int w, int h);
@@ -99,9 +101,39 @@ void SDL_GUI_DISPLAY(SDL_Renderer* renderer, SDL_Event* event);
 //															(see bottom of this document and CosmoCombat.cpp)
 vector<UIElement*> master = vector<UIElement*>();
 
+UIElement Perif(int x, int y, int w, int h, bool dir){
 
+	/**
+	 *\param dir (Gives Direction) True = Right, False = Left 
+	 * 
+	 */
+	UIElement *alloc = new UIElement(); 
+	UIElement out = *alloc;
+	out.x=x;
+	out.y=y;
+	out.w=w;
+	out.h=h;
+	out.type = PERIF;
+	out.perifDir=dir;
+	return out;
+}
+void UIElement::createBgElements(){
+	UIElement *p = &Perif(x,y,w,h,true);
+	UIElement *p2 = &Perif(x,y,w,h,false);
+	parent->add(p);
+	parent->add(p2);
 
+}
 
+void drawPerif(UIElement *p, SDL_Renderer* renderer){
+	//TODO
+	if(p->perifDir){
+
+	}else{
+
+	}
+
+}
 
 void UIElement::click() {
 
@@ -171,7 +203,7 @@ void drawButton(UIElement* b, SDL_Renderer* renderer) {
 
 	if(b->text_texture->texture!=nullptr){
 
-		quickImage(renderer,b->text_texture->texture, b->x+b->w/10,b->y+b->h/2);
+		quickImage(renderer,b->text_texture->texture, b->x+b->w/5,b->y+b->h/2);
 
 	}
 
@@ -192,6 +224,8 @@ void UIElement::draw(SDL_Renderer* renderer,SDL_Event* event) {
 	}
 	else if (type == PAGE) {
 		drawPage(this, renderer, event);
+	}else if(type==PERIF){
+		drawPerif(this, renderer);
 	}
 
 
