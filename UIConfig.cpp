@@ -104,37 +104,46 @@ void configure_UI_Elements(SDL_Renderer* renderer) { //root function, called in 
 	buildShipsPage.setColors(color(0,0,0,0), color(0, 0, 0), color(0, 0, 0));
 	buildShipsPage.hide();
 
+	const int MMSX = width/2-width/6;//Main menu start x
+	const int MMSY = height/10;//Main menu start y
+	const int MMBW = width/3; //Main menu button width
+	const int MMBH = MMBW*(500.0/1131.0); //Main menu button height (Is function of MMBW to avoid stretching)
 
-	MM_ToGame = Button(width/2-width/6,height/2,width/3,height/10);
-	MM_ToGame.setColors(color(235, 235, 235,0),color(255,255,255,100),color(135,135,135,255));
+	MM_ToGame = Button(MMSX,MMSY,MMBW,MMBH);
+	MM_ToGame.setColors(color(235, 235, 235,0),color(255,255,255,0),color(135,135,135,0));
 	MM_ToGame.text_color = color(0, 0, 0, 255);
 	MM_ToGame.renderOwnText(renderer,"Play Game", fontAstro[20],SLOW);
 	MM_ToGame.setCallback(&MM_toShipView);
-	MM_ToGame.setTextures(UI_B3,UI_B3,UI_B3);
+	MM_ToGame.setTextures(UI_B3,UI_B3_H,UI_B3_C);
 	mainPage.add(&MM_ToGame);
+	MM_ToGame.createBgElements(UI_B_BG1);
 
-	MM_ToSettings = Button(width / 2 - width / 6, height / 2+height/10+10, width / 3, height / 10);
-	MM_ToSettings.setColors(color(235, 235, 235,0),color(255,255,255,100),color(135,135,135,255));
+
+	MM_ToSettings = Button(MMSX, MMSY+MMBH+10, MMBW, MMBH);
+	MM_ToSettings.setColors(color(235, 235, 235,0),color(255,255,255,0),color(135,135,135,0));
 	MM_ToSettings.text_color = color(0, 0, 0, 255);
 	MM_ToSettings.renderOwnText(renderer, "Options", fontAstro[20], SLOW);
-	MM_ToSettings.setTextures(UI_B3,UI_B3,UI_B3);
+	MM_ToSettings.setTextures(UI_B3,UI_B3_H,UI_B3_C);
 	mainPage.add(&MM_ToSettings);
+	MM_ToSettings.createBgElements(UI_B_BG1);
 
-	MM_EditShip = Button(width / 2 - width / 6, height / 2 + 2*(height / 10) + 20, width / 3, height / 10);
-	MM_EditShip.setColors(color(235, 235, 235,0),color(255,255,255,100),color(135,135,135,255));
+
+	MM_EditShip = Button(MMSX, MMSY + 2*(MMBH) + 20,MMBW, MMBH);
+	MM_EditShip.setColors(color(235, 235, 235,0),color(255,255,255,0),color(135,135,135,0));
 	MM_EditShip.text_color = color(0, 0, 0, 255);
 	MM_EditShip.renderOwnText(renderer, "Edit Ship", fontAstro[20], SLOW);
 	MM_EditShip.setCallback(&MM_toEditShip);
-	MM_EditShip.setTextures(UI_B3,UI_B3,UI_B3);
+	MM_EditShip.setTextures(UI_B3,UI_B3_H,UI_B3_C);
 	mainPage.add(&MM_EditShip);
+	MM_EditShip.createBgElements(UI_B_BG1);
 
 
 	MM_Quit = Button(0, 0, width / 10, height / 10);
-	MM_Quit.setColors(color(235, 235, 235,0),color(255,255,255,100),color(135,135,135,255));
+	MM_Quit.setColors(color(235, 235, 235,0),color(255,255,255,0),color(135,135,135,0));
 	MM_Quit.text_color = color(0,0,0);
 	MM_Quit.renderOwnText(renderer, "Quit", fontAstro[15], SLOW);
 	MM_Quit.setCallback(&endGame);
-	MM_Quit.setTextures(UI_B1,UI_B1,UI_B1);
+	MM_Quit.setTextures(UI_B1,UI_B1_H,UI_B1_C);
 	mainPage.add(&MM_Quit);
 
 
@@ -143,10 +152,10 @@ void configure_UI_Elements(SDL_Renderer* renderer) { //root function, called in 
 
 	fill_Build_Ship_Page(renderer);
 	BSP_Back = Button(0,0, width / 10, height / 15);
-	BSP_Back.setColors(color(235, 235, 235,0),color(255,255,255,100),color(135,135,135,255));
+	BSP_Back.setColors(color(235, 235, 235,0),color(255,255,255,0),color(135,135,135,0));
 	BSP_Back.renderOwnText(renderer, "Back", fontAstro[15], SLOW);
 	BSP_Back.setCallback(&BSP_toBack);
-	BSP_Back.setTextures(UI_B1,UI_B1,UI_B1);
+	BSP_Back.setTextures(UI_B1,UI_B1_H,UI_B1_C);
 	mainPage.add(&MM_Quit);
 	buildShipsPage.add(&BSP_Back);
 

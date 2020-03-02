@@ -87,7 +87,7 @@ public:
 	void init();
 
 	void destroy();
-	void createBgElements();
+	void createBgElements(Sprite* sp);
 
 };
 UIElement Button(int x, int y, int w, int h);
@@ -104,10 +104,10 @@ vector<UIElement*> master = vector<UIElement*>();
 UIElement Perif(int x, int y, int w, int h, bool dir){
 
 	/**
-	 *\param dir (Gives Direction) True = Right, False = Left 
-	 * 
+	 *\param dir (Gives Direction) True = Right, False = Left
+	 *
 	 */
-	UIElement *alloc = new UIElement(); 
+	UIElement *alloc = new UIElement();
 	UIElement out = *alloc;
 	out.x=x;
 	out.y=y;
@@ -117,9 +117,12 @@ UIElement Perif(int x, int y, int w, int h, bool dir){
 	out.perifDir=dir;
 	return out;
 }
-void UIElement::createBgElements(){
+void UIElement::createBgElements(Sprite* sp){
 	UIElement *p = &Perif(x,y,w,h,true);
 	UIElement *p2 = &Perif(x,y,w,h,false);
+	p->texture = sp;
+	p2->texture=sp;
+
 	parent->add(p);
 	parent->add(p2);
 
@@ -127,10 +130,16 @@ void UIElement::createBgElements(){
 
 void drawPerif(UIElement *p, SDL_Renderer* renderer){
 	//TODO
+	if(p->texture->texture == nullptr){
+		cout <<" ERROR periferal texture is null pointer" << endl;
+		return;
+	}
+	int pw = (p->h)*(330/748);
+	SDL_Rect sprect = (SDL_Rect){0,0,p->texture->w,p->texture->h};
 	if(p->perifDir){
-
+		image(renderer, p->texture->texture, sprect, (SDL_Rect){p->x,p->y,pw,p->h});
 	}else{
-
+		image(renderer, p->texture->texture, sprect, (SDL_Rect){p->x+p->w-pw/2,p->y,pw,p->h},0.0,(SDL_Point){sprect.w/2,0},SDL_FLIP_HORIZONTAL);
 	}
 
 }
@@ -193,11 +202,11 @@ void drawButton(UIElement* b, SDL_Renderer* renderer) {
 		int w = 0, h = 0;
 		if(SDL_QueryTexture(b->currentTexture->texture, NULL, NULL, &w, &h) < 0)  {
   			cout << "Error on texture query: "<< SDL_GetError() << endl;
-			
+
 		}
 		SDL_Rect source = (SDL_Rect){0,0,w,h};
 		SDL_Rect dest =(SDL_Rect){b->x,b->y,b->w,b->h};
-		
+
 		image(renderer,b->currentTexture->texture,source,dest);
 	}
 
@@ -288,11 +297,8 @@ void UIElement::init() {
 	master.push_back(this);
 }
 void UIElement::renderOwnText(SDL_Renderer* renderer, string text, TTF_Font *f, TextQuality q) {
-	cout << "rotStop" << endl;
 
 	text_texture->texture = renderText(renderer,text.c_str(),f,text_color,q);
-
-	cout << "rotSucc" << endl;
 }
 void UIElement::show() {
 	visible = true;
@@ -327,7 +333,7 @@ Callback UIElement::getCallback() {
 UIElement Button(int x, int y, int w, int h) {
 
 	UIElement *alloc = new UIElement();
-	UIElement out = *alloc; 
+	UIElement out = *alloc;
 	out.x = x;
 	out.y = y;
 	out.w = w;
