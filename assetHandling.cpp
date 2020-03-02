@@ -21,8 +21,15 @@ Animation Arms1;
 
 // UI Element Standards
 Sprite *UI_B1;
+/*	*/Sprite *UI_B1_C;
+/*	*/Sprite *UI_B1_H;
 Sprite *UI_B2;
+/*	*/Sprite *UI_B2_C;
+/*	*/Sprite *UI_B2_H;
 Sprite *UI_B3;
+/*	*/Sprite *UI_B3_C;
+/*	*/Sprite *UI_B3_H;
+
 Sprite *UI_B_BG1;
 
 // </UI>
@@ -45,9 +52,15 @@ void loadSprites(SDL_Renderer *renderer)
 	Arms1 = Animation(file_fix("assets\\Animations\\player\\Arms1\\"),24,FPS12);
 
 	//Load UI specifics
-	UI_B1 = loadImage(renderer,"assets\\UI\\b1.png");
-	UI_B2 = loadImage(renderer,"assets\\UI\\b2.png");
-	UI_B3 = loadImage(renderer,"assets\\UI\\b3.png");
+	UI_B1 = loadImage(renderer,"assets\\UI\\B1\\b1.png");
+	/*	*/UI_B1_C = loadImage(renderer, "assets\\UI\\B1\\b1c.png");
+	/*	*/UI_B1_H = loadImage(renderer, "assets\\UI\\B1\\b1h.png");
+	UI_B2 = loadImage(renderer,"assets\\UI\\B2\\b2.png");
+	/*	*/UI_B2_C = loadImage(renderer, "assets\\UI\\B2\\b2c.png");
+	/*	*/UI_B2_H = loadImage(renderer, "assets\\UI\\B2\\b2h.png");
+	UI_B3 = loadImage(renderer,"assets\\UI\\B3\\b3.png");
+	/*	*/UI_B3_C = loadImage(renderer, "assets\\UI\\B3\\b3c.png");
+	/*	*/UI_B3_H = loadImage(renderer, "assets\\UI\\B3\\b3h.png");
 	UI_B_BG1 = loadImage(renderer, "assets,\\UI\\bg.png");
 }
 
