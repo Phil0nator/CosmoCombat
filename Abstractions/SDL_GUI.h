@@ -3,8 +3,7 @@
 #pragma once
 
 using namespace std;
-//text
-
+//text predefined from text.h
 TTF_Font* loadFont(const char* path, Uint32 size);
 SDL_Texture* renderText(SDL_Renderer* renderer, const char* text, TTF_Font* font, Color c, TextQuality flags);
 //UI Elements:
@@ -12,18 +11,23 @@ enum UIElement_Type {
 
 	UNKOWN, BUTTON, ENTRY, SLIDER, PROGRESS_BAR, PAGE, PERIF
 
-};
+};/**
+*\brief Used to determine the type of element a given object will be
+*\brief not needed by user, will be done automatically in secondary constructors
+**/
 
 void defaultCallback(){}
 
-typedef void(*Callback)(void); //Function Pointer typdef
+typedef void(*Callback)(void); /**
+*\brief defines function pointer as type Callback.
+**/
 
 class UIElement {
 /*
-*single class which can be used to represent each of the UIElement_Types:
-			>UNKOWN, BUTTON, ENTRY, SLIDER, PROGRESS_BAR, PAGE
-*the type variable will determine its functionality
-
+*\brief single class which can be used to represent each of the UIElement_Types:
+*\breif			>UNKOWN, BUTTON, ENTRY, SLIDER, PROGRESS_BAR, PAGE (see enum UIElement_Type)
+*\briefthe type variable will determine its functionality
+*
 */
 private:
 	UIElement* parent; //used for pages
@@ -34,7 +38,9 @@ private:
 
 
 public:
-	vector<UIElement*> elems;
+	vector<UIElement*> elems;/**
+	*\brief used for pages to contain pointer to child objects
+	**/
 	Color color;
 	Color mouseOverColor;
 	Color mouseDownColor;
@@ -73,20 +79,40 @@ public:
 	void setTextures(Sprite * nat, Sprite * mover, Sprite * mdwn);
 	void click();
 	void release();
-	void renderOwnText(SDL_Renderer* renderer, string text, TTF_Font* f, TextQuality q);
-	void setCallback(Callback inp);
+	void renderOwnText(SDL_Renderer* renderer, string text, TTF_Font* f, TextQuality q);/**
+	*\brief render some words to the object's text sprite
+	*\brief see text.h
+	**/
+	void setCallback(Callback inp);/**
+	*\brief set the funtion to be called by the button when it is clicked (done with mouse up by default)
+	*\param inp give a pointer to a function
+	**/
 	Callback getCallback();
 	void show();
 	void hide();
 	void toggle();
-	void add(UIElement* adder);
+	void add(UIElement* adder);/**
+	*\breif used for pages, add a pointer to child element to list of children
+	*\brief see UIElement::elems
+	**/
 	//client
-	void draw(SDL_Renderer* renderer, SDL_Event* event);
-	void update(SDL_Renderer* renderer, SDL_Event* event);
-	void tick(SDL_Event* event);
-	void init();
+	void draw(SDL_Renderer* renderer, SDL_Event* event);/**
+	*\brief not needed by user. Used to call correct draw function for type of element
+	**/
+	void update(SDL_Renderer* renderer, SDL_Event* event);/**
+	*\brief not needed by user. calls UIElement::tick and UIElement::draw
+	**/
+	void tick(SDL_Event* event);/**
+	*\brief calls correct tick function for element type. (tick means do conditionals)
+	**/
+	void init();/**
+	*\brief initialize a UIElement to the maser page
+	**/
 
-	void destroy();
+	void destroy();/**
+	*\brief will remove element from its parent. Data will still exist, but it will not be drawn
+	*\warning this not a destructor, data will remain persistent
+	**/
 	void createBgElements(Sprite* sp);
 
 };
