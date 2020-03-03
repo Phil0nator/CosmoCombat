@@ -1,48 +1,20 @@
-//Shorthand functions for SDL:
-#define PI 3.141592
-#define TAO PI*2
-//Geometry
-	//drawing
-
-SDL_Rect getQuickRect(int x, int y, int w, int h); //create SDL_Rect object in one line
-void quickCircle(SDL_Renderer* renderer, int32_t centerx, int32_t centery, int32_t r, Color color); //draw an unfilled circle quickly
-void quickRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color color); //quckly draw an unfilled rectangle
-void quickPoint(SDL_Renderer* renderer, SDL_Point p, Color color); //draw a point
-void quickPoint(SDL_Renderer* renderer, int x, int y, Color color);//draw a point with x and y instead of a SDL_Point instance
-void quickLine(SDL_Renderer* renderer, int sx, int sy, int fx, int fy, Color color); //draw a line
-void quickFillRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color color); //draw a filled rectangle
-//math
-
-SDL_Point rotatePoint(SDL_Point p, SDL_Point center, float r);
-SDL_Point Point(int x, int y);
-float radians(Uint32 degrees);
-Uint32 degrees(double r);
-
-
-//Images
-void image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect source, SDL_Rect dest);
-void image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect source, SDL_Rect dest, float r, SDL_Point center, SDL_RendererFlip flags); //same as image, but takes rotation
-void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y); //draws an image at original size without crop for quick use
-void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, float r, SDL_Point center, SDL_RendererFlip flags); //same as quickImage above, but can rotate
-
-SDL_Point getTextureSize(SDL_Texture* texture); //get the dimentions of a texture in a SDL_Point instance
-SDL_Texture* loadImage(SDL_Renderer* renderer, const char* path);
-SDL_Rect getTextureRect(SDL_Texture* texture);
-
 //drawing
 SDL_Rect getQuickRect(int x, int y, int w, int h) {
 
-	SDL_Rect out;
-	out.x = x;
-	out.y = y;
-	out.w = w;
-	out.h = h;
-	return out;
+	return (SDL_Rect){x,y,w,h};
 
 }
+void quickRect(SDL_Rect* rect, int x, int y, int w, int h){
+	rect->x=x;
+	rect->y=y;
+	rect->w=w;
+	rect->h=h;
+}
+
+
 void quickFillRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color color) {
 
-	SDL_Rect r = getQuickRect(x, y, w, h);
+	SDL_Rect r = (SDL_Rect){x,y,w,h};
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderFillRect(renderer, &r);
 	Color defaultColor = getDefaultColor();
@@ -50,7 +22,7 @@ void quickFillRect(SDL_Renderer* renderer, int x, int y, int w, int h, Color col
 }
 void quickRect(SDL_Renderer *renderer,int x, int y, int w, int h, Color color) {
 
-	SDL_Rect r = getQuickRect(x,y,w,h);
+	SDL_Rect r = (SDL_Rect){x,y,w,h};
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b,color.a);
 	SDL_RenderDrawRect(renderer,&r);
 	Color defaultColor = getDefaultColor();
@@ -142,11 +114,15 @@ SDL_Point rotatePoint(SDL_Point p, SDL_Point center, float r) {
 	return p;
 }
 SDL_Point Point(int x, int y) {
-	SDL_Point p;
-	p.x = x;
-	p.y = y;
-	return p;
+	return (SDL_Point){x,y};
 }
+SDL_Point point(int x,int y){
+
+
+	return (SDL_Point){x,y};
+
+}
+
 float radians(Uint32 degrees) {
 
 	return degrees * M_PI / 180;

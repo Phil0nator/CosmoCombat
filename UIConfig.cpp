@@ -116,7 +116,7 @@ void configure_UI_Elements(SDL_Renderer* renderer) { //root function, called in 
 	MM_ToGame.setCallback(&MM_toShipView);
 	MM_ToGame.setTextures(UI_B3,UI_B3_H,UI_B3_C);
 	mainPage.add(&MM_ToGame);
-	MM_ToGame.createBgElements(UI_B_BG1);
+	//MM_ToGame.createBgElements(UI_B_BG1);
 
 
 	MM_ToSettings = Button(MMSX, MMSY+MMBH+10, MMBW, MMBH);
@@ -125,7 +125,7 @@ void configure_UI_Elements(SDL_Renderer* renderer) { //root function, called in 
 	MM_ToSettings.renderOwnText(renderer, "Options", fontAstro[20], SLOW);
 	MM_ToSettings.setTextures(UI_B3,UI_B3_H,UI_B3_C);
 	mainPage.add(&MM_ToSettings);
-	MM_ToSettings.createBgElements(UI_B_BG1);
+	//MM_ToSettings.createBgElements(UI_B_BG1);
 
 
 	MM_EditShip = Button(MMSX, MMSY + 2*(MMBH) + 20,MMBW, MMBH);
@@ -135,7 +135,7 @@ void configure_UI_Elements(SDL_Renderer* renderer) { //root function, called in 
 	MM_EditShip.setCallback(&MM_toEditShip);
 	MM_EditShip.setTextures(UI_B3,UI_B3_H,UI_B3_C);
 	mainPage.add(&MM_EditShip);
-	MM_EditShip.createBgElements(UI_B_BG1);
+	//MM_EditShip.createBgElements(UI_B_BG1);
 
 
 	MM_Quit = Button(0, 0, width / 10, height / 10);

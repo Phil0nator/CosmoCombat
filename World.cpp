@@ -4,7 +4,7 @@
 #define CHUNK_AMT_FG 20
 #define CHUNK_AMT_BG 10
 
-#define SMALL_STAR_AMT 100
+#define SMALL_STAR_AMT 10000
 #define MED_STAR_AMT 5
 #define BIG_STAR_AMT 1
 #define ASTEROID_AMT 10
@@ -97,7 +97,7 @@ void World_INIT(SDL_Renderer *r, int seed)
 	dimensions.x = 20000;
 	dimensions.y = 20000;
 
-	srand(seed);
+	srand(time(NULL));
 	smallStarSource.h = 50;
 	smallStarSource.w = 50;
 	smallStarSource.x = 0;

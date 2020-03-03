@@ -9,13 +9,13 @@ struct Color {
 	Uint8 a = 255;
 
 
-}; 
+};
 /**
 *\brief easy-access data structure for rgba data
 *\warning uses unsigned 8 bit integers
 **/
 
-Color color(int r, int g, int b); 
+Color color(int r, int g, int b);
 /**
 *\brief constructor for a Color struct, with default (255) alpha value
 **/
@@ -37,8 +37,13 @@ Color randomColor();
 **/
 void resetRenderColor(SDL_Renderer* renderer);
 SDL_Color color(Color color);
-SDL_Color sdlColor(int r, int g, int b);
+SDL_Color sdlColor(int r, int g, int b);/**
+*\Brief easy constructor for the SDL_Color struct (uses default alpha 255)
+**/
 SDL_Color sdlColor(int r, int g, int b, int a);
+/**
+*\Brief easy constructor for the SDL_Color struct, using alpha
+**/
 void print(Color inp);
 /**
 *\brief pretty print for a color struct

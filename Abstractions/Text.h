@@ -2,56 +2,22 @@ enum TextQuality{
 
 	SLOW, MEDIUM, FAST
 
-};
-
-TTF_Font *loadFont(const char* path, Uint32 size) {
-
-	return TTF_OpenFont(path,size);
-
-}
-
-SDL_Texture* renderText(SDL_Renderer *renderer,const char *text, TTF_Font* font, Color c, TextQuality flags) {
-
-	SDL_Texture* out;
-	SDL_Surface* primary;
-	if (flags == FAST) {
-		primary = TTF_RenderText_Solid(font,text, color(c));
-	}
-	else if (flags == MEDIUM) {
-		primary = TTF_RenderText_Shaded(font, text,color(c), sdlColor(0,0,0,0));
-	}
-	else if (flags == SLOW) {
-		primary = TTF_RenderText_Blended(font, text, color(c));
-	}
-	else {
-		primary = TTF_RenderText_Solid(font, text, color(c));
-	}
-
-	out = SDL_CreateTextureFromSurface(renderer, primary);
-	//SDL_FreeSurface(primary);
-	return out;
-}
-SDL_Texture* renderText(SDL_Renderer* renderer, SDL_Texture* dest, const char *text, TTF_Font* font, Color c, TextQuality flags){
-
-	SDL_Surface* primary;
-	SDL_Texture* intermediary;
-	if (flags == FAST) {
-		primary = TTF_RenderText_Solid(font,text, color(c));
-	}
-	else if (flags == MEDIUM) {
-		primary = TTF_RenderText_Shaded(font, text,color(c), sdlColor(0,0,0,0));
-	}
-	else if (flags == SLOW) {
-		primary = TTF_RenderText_Blended(font, text, color(c));
-	}
-	else {
-		primary = TTF_RenderText_Solid(font, text, color(c));
-	}
-	intermediary = SDL_CreateTextureFromSurface(renderer, primary);
-	//SDL_FreeSurface(primary);
-	
-	
-	SDL_RenderCopy(renderer,intermediary, NULL, &getTextureRect(intermediary));
-	SDL_DestroyTexture(intermediary);
-	return dest;
-}
+};/**
+*
+*\brief enumerated value for the quality of text. SLOW looks best but is expensive, FAST looks worse but is much cheaper
+**/
+TTF_Font *loadFont(const char* path, Uint32 size);/**
+*\brief load a .ttf file into a font pointer
+*\param path relative path to .tff file
+*\param size the text size to render to (See SDL_TTF online)
+**/
+SDL_Texture* renderText(SDL_Renderer *renderer,const char *text, TTF_Font* font, Color c, TextQuality flags);/**
+*\breif render words to new texture using font, color, and textQuality flags
+*\warning will allocate a new SDL_Texture
+**/
+SDL_Texture* renderText(SDL_Renderer* renderer, SDL_Texture* dest, const char *text, TTF_Font* font, Color c, TextQuality flags);
+/**
+*\breif render words to an existing texture using font, color, and textQuality flags
+*\param dest the destination texture for the rendering
+**/
+#include "Text.cpp"

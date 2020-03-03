@@ -1,70 +1,26 @@
 //misc
 
-int randint(int min, int max);
-float fclamp (float val, float min, float max);
-void smoothFinish(SDL_Window* window, SDL_Renderer* renderer);
-void quickInit();
-void quickInit(int colorDepth, int samples);
+int randint(int min, int max); /**
+*\brief gets a random integer within the specified range (Uses semi random time)
+**/
+float fclamp (float val, float min, float max); /**
+*\brief standard constrain function using floats
+**/
+void smoothFinish(SDL_Window* window, SDL_Renderer* renderer);/**
+*\brief uses standard SDL Cleanup methods to properly deallocate memory and close program
+*\warning after this call, the pointers given as perameters will become unsafe. Do not use them after calling this.
+**/
+void quickInit(); /**
+*\brief initialize SDL with some common default values
+**/
+void quickInit(int colorDepth, int samples); /**
+*\breif initialize SDL with common defaults, and your own color depth and samples
+**/
+int now(); /**
+*\brief get current time since epoch
+**/
+int clamp(int val, int min, int max); /**
+*\brief standard constrain function
+**/
 
-int randint(int min, int max) {
-	return min + rand() % (max - min);
-}
-
-int now(){
-
-	return chrono::system_clock::now().time_since_epoch().count();
-
-}
-
-int clamp(int val, int min, int max){
-
-	if(val<min){
-		return min;
-	}
-	if(val>max){
-		return max;
-	}
-	return val;
-
-}
-
-float fclamp (float val, float min, float max){
-	if(val<min){
-		return min;
-	}
-	if(val>max){
-		return max;
-	}
-	return val;
-}
-
-void smoothFinish(SDL_Window *window,SDL_Renderer*renderer) { //smoothly close and finish data buffers for the end of the program
-	SDL_DestroyWindow(window);
-	SDL_DestroyRenderer(renderer);
-	SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
-	SDL_Quit();
-}
-void quickInit() {
-    quickInit(8, 2);
-}
-void quickInit(int colorDepth ,int samples) {
-	// should be       8             2
-	//most likely
-	SDL_Init(SDL_INIT_EVERYTHING);
-	TTF_Init();
-
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, colorDepth);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, colorDepth);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, colorDepth);
-    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, colorDepth);
-
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
-
-    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, samples);
-
-    SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-}
-
-
-//anti-error main method;
+#include "Misc.cpp"

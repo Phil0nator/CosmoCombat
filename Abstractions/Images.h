@@ -2,73 +2,41 @@
 
 //Images
 
-void image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect source, SDL_Rect dest);
+void image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect source, SDL_Rect dest);/**
+*\breif passees values through to SDl_RenderCopy()
+*\param source used to crop source image. If you just want the whole image, use (SDL_Rect){0,0,image.nativeWidth, image.nativeHeight}
+*\param dest used to place the image onto the screen. The rect's x and y will be x and y on the screen, and w and h will be the dimentions of the drawing
+**/
 void image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect source, SDL_Rect dest, float r, SDL_Point center, SDL_RendererFlip flags);
-void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y);
-void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, float r, SDL_Point center, SDL_RendererFlip flags);
+/**
+*\breif passees values through to SDl_RenderCopy(), using rotation
+*\param source used to crop source image. If you just want the whole image, use (SDL_Rect){0,0,image.nativeWidth, image.nativeHeight}
+*\param dest used to place the image onto the screen. The rect's x and y will be x and y on the screen, and w and h will be the dimentions of the drawing
+*\param center point relative to image itself to rotate around. Example: Image w and h = 100, center would be 50,50
+*\param flags SDL_RenderFlip flags. flip horizontal,vertical, or none
+**/
 
-SDL_Point getTextureSize(SDL_Texture* texture);
-Sprite * loadImage(SDL_Renderer* renderer, const char* path);
-SDL_Rect getTextureRect(SDL_Texture* texture);
+void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y);/**
+*\brief draw image at x and y using native dimentions, and without cropping
+*
+**/
+void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, float r, SDL_Point center, SDL_RendererFlip flags);/**
+*\brief draw an image with native size, but using rotation.
+*\param center point relative to image itself to rotate around. Example: Image w and h = 100, center would be 50,50
+*\param flags SDL_RenderFlip flags. flip horizontal,vertical, or none
+**/
+void clearTexture(SDL_Renderer* renderer, SDL_Texture* texture); /**
+*\brief clear contents of existing texture to transparent
+**/
 
-void image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect source, SDL_Rect dest) {
-
-	SDL_RenderCopy(renderer, texture, &source, &dest);
-
-}
-void image(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Rect source, SDL_Rect dest, float r, SDL_Point center, SDL_RendererFlip flags) {
-
-	SDL_RenderCopyEx(renderer, texture, &source, &dest, r,&center, flags);
-
-}
-void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y) {
-
-	int w, h;
-	SDL_QueryTexture(texture, NULL,NULL,&w,&h);
-	SDL_RenderCopy(renderer, texture, NULL, &(SDL_Rect){x,y,w,h});
-
-}
-void quickImage(SDL_Renderer* renderer, SDL_Texture* texture, int x, int y, float r, SDL_Point center, SDL_RendererFlip flags) {
-
-	int w, h;
-	SDL_QueryTexture(texture, NULL, NULL, &w, &h);
-	SDL_RenderCopyEx(renderer, texture, NULL, &(SDL_Rect){x,y,w,h}, r, &center, flags);
-
-}
-void clearTexture(SDL_Renderer* renderer, SDL_Texture* texture){
-
-	SDL_SetRenderTarget(renderer,texture);
-	SDL_SetRenderDrawColor(renderer, 0,0,0,0);
-	SDL_RenderClear(renderer);
-	//quickFillRect(renderer, 0,0,ship->w,ship->h,color(0,0,0,0));
-	SDL_SetRenderTarget(renderer, NULL);
-
-}
-
-SDL_Point getTextureSize(SDL_Texture* texture) {
-
-	int w, h;
-	if(texture==nullptr){
-		return Point(0,0);
-	} //prevent seg fault for null pointers
-	//cout << texture << endl;
-	SDL_QueryTexture(texture, NULL, NULL, &w,&h);
-	return Point(w,h);
-}
-Sprite * loadImage(SDL_Renderer*renderer,const char* path) {
-
-	SDL_Surface* s = IMG_Load(path);
-	//SDL_Texture* out = SDL_CreateTextureFromSurface(renderer, s);
-
-	Sprite * out = new Sprite();
-	//out->source= s;
-	out->texture = SDL_CreateTextureFromSurface(renderer, s);
-	SDL_FreeSurface(s);
-	SDL_UnlockTexture(out->texture);
-	return out;
-
-}
-SDL_Rect getTextureRect(SDL_Texture* texture) {
-	SDL_Point dims = getTextureSize(texture);
-	return (SDL_Rect){0,0,dims.x,dims.y};
-}
+SDL_Point getTextureSize(SDL_Texture* texture); /**
+*\brief gets the native dimentions of a texture and returns them through an SDL_Point contianer
+**/
+Sprite * loadImage(SDL_Renderer* renderer, const char* path);/**
+*\brief load image from disk into Sprite pointer
+*\param path The relative path to image file
+**/
+SDL_Rect getTextureRect(SDL_Texture* texture);/**
+*\brief get native dimentions of texture in the form of a SDL_Rect struct (x and y will always = 0)
+**/
+#include "Images.cpp"
