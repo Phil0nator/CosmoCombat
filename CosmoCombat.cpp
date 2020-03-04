@@ -1,4 +1,4 @@
-
+//L:3167
 #include "SDL_timer.h"
 #include "CosmoCombat.h"
 #undef main
@@ -26,7 +26,7 @@ bool loaded = false;
 
 //Global Variables
 void endGame() {
-	
+
 	running = false;
 
 }
@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
 	//SDL_Thread *splashThread = SDL_CreateThread(SplashScreen, "splashscreen",nullptr);
 
 	startup(nullptr);
-	
+
 	//SDL_ShowWindow(window);
 	//SDL_RaiseWindow(window);
 	//SDL_SetWindowInputFocus(window);
