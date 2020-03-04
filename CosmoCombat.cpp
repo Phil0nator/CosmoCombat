@@ -5,7 +5,7 @@
 
 #define CAP_FRAMERATE true
 #define FRAME_CAP 120
-
+#define FRAME_COUNTER true
 #define WORLD_DIV_FACTOR 10000
 
 

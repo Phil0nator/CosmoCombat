@@ -38,7 +38,6 @@ using namespace std;
 using namespace TextureHandling;
 
 #include "Misc.h"
-#include "Misc.cpp"
 #include "Colors.h"
 #include "Geometry.h"
 #include "Images.h"
