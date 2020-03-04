@@ -4,6 +4,8 @@
 #define FPS12 1000/12
 #define FPS6  1000/6
 
+bool allSpritesLoaded = false;
+int spritesLoaded = 0;
 
 vector<SDL_Texture* > sprites;
 vector<AnimationInstance *> anims;
@@ -17,6 +19,7 @@ Animation Shoulders1;
 Animation Arms1;
 
 
+
 // </animations>
 
 void loadSprites(SDL_Renderer *renderer)
@@ -28,14 +31,19 @@ void loadSprites(SDL_Renderer *renderer)
 		SDL_Texture* sp = loadImage(renderer,string("assets\\sprites\\").append(to_string(i).append(".PNG")).c_str());
 		cout << clearLine << i << "/" << 16<<"                ";
 		sprites.push_back(sp);
+		spritesLoaded++;
 	}
 	//load animations
 	cout << endl << "Loading Animations: " << endl;
 	Fire1 = Animation(file_fix("assets\\Animations\\world\\fire1\\"),24,FPS24);
+	spritesLoaded += 24;
 	Shoulders1 = Animation(file_fix("assets\\Animations\\player\\Shoulders1\\"), 24,FPS24);
+	spritesLoaded += 24;
 	Arms1 = Animation(file_fix("assets\\Animations\\player\\Arms1\\"),24,FPS24);
+	spritesLoaded += 24;
 
-
+	allSpritesLoaded = true;
+	cout << "Loaded Sprites: " << spritesLoaded << endl;
 }
 
 //used each frame to tick all active animations

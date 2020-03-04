@@ -1,0 +1,38 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "Abstractions/**",
+                "C:/SDL/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.17763.0",
+            "compilerPath": "C:/MinGW/bin/g++.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x86",
+            "compilerArgs": [
+                "-I C:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0.10/i686-w64-mingw32/include/SDL2 ",
+                "-I C:/SDL/SDL2_ttf-2.0.15/i686-w64-mingw32/include/SDL2 ",
+                "-I C:/SDL/SDL2_image-devel-2.0.5-mingw/SDL2_image-2.0.5/i686-w64-mingw32/include/SDL2",
+                "-L C:/mingw_dev_lib/lib -LC:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0.10/i686-w64-mingw32/lib ",
+                "-L C:/SDL/SDL2_image-devel-2.0.5-mingw/SDL2_image-2.0.5/i686-w64-mingw32/lib ",
+                "-L C:/SDL/SDL2_ttf-2.0.15/i686-w64-mingw32/lib",
+                "-Wreturn-type",
+                "-l mingw32 ",
+                "-l SDL2main ",
+                "-l SDL2 ",
+                "-l SDL2_image ",
+                "-l SDL2_ttf",
+                "-o CosmoCombat",
+                "-fpermissive"
+            ]
+        }
+    ],
+    "version": 4
+}

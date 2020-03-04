@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "g++.exe build active file",
+      "command": "C:/MinGW/bin/g++.exe",
+      "args": [
+        "-g",
+        "${fileDirname}\\CosmoCombat.cpp",
+        
+        "-I C:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0.10/i686-w64-mingw32/include/SDL2/",
+        "-I C:/SDL/SDL2_ttf-2.0.15/i686-w64-mingw32/include/SDL2 ",
+        "-I C:/SDL/SDL2_image-devel-2.0.5-mingw/SDL2_image-2.0.5/i686-w64-mingw32/include/SDL2",
+        "-L C:/mingw_dev_lib/lib -LC:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0.10/i686-w64-mingw32/lib ",
+        "-L C:/SDL/SDL2_image-devel-2.0.5-mingw/SDL2_image-2.0.5/i686-w64-mingw32/lib ",
+        "-L C:/SDL/SDL2_ttf-2.0.15/i686-w64-mingw32/lib",
+        "-Wreturn-type",
+        "-fpermissive",
+        "-l mingw32 ",
+        "-l SDL2main ",
+        "-l SDL2 ",
+        "-l SDL2_image ",
+        "-l SDL2_ttf",
+        "-o CosmoCombat"
+        
+    ],
+      "options": {
+
+      },
+      "problemMatcher": ["$gcc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+    
+}

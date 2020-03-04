@@ -1,7 +1,7 @@
-#include <iostream>
+
 #include <cstddef>
 #include "Abstractions/SDL_Abstractions.h" //some simple functions to make SDL a little easier to work with shorthand
-
+#include <iostream>
 #pragma once
 
 
@@ -142,9 +142,6 @@ struct GamePart { //this is the type of part that goes on ships, it stores coord
 	float rot = 0;
 	Part origin; //reference to the extra info from the above struct ^
 	int sprite = 0;
-
-
-
 };
 
 //classifications of parts for functionality
@@ -239,7 +236,7 @@ SDL_Point localToGlobalShip(int x, int y){
 
 
 
-//UIConfig
+///UIConfig
 void configure_UI_Elements(SDL_Renderer* renderer);
 
 
@@ -268,6 +265,8 @@ void handleAnimations();
 bool keyPressed(SDL_Keycode keyCode);
 
 #include "assetHandling.cpp" //load images, and store them
+#include "loadingScreen.cpp" // loading screen handling by ALEX HARLAN
+
 #include "ItemData.cpp" //store and initialize data about items, rooms, etc...
 #include "Hitbox.h" //collition utilities
 #include "GameObjects.cpp" //handles solid objects that exist in the world
