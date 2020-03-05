@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstddef>
 #include "Abstractions/SDL_Abstractions.h" //some simple functions to make SDL a little easier to work with shorthand
+
 #include "linuxComp.h"
 string loadingMessage = "Loading";
 #pragma once
@@ -9,104 +10,22 @@ string loadingMessage = "Loading";
 #define ICON_DIM 75 //dimention of icons
 #define SPRITE_DIM 100 // dimention of Sprites (the size of rooms in a ship for example)
 #define FSDIM 1000 //full-size-dimention: the original size of the images, used for playerView
-#define SPRITE_ASSET_DIMENTION 1920
-
-//fonts:
-TTF_Font *fontAstro[50];
+ //will include "SDL_Abstractions.h", which includes the all the other libraries
 
 
 //definitions of different gamestates, each of which has a different set of functions to be called each frame
 enum gameState {
 
-	LOADING, MAIN_MENU, BUILD_SHIP, SHIP_VIEW, PLAYER_VIEW, CUSTOMIZE_PLAYER, NONE_STATE
+	MAIN_MENU, BUILD_SHIP, SHIP_VIEW, PLAYER_VIEW, CUSTOMIZE_PLAYER, NONE_STATE, LOADING
 
 };
 
 
 enum Direction{
 
-	UP ,DOWN,LEFT,RIGHT,UPLEFT,UPRIGHT,DOWNLEFT,DOWNRIGHT,NONE_DIRECTION
+	UP ,DOWN,LEFT,RIGHT,UPLEFT,UPRIGHT,DOWNLEFT,DOWNRIGHT
 
 };
-Direction dir(int rot){
-	rot=rot % 360; //bring back to earth
-
-	if(rot%45!=0)return NONE_DIRECTION; //if not a snapping-rotation
-
-	switch (rot) {
-		case 0:
-			return UP;
-			break;
-		case 90:
-			return LEFT;
-			break;
-		case 180:
-			return DOWN;
-			break;
-	  case 270:
-		 	return RIGHT;
-			break;
-		default:
-			return NONE_DIRECTION;
-			break;
-	}
-	return NONE_DIRECTION;
-} //turn a float into the Direction enum
-
-float rotFromDir(Direction dir){
-
-	switch(dir){
-		case UP:
-			return 0;
-			break;
-		case DOWN:
-			return 180;
-			break;
-		case LEFT:
-			return 270;
-			break;
-		case RIGHT:
-			return 90;
-			break;
-		case UPRIGHT:
-			return 45;
-			break;
-		case DOWNRIGHT:
-			return 135;
-			break;
-		case DOWNLEFT:
-			return 215;
-			break;
-		case UPLEFT:
-			return 315;
-			break;
-		default:
-			return 0;
-	}
-	return 0;
-
-}
-
-SDL_Point vDir(Direction d){
-
-	switch (d){
-		case UP:
-			return Point(0,-1);
-			break;
-		case DOWN:
-			return Point(0,1);
-			break;
-		case LEFT:
-			return Point(-1,0);
-			break;
-		case RIGHT:
-			return Point(1,0);
-			break;
-
-	}
-	return Point(0,0);
-
-} //turn a Direction enum into a translation vector
 
 
 //big global variables:
@@ -119,14 +38,15 @@ extern SDL_Renderer *renderer;
 extern SDL_Surface *screen;
 extern SDL_Window *window;
 
-//zoom
-extern float playerView_ZoomFactor = 1.0;
-
-
 void endGame();
 
 //assetHandling:
 #include "Animations.cpp"
+
+vector<SDL_Texture* > sprites;
+vector<AnimationInstance* > anims;
+
+
 struct Part { //Part Structs store the game-mechanic information about parts, such as their weight and thrust, etc...
 	//This structure is NOT what goes in ships, as it stores more information than is necessary
 	int num = 0;
@@ -170,7 +90,8 @@ Part part(int index);
 GamePart gamePart(int index);
 
 //Ships:
-struct GameShip {
+/*
+struct GameShip { //DEPRICATING FOR AN EXTENTION OF GAMEOBJECT CLASS
 	//parts/contents:
 	vector<vector<GamePart>> contents = vector<vector<GamePart>>();
 	vector<SDL_Point> engines = vector<SDL_Point>();
@@ -200,11 +121,14 @@ struct GameShip {
 	//visuals
 	SDL_Texture* texture;
 	SDL_Texture* overlayTexture;
-	SDL_Texture* mapTexture;
-	SDL_Texture* animationsTexture;
+	Sprite texture;
+	Sprite overlayTexture;
+	Sprite mapTexture;
+	Sprite animationsTexture;
 
 	bool needsOverlay;
-	AnimationInstance exhaust;
+	AnimationInstance *exhaust;
+
 
 
 
@@ -213,6 +137,8 @@ struct GameShip {
 
 };
 
+extern GameShip* current_Ship;
+*/
 Part current_Part; //part being held in the ship build menu
 GameShip *current_Ship;//ship that the player is currently flying (ship view)
 
@@ -271,17 +197,17 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event);
 
 void handleAnimations();
 
-bool keyPressed(SDL_Keycode keyCode);
 
+#include "Hitbox.h" //collition utilities
 #include "assetHandling.cpp" //load images, and store them
 #include "ItemData.cpp" //store and initialize data about items, rooms, etc...
 #include "Hitbox.h" //collition utilities
-#include "GameObjects.cpp" //handles solid objects that exist in the world
-
 #include "Player.h" //player class
+#include "GameObjects.cpp" //handles solid objects that exist in the world
 #include "Ship.cpp" //functions for the GameShip data structure
+#include "GameObjects.cpp" //handles solid objects that exist in the world
+//#include "Player.cpp" //player class
 
 #include "GameStates.cpp" //handling for each of the root gamestate functions
 #include "UIConfig.cpp" //configure the UI, and callbacks, etc...
 #include "World.cpp" // handling of the world (Alex Harlan)
-#include "EventHandling.cpp" // smooth keyboard input, mouse scrolling, general event stuff etc...

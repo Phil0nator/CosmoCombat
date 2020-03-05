@@ -2,10 +2,12 @@
 //lots of general purpose stuff
 
 
+
+Part current_Part; //part being held in the ship build menu
+GameShip *current_Ship;//ship that the player is currently flying (ship view)
 bool BSP_Rotated = false;
 time_t lastShipUpdate = 1;
 bool bsp_pickupClick = false;
-SDL_Texture* startup_message_texture;
 
 //event handlers
 void BSP_Events(SDL_Event* event){
@@ -29,7 +31,7 @@ void BSP_Events(SDL_Event* event){
 
 
 		}else if(/*event->button.clicks == 1&&*/current_Part.num==0&&event->type==SDL_MOUSEBUTTONUP){//pick up existing parts
-			if(mx>sx&&!bsp_pickupClick&&mx<ex){
+			if(mx>sx&&!bsp_pickupClick){
 				current_Part = part(bluePrints.at(0).contents.at((mx - sx) / SPRITE_DIM).at(my / SPRITE_DIM).origin.num);
 				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, 0,0);
 				bsp_pickupClick=true;
@@ -53,33 +55,30 @@ void Ship_View_Events(SDL_Event* event){
 	//handle key events:
 
 	bool engineUsed = false;
-	if (keyPressed(SDLK_w)) { //w
+	if (event->key.state == SDLK_w) { //w
 		//degrees(current_Ship->acceleration)*spriteDimention
-		float dx = cos(radians((current_Ship->rot)+90)) * .05; // last = size
-		float dy = sin(radians((current_Ship->rot)+90)) * .05;
+		float dx = cos(radians((current_Ship->rot)+90)) * current_Ship->acceleration*SPRITE_DIM; // last = size
+		float dy = sin(radians((current_Ship->rot)+90)) * current_Ship->acceleration*SPRITE_DIM;
 
 		current_Ship->velx+=dx;
 		current_Ship->vely+=dy;
 		engineUsed=true;
 	}
-	if (keyPressed(SDLK_a)) {//a
+	if (event->key.state == SDLK_a) {//a
 		current_Ship->rotvel-=current_Ship->angularAcceleration;
 		engineUsed=true;
 	}
-	if (keyPressed( SDLK_d)) { //d
+	if (event->key.state == SDLK_d) { //d
 		current_Ship->rotvel+=current_Ship->angularAcceleration;
 		engineUsed=true;
 	}
-	if (keyPressed(SDLK_s)) { //s
+	if (event->key.state == SDLK_s) { //s
 	}
-	if(keyPressed(SDLK_ESCAPE)){
+	if(event->key.keysym.sym == SDLK_ESCAPE){
 		state = MAIN_MENU;
-
 	}
-	if(keyPressed(SDLK_SPACE)){
-
-		state=PLAYER_VIEW;
-
+	if(event->key.keysym.sym==SDLK_SPACE){
+		state = PLAYER_VIEW;
 	}
 
 	if (engineUsed) {
@@ -103,69 +102,18 @@ void Ship_View_Events(SDL_Event* event){
 	}
 
 }
-void Player_View_Events(SDL_Event* event){
-	if(keyPressed(SDLK_SPACE)){
 
-		//state=SHIP_VIEW;
-
-	}
-	if (keyPressed(SDLK_w)) { //w
-		me.vely-=5;
-		me.rot = UP;
-	}
-	if (keyPressed(SDLK_a)) {//a
-		me.velx-=5;
-		me.rot = LEFT;
-	}
-	if (keyPressed(SDLK_d)) { //d
-		me.velx+=5;
-		me.rot = RIGHT;
-	}
-	if (keyPressed(SDLK_s)) { //s
-		me.vely+=5;
-		me.rot = DOWN;
-	}
-
-	if(keyPressed(SDLK_s)&&keyPressed(SDLK_d)){
-		me.rot = DOWNRIGHT;
-	}else if (keyPressed(SDLK_s)&&keyPressed(SDLK_a)){
-		me.rot = DOWNLEFT;
-	}else if (keyPressed(SDLK_w)&&keyPressed(SDLK_d)){
-		me.rot = UPRIGHT;
-	}else if (keyPressed(SDLK_w)&&keyPressed(SDLK_a)){
-		me.rot = UPLEFT;
-	}
-
-	if(keyPressed(SDLK_ESCAPE)){
-		state = SHIP_VIEW;
-
-	}
-}
-
-void GameStateEventHandler(SDL_Event* event){
+void eventHandler(SDL_Event* event){
 
 	if (state == BUILD_SHIP) {
 		BSP_Events(event);
 	}else if (state == SHIP_VIEW){
 		Ship_View_Events(event);
-	}else if (state == PLAYER_VIEW){
-		Player_View_Events(event);
 	}
 
 }
 
 //root functions
-void root_loading_startup(){
-	clearTexture(renderer, startup_message_texture);
-	SDL_SetRenderTarget(renderer, startup_message_texture);
-
-	renderText(renderer, startup_message_texture, loadingMessage.c_str(),fontAstro[25],color(255,255,255),SLOW);
-	cout << clearLine<< loadingMessage.c_str() << "                                                                                                     ";
-
-	SDL_SetRenderTarget(renderer,NULL);
-	quickImage(renderer, startup_message_texture, width/2,height/2);
-
-}
 void root_Main_Menu() {
 
 	UI_Main_Menu();
@@ -178,8 +126,8 @@ void setCurrentPart(Part p) {
 void root_Build_Ship(SDL_Renderer* renderer, SDL_Surface* screen, SDL_Event* event) {
 
 	UI_Build_Ship(renderer);
-
-	drawShip(renderer,&bluePrints.at(0));
+	bluePrints.at(0).drawBSP();
+	//drawShip(renderer,&bluePrints.at(0));
 	int mx, my;
 	SDL_GetMouseState(&mx, &my);
 	if (&current_Part != nullptr) {
@@ -221,7 +169,7 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 //TODO
 void root_Player_View(){
 
-	drawShipMap(current_Ship);
+
 	me.drawLocal();
 
 }
