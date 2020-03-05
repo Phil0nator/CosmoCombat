@@ -93,7 +93,8 @@ Part part(int index);
 GamePart gamePart(int index);
 
 //Ships:
-struct GameShip {
+/*
+struct GameShip { //DEPRICATING FOR AN EXTENTION OF GAMEOBJECT CLASS
 	//parts/contents:
 	vector<vector<GamePart>> contents = vector<vector<GamePart>>();
 	vector<SDL_Point> engines = vector<SDL_Point>();
@@ -141,8 +142,15 @@ struct GameShip {
 	bool enginesOn = false;
 
 };
+<<<<<<< Updated upstream
 
 extern GameShip* current_Ship;
+=======
+*/
+Part current_Part; //part being held in the ship build menu
+GameShip *current_Ship;//ship that the player is currently flying (ship view)
+
+>>>>>>> Stashed changes
 
 extern vector<GameShip> bluePrints;
 SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* ship);
@@ -202,10 +210,20 @@ void handleAnimations();
 #include "Hitbox.h" //collition utilities
 #include "assetHandling.cpp" //load images, and store them
 #include "ItemData.cpp" //store and initialize data about items, rooms, etc...
+<<<<<<< Updated upstream
+=======
+#include "Hitbox.h" //collition utilities
+#include "Player.h" //player class
+#include "GameObjects.cpp" //handles solid objects that exist in the world
+>>>>>>> Stashed changes
 #include "Ship.cpp" //functions for the GameShip data structure
 #include "GameObjects.cpp" //handles solid objects that exist in the world
 
+<<<<<<< Updated upstream
 #include "Player.cpp" //player class
+=======
+
+>>>>>>> Stashed changes
 #include "GameStates.cpp" //handling for each of the root gamestate functions
 #include "UIConfig.cpp" //configure the UI, and callbacks, etc...
 #include "World.cpp" // handling of the world (Alex Harlan)
