@@ -29,7 +29,7 @@ void BSP_Events(SDL_Event* event){
 
 
 		}else if(/*event->button.clicks == 1&&*/current_Part.num==0&&event->type==SDL_MOUSEBUTTONUP){//pick up existing parts
-			if(mx>sx&&!bsp_pickupClick){
+			if(mx>sx&&!bsp_pickupClick&&mx<ex){
 				current_Part = part(bluePrints.at(0).contents.at((mx - sx) / SPRITE_DIM).at(my / SPRITE_DIM).origin.num);
 				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, 0,0);
 				bsp_pickupClick=true;

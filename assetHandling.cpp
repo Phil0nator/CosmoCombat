@@ -3,7 +3,7 @@
 #define FPS60 1000/60
 #define FPS12 1000/12
 #define FPS6  1000/6
-#define ASSET_NUMBER 16
+#define ASSET_NUMBER 17
 
 vector<Sprite *> sprites;
 vector<AnimationInstance *> anims;

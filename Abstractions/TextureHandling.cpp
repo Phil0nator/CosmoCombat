@@ -3,7 +3,7 @@ namespace TextureHandling{
 
   class Sprite{
   public:
-    SDL_Texture *texture;
+    SDL_Texture *texture = nullptr;
     SDL_Surface *source;
     int w = 0;
     int h = 0;

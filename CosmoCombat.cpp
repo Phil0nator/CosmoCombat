@@ -31,6 +31,11 @@ void endGame() {
 
 }
 
+
+
+
+
+
 //configure necessary SDL stuffs
 void setup() {
 	//fullscreen, opengl window
@@ -68,37 +73,7 @@ int startup(void* ptr){
 	return 0;
 }
 
-void SplashScreen(void *a){
-	SDL_Init(SDL_INIT_EVERYTHING);
-	quickInit(8,2);
-	SDL_Window* splash = SDL_CreateWindow("CCLoad", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_ALWAYS_ON_TOP);
-	SDL_Renderer* sRenderer = SDL_CreateRenderer(splash,-1, SDL_RENDERER_SOFTWARE|SDL_RENDERER_PRESENTVSYNC);
-	SDL_Surface* sScreen = SDL_GetWindowSurface(splash);
 
-	SDL_ShowWindow(splash);
-
-	SDL_RaiseWindow(splash);
-	SDL_Event event;
-	while(true){
-
-		while(SDL_PollEvent(&event)){
-			if (event.type == SDL_QUIT) {
-				running = false;
-				break;
-			}
-		}
-		SDL_RenderClear(sRenderer);
-
-		quickFillRect(sRenderer, 0,0,500,500,color(255,0,255));
-
-		SDL_RenderPresent(sRenderer); //update display
-
-
-		if(loaded)break;
-	}
-	SDL_DestroyWindow(splash);
-	SDL_DestroyRenderer(sRenderer);
-}
 
 
 int main(int argc, char* argv[])
@@ -111,22 +86,13 @@ int main(int argc, char* argv[])
 	setup(); //create window, and setup renderer and screen
 	setDefaultColor(color(255,255,255)); //sets default screen background color;
 
-	//texture used to display loading messages on startup:
 	startup_message_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,width,height);
 	SDL_SetTextureBlendMode(startup_message_texture,SDL_BLENDMODE_BLEND);
 
-	//begin opengl context for real
-	//SDL_RenderClear(renderer);
-	//SDL_RenderPresent(renderer);
-	//SDL_HideWindow(window);
-	//SDL_Thread *splashThread = SDL_CreateThread(SplashScreen, "splashscreen",nullptr);
-
 	startup(nullptr);
 
-	//SDL_ShowWindow(window);
-	//SDL_RaiseWindow(window);
-	//SDL_SetWindowInputFocus(window);
-	//Game Loop:
+	//test:
+
 	SDL_Event event;
 	while (running) {
 		//event loop:
@@ -162,6 +128,8 @@ int main(int argc, char* argv[])
 			World_draw(renderer, Point(-current_Ship->gx,-current_Ship->gy));
 			SDL_GUI_DISPLAY(renderer, &event);
 			root_Ship_View(renderer, &event);
+			handleGameObjects(renderer);
+
 			cout << clearLine << current_Ship->gx << " : "<<current_Ship->gy << "                             ";
 
 		} else if (state == PLAYER_VIEW){

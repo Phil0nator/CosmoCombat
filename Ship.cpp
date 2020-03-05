@@ -210,7 +210,7 @@ void clearShipOverlay(GameShip* ship){
 }
 
 void renderShipOverlay(GameShip* ship){
-	//TODO make updated bool for animations, make engines an array 
+	//TODO make updated bool for animations, make engines an array
 	if(ship->enginesOn){
 		ship->exhaust.tick();
 		SDL_SetRenderTarget(renderer, ship->animationsTexture);
@@ -257,7 +257,8 @@ void drawGameShip(SDL_Renderer* renderer, GameShip* ship) { //draw ship for inga
 
 		quickImage(renderer, ship->overlayTexture,(width/2)-(rotCentx),(height/2)-(rotCenty),ship->rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
 		quickImage(renderer, ship->animationsTexture,(width/2)-(rotCentx),(height/2)-(rotCenty),ship->rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
-
+		//cout << "the bruh spot" << endl;
+		
 	}
 
 }

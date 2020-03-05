@@ -1,10 +1,11 @@
-#define SIZE_X 100000
-#define SIZE_Y 100000
+
+#define SIZE_X 20000
+#define SIZE_Y 20000
 #define CHUNK_SIZE 500
 #define CHUNK_AMT_FG 20
 #define CHUNK_AMT_BG 10
 
-#define SMALL_STAR_AMT 10000
+#define SMALL_STAR_AMT 100
 #define MED_STAR_AMT 5
 #define BIG_STAR_AMT 1
 #define ASTEROID_AMT 10
@@ -97,7 +98,7 @@ void World_INIT(SDL_Renderer *r, int seed)
 	dimensions.x = 20000;
 	dimensions.y = 20000;
 
-	srand(time(NULL));
+	srand(seed);
 	smallStarSource.h = 50;
 	smallStarSource.w = 50;
 	smallStarSource.x = 0;
@@ -117,10 +118,9 @@ void World_INIT(SDL_Renderer *r, int seed)
 	asteroidSource.y = 0;
 	asteroidTexture = sprite(7);
 
-	SDL_Rect rect = (SDL_Rect){rand() % CHUNK_SIZE, rand() % CHUNK_SIZE, 3, 3};
 
-	for (std::size_t y = 0; y < CHUNK_AMT_FG; y++)
-		for (std::size_t x = 0; x < CHUNK_AMT_FG; x++)
+	for (size_t y = 0; y < CHUNK_AMT_FG; y++)
+		for (size_t x = 0; x < CHUNK_AMT_FG; x++)
 		{
 			Chunk* chunk = &fGroundChunks[x][y];
 
@@ -130,14 +130,14 @@ void World_INIT(SDL_Renderer *r, int seed)
 			SDL_SetTextureBlendMode(chunk->drawTexture, SDL_BLENDMODE_BLEND);
 			SDL_SetRenderTarget(r, chunk->drawTexture);
 
-			for (std::size_t i = 0; i < SMALL_STAR_AMT / 2; i++)
-				SDL_RenderCopy(r, smallStarTexture, &smallStarSource, &rect);
+			for (size_t i = 0; i < SMALL_STAR_AMT / 2; i++)
+				SDL_RenderCopy(r, smallStarTexture, &smallStarSource, &getQuickRect(rand() % CHUNK_SIZE, rand() % CHUNK_SIZE, 3, 3));
 
 			//SDL_LockTexture(chunk->drawTexture, NULL, NULL, NULL);
 		}
 
-	for (std::size_t y = 0; y < CHUNK_AMT_BG; y++)
-		for (std::size_t x = 0; x < CHUNK_AMT_BG; x++)
+	for (size_t y = 0; y < CHUNK_AMT_BG; y++)
+		for (size_t x = 0; x < CHUNK_AMT_BG; x++)
 		{
 			Chunk* chunk = &bGroundChunks[x][y];
 
@@ -147,8 +147,8 @@ void World_INIT(SDL_Renderer *r, int seed)
 			SDL_SetTextureBlendMode(chunk->drawTexture, SDL_BLENDMODE_BLEND);
 			SDL_SetRenderTarget(r, chunk->drawTexture);
 
-			for (std::size_t i = 0; i < SMALL_STAR_AMT / 2; i++)
-				SDL_RenderCopy(r, smallStarTexture, &smallStarSource, &rect);
+			for (size_t i = 0; i < SMALL_STAR_AMT / 2; i++)
+				SDL_RenderCopy(r, smallStarTexture, &smallStarSource, &getQuickRect(rand() % CHUNK_SIZE, rand() % CHUNK_SIZE, 3, 3));
 		}
 
 	SDL_SetRenderTarget(r, NULL);
@@ -193,8 +193,8 @@ void World_draw(SDL_Renderer *r, SDL_Point offset)
 
 	//cout << ix << ":" << iy << ", " << (ix * CHUNK_SIZE) + offset.x << ":" << (iy * CHUNK_SIZE) + offset.y << endl;
 
-	for (std::size_t y = 0; y < 4; y++)
-		for (std::size_t x = 0; x < 5; x++)
+	for (size_t y = 0; y < 4; y++)
+		for (size_t x = 0; x < 5; x++)
 		{
 			ix = clamp(rbx + x, 0, CHUNK_AMT_BG);
 			iy = clamp(rby + y, 0, CHUNK_AMT_BG);
