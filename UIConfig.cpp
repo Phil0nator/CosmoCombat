@@ -20,6 +20,7 @@ UIElement mainPage;
 UIElement buildShipsPage;
 UIElement buildShipsPage_SideMenu;
 
+TTF_Font* fontAstro[50];
 
 void loadFontAstro() {
 	/*
@@ -43,11 +44,11 @@ void MM_toEditShip() {
 }
 void BSP_toBack() {
 	state = MAIN_MENU;
-	setShipAttributes(&bluePrints.at(0));
+	bluePrints.at(0).setAttributes();
 	print(BSP_Back.text_color);
 	current_Ship = &bluePrints.at(0);
-	bufferShip_mapTexture(current_Ship);
-	bufferShipOverlay(current_Ship);
+	current_Ship->bufferMapTexture();
+	current_Ship->bufferOverlay();
 }
 void BSP_setCurrentPart() {
 	int mx, my;

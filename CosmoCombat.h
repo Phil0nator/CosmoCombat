@@ -11,7 +11,7 @@ string loadingMessage = "Loading";
 #define SPRITE_DIM 100 // dimention of Sprites (the size of rooms in a ship for example)
 #define FSDIM 1000 //full-size-dimention: the original size of the images, used for playerView
  //will include "SDL_Abstractions.h", which includes the all the other libraries
-
+#define SPRITE_ASSET_DIMENTION 1000
 
 //definitions of different gamestates, each of which has a different set of functions to be called each frame
 enum gameState {
@@ -26,7 +26,39 @@ enum Direction{
 	UP ,DOWN,LEFT,RIGHT,UPLEFT,UPRIGHT,DOWNLEFT,DOWNRIGHT
 
 };
+float rotFromDir(Direction dir){
 
+	switch(dir){
+		case UP:
+			return 0;
+			break;
+		case DOWN:
+			return 180;
+			break;
+		case LEFT:
+			return 270;
+			break;
+		case RIGHT:
+			return 90;
+			break;
+		case UPRIGHT:
+			return 45;
+			break;
+		case DOWNRIGHT:
+			return 135;
+			break;
+		case DOWNLEFT:
+			return 215;
+			break;
+		case UPLEFT:
+			return 315;
+			break;
+		default:
+			return 0;
+	}
+	return 0;
+
+}
 
 //big global variables:
 extern int numberOfParts; //total number of existing rooms that can be added to a ship
@@ -43,7 +75,7 @@ void endGame();
 //assetHandling:
 #include "Animations.cpp"
 
-vector<SDL_Texture* > sprites;
+vector<Sprite* > sprites;
 vector<AnimationInstance* > anims;
 
 
@@ -140,35 +172,6 @@ struct GameShip { //DEPRICATING FOR AN EXTENTION OF GAMEOBJECT CLASS
 extern GameShip* current_Ship;
 */
 Part current_Part; //part being held in the ship build menu
-GameShip *current_Ship;//ship that the player is currently flying (ship view)
-
-
-extern vector<GameShip> bluePrints;
-SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* ship);
-void drawShip(SDL_Renderer* renderer, GameShip* ship);
-void placePart(GameShip* ship, int x, int y, GamePart p);
-GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen);
-void placePart(GameShip* ship, int x, int y, int part, float r);
-void shipPhysics(GameShip* ship);
-void drawGameShip(SDL_Renderer* renderer, GameShip* ship);
-void setShipAttributes(GameShip *ship);
-
-
-//Coordinates:
-SDL_Point globalToLocalPlayer(int x, int y);
-SDL_Point localToGlobalPlayer(int x, int y);
-
-SDL_Point globalToLocalShip(int x, int y){
-
-	return point(x-current_Ship->gx,y-current_Ship->gy);
-
-}
-SDL_Point localToGlobalShip(int x, int y){
-
-	return point(x+current_Ship->gx,y+current_Ship->gy);
-
-}
-
 
 
 //UIConfig
@@ -198,14 +201,20 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event);
 void handleAnimations();
 
 
+//coordinates:
+void setTranslationFactor();
+void globalToLocal(int &x,int &y);
+void localToGlobal(int &x,int &y);
+
+
 #include "Hitbox.h" //collition utilities
 #include "assetHandling.cpp" //load images, and store them
 #include "ItemData.cpp" //store and initialize data about items, rooms, etc...
-#include "Hitbox.h" //collition utilities
+#include "GameObjects.cpp" //handles solid objects that exist in the world
 #include "Player.h" //player class
-#include "GameObjects.cpp" //handles solid objects that exist in the world
+
 #include "Ship.cpp" //functions for the GameShip data structure
-#include "GameObjects.cpp" //handles solid objects that exist in the world
+
 //#include "Player.cpp" //player class
 
 #include "GameStates.cpp" //handling for each of the root gamestate functions

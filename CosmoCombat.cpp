@@ -18,7 +18,7 @@ SDL_Surface* screen;
 bool running = true;
 int width;
 int height;
-gameState state = LOADING;
+gameState state = MAIN_MENU;
 using namespace std;
 
 
@@ -60,10 +60,8 @@ int startup(void* ptr){
 	cout << " Configured Parts " << endl;
 	configure_UI_Elements(renderer); //setup all the various ui pages, and fonts
 	cout << " Configured UI Elements" << endl;
-	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
-	loadingMessage = "Initializing World...";
+	bluePrints.push_back(createShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
 	World_INIT(renderer, time(NULL));
-	loadingMessage = "Creating Player....";
 	me = Player();
 	//preAllocateShips();
 	state = MAIN_MENU;
@@ -85,10 +83,6 @@ int main(int argc, char* argv[])
 	quickInit(8,2); //setup SDL subsystems (SDL, Image, TTF), 8 = color depth, 2 = samples
 	setup(); //create window, and setup renderer and screen
 	setDefaultColor(color(255,255,255)); //sets default screen background color;
-
-	startup_message_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,width,height);
-	SDL_SetTextureBlendMode(startup_message_texture,SDL_BLENDMODE_BLEND);
-
 	startup(nullptr);
 
 	//test:
@@ -125,20 +119,17 @@ int main(int argc, char* argv[])
 			SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer
 			root_Build_Ship(renderer,screen,&event);
 		} else if (state == SHIP_VIEW){
-			World_draw(renderer, Point(-current_Ship->gx,-current_Ship->gy));
+			World_draw(renderer, Point(-current_Ship->x,-current_Ship->y));
 			SDL_GUI_DISPLAY(renderer, &event);
 			root_Ship_View(renderer, &event);
 			handleGameObjects(renderer);
 
-			cout << clearLine << current_Ship->gx << " : "<<current_Ship->gy << "                             ";
+			cout << clearLine << current_Ship->x << " : "<<current_Ship->y << "                             ";
 
 		} else if (state == PLAYER_VIEW){
 			SDL_GUI_DISPLAY(renderer, &event);
 
 			root_Player_View();
-		} else if (state == LOADING){
-
-			root_loading_startup();
 		}
 
 

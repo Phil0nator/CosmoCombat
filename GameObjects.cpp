@@ -5,14 +5,6 @@
 
 int numParticles =0;
 
-GameShip otherShips[MAX_OTHER_SHIPS];
-void preAllocateShips(){
-  loadingMessage = "Allocating Ships";
-  for(int i = 0 ; i < MAX_OTHER_SHIPS;i++){
-    otherShips[i] = createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer, screen);
-  }
-
-}
 enum Particle_Type{
 
   PARTICLE_SMOKE, PARTICLE_FLAME, PARTICLE_DEAD_ROOM, PARTICLE_DEAD_DERELECT_ROOM, PARTICLE_NONE
@@ -25,27 +17,7 @@ enum Projectile_Type{
 
 };
 
-int globalTranslationFactorX=0;
-int globalTranslationFactorY=0;
 
-void setTranslationFactor(){
-  globalTranslationFactorX=current_Ship->gx;
-  globalTranslationFactorY=current_Ship->gy;
-}
-
-void globalToLocal(int &x,int &y){
-
-  x-=globalTranslationFactorX;
-  y-=globalTranslationFactorY;
-
-}
-
-void localToGlobal(int &x,int &y){
-
-  x+=globalTranslationFactorX;
-  y+=globalTranslationFactorY;
-
-}
 
 class GameObject{
 public:
@@ -84,7 +56,7 @@ public:
   }
   virtual void init() = 0;
 
-  
+
 
 };
 
@@ -153,7 +125,7 @@ void CreateSmokeParticle(int x, int y, SDL_Point initialVector){
 
 void handleGameObjects(SDL_Renderer* renderer){
 
-  setTranslationFactor();  
+  setTranslationFactor();
   for(int i = 0 ; i < gameObjects.size();i++){
 
     gameObjects.at(i)->update(renderer);

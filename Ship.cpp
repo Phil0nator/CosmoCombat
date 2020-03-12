@@ -1,6 +1,5 @@
-
-vector<GameShip> bluePrints;
 class GameShip : public GameObject{
+public:
   vector<vector<GamePart>> contents = vector<vector<GamePart>>();
 	vector<SDL_Point> engines = vector<SDL_Point>();
 	vector<SDL_Point> weapons = vector<SDL_Point>();
@@ -9,6 +8,16 @@ class GameShip : public GameObject{
 	int h = DEFAULT_SHIP_DIM;
 	int weight = 0;
 	int fuel = 0;
+
+  int index;
+
+
+  int x;
+  int y;
+  float velx;
+  float vely;
+  float rot;
+  float rotvel;
 
 	bool updated = true;
 	float acceleration =0;
@@ -26,25 +35,77 @@ class GameShip : public GameObject{
 	//state-booleans
 	bool enginesOn = false;
 
-  Ship();
-  Ship(SDL_Renderer* renderer, SDL_Surface *screen, int w, int h);
+  GameShip(){}
+  GameShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen);
 
-	void setAttriutes();
+	void setAttributes();
 	void placePart(int x, int y, GamePart p);
 	void placePart(int x, int y, int part, float r);
 	void bufferMapTexture();
 	void bufferOverlay();
 	SDL_Texture* buffer(SDL_Renderer* renderer, SDL_Surface* screen);
 
-	void drawBSP();
+	void drawBSP(SDL_Renderer* renderer);
 	void physics();
 	void clearOverlay();
 	void renderOverlay();
-	void drawShipView();
-	void drawPlayerView();
+	void drawShipView(SDL_Renderer* renderer);
+	void drawPlayerView(SDL_Renderer* renderer);
+
+  void draw(SDL_Renderer* renderer);
+  void init();
+  void collision();
+
+
 };
 
-void GameShip::setAtributes(){//setup attributes of a ship that need to be calculated before flight, or during
+
+vector<GameShip> bluePrints;
+GameShip *current_Ship;//ship that the player is currently flying (ship view)
+
+int globalTranslationFactorX=0;
+int globalTranslationFactorY=0;
+
+void setTranslationFactor(){
+  globalTranslationFactorX=current_Ship->x;
+  globalTranslationFactorY=current_Ship->y;
+}
+
+void globalToLocal(int &x,int &y){
+
+  x-=globalTranslationFactorX;
+  y-=globalTranslationFactorY;
+
+}
+
+void localToGlobal(int &x,int &y){
+
+  x+=globalTranslationFactorX;
+  y+=globalTranslationFactorY;
+
+}
+
+
+
+
+
+
+//Coordinates:
+SDL_Point globalToLocalPlayer(int x, int y);
+SDL_Point localToGlobalPlayer(int x, int y);
+
+SDL_Point globalToLocalShip(int x, int y){
+
+	return point(x-current_Ship->x,y-current_Ship->y);
+
+}
+SDL_Point localToGlobalShip(int x, int y){
+
+	return point(x+current_Ship->x,y+current_Ship->y);
+
+}
+
+void GameShip::setAttributes(){//setup attributes of a ship that need to be calculated before flight, or during
 
 	angularAcceleration = thrust/(weight*25);
 	acceleration = thrust/(weight);
@@ -93,7 +154,7 @@ void GameShip::placePart(int x, int y, GamePart p) { //correctly add a part to a
 
 	thrust += contents.at(x).at(y).origin.thrust;
 	weight += contents.at(x).at(y).origin.weight;
-	setShipAttributes(ship);
+	setAttributes();
 
 	//setup SDL_Point vectors to remember coords if this type
 	switch (p.origin.type){
@@ -107,7 +168,7 @@ void GameShip::placePart(int x, int y, GamePart p) { //correctly add a part to a
 
 
 	updated =false;
-	bufferShip(renderer, screen,ship);
+	buffer(renderer, screen);
 
 }
 void GameShip::placePart(int x, int y, int part, float r) { //place a part with rotation, calls above function
@@ -116,11 +177,6 @@ void GameShip::placePart(int x, int y, int part, float r) { //place a part with 
 	placePart(x,y,p);
 	updated =false;
 }
-void bufferShip_mapTexture(GameShip* ship){
-
-	Sprite out;
-	out = Sprite( renderer, ship->w*FSDIM, ship->h*FSDIM); //setup new texture
-	SDL_SetRenderTarget(renderer, out.get());
 void GameShip::bufferMapTexture(){
 
 	SDL_Texture* out;
@@ -133,8 +189,7 @@ void GameShip::bufferMapTexture(){
 
 			if (contents.at(i).at(j).sprite == 0)continue;
 
-			SDL_Rect source = getTextureRect(sprite( ship->contents.at(i).at(j).sprite));
-			SDL_Rect source = getTextureRect(sprite(contents.at(i).at(j).sprite));
+			SDL_Rect source = getTextureRect(sprite( contents.at(i).at(j).sprite));
 			SDL_Rect dest = getQuickRect(i * FSDIM, j * FSDIM, FSDIM, FSDIM);
 			const float r = contents.at(i).at(j).rot;
 			image(renderer, sprite(contents.at(i).at(j).sprite), source, dest, r, Point(FSDIM/2,FSDIM/2), SDL_FLIP_NONE);
@@ -147,9 +202,6 @@ void GameShip::bufferMapTexture(){
 	mapTexture = out;
 
 }
-void bufferShipOverlay(GameShip *ship){
-	SDL_SetRenderTarget(renderer, ship->overlayTexture.get());
-	for(int i = 0 ; i < ship->engines.size();i++){
 void GameShip::bufferOverlay(){
 	SDL_SetRenderTarget(renderer, overlayTexture);
 	for(int i = 0 ; i < engines.size();i++){
@@ -167,18 +219,13 @@ void GameShip::bufferOverlay(){
 	SDL_SetRenderTarget(renderer, NULL);
 
 }
-SDL_Texture* bufferShip(SDL_Renderer* renderer, SDL_Surface* screen, GameShip* ship) { //draws the parts of a ship onto a graphics buffer. Only called when parts change
-	Sprite out;
-
-		out = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, DEFAULT_SHIP_DIM*SPRITE_DIM, DEFAULT_SHIP_DIM*SPRITE_DIM); //setup new texture
 SDL_Texture* GameShip::buffer(SDL_Renderer* renderer, SDL_Surface* screen) { //draws the parts of a ship onto a graphics buffer. Only called when parts change
 	  SDL_Texture* out;
 
 		out = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w*SPRITE_DIM, h*SPRITE_DIM); //setup new texture
 		SDL_SetTextureBlendMode(out, SDL_BLENDMODE_BLEND); //for transparency
-	  out = Sprite( renderer, ship->w*SPRITE_DIM, ship->h*SPRITE_DIM);
 
-	  SDL_SetRenderTarget(renderer, out.get());
+	  SDL_SetRenderTarget(renderer, out);
 
 	//loop though all the parts and draw them onto the buffer:
 	for (int i = 0; i < contents.size(); i++) {
@@ -186,14 +233,14 @@ SDL_Texture* GameShip::buffer(SDL_Renderer* renderer, SDL_Surface* screen) { //d
 
 			if (contents.at(i).at(j).sprite == 0)continue;
 
-			SDL_Rect source = getTextureRect(sprite( ship->contents.at(i).at(j).sprite));
+			SDL_Rect source = getTextureRect(sprite( contents.at(i).at(j).sprite));
 			SDL_Rect dest = getQuickRect(i * SPRITE_DIM, j * SPRITE_DIM, SPRITE_DIM, SPRITE_DIM);
-			const float r = ship->contents.at(i).at(j).rot;
-			image(renderer, sprite(ship->contents.at(i).at(j).sprite), source, dest, r, Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
+			 float r = contents.at(i).at(j).rot;
+			image(renderer, sprite(contents.at(i).at(j).sprite), source, dest, r, Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
 
-			SDL_Rect source = (SDL_Rect){0,0,SPRITE_ASSET_DIMENTION,SPRITE_ASSET_DIMENTION};
-			SDL_Rect dest = (SDL_Rect){i * SPRITE_DIM, j * SPRITE_DIM, SPRITE_DIM, SPRITE_DIM};
-			const float r = contents.at(i).at(j).rot;
+			 source = (SDL_Rect){0,0,SPRITE_ASSET_DIMENTION,SPRITE_ASSET_DIMENTION};
+			 dest = (SDL_Rect){i * SPRITE_DIM, j * SPRITE_DIM, SPRITE_DIM, SPRITE_DIM};
+			 r = contents.at(i).at(j).rot;
 			image(renderer, sprite(contents.at(i).at(j).sprite), source, dest, r, Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
 		}
 
@@ -201,18 +248,10 @@ SDL_Texture* GameShip::buffer(SDL_Renderer* renderer, SDL_Surface* screen) { //d
 	}
 	SDL_SetRenderTarget(renderer, NULL);
 
-	ship->texture = out;
-	ship->updated = true;
-	return out.get();
-}
-
-GameShip createNewShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen) {
 	texture = out;
 	updated = true;
 	return out;
 }
-
-
 GameShip::GameShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen) {
 	//initialize contents vector correctly
 	contents.resize(w);
@@ -223,31 +262,12 @@ GameShip::GameShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen) {
 		}
 
 	}
-	out.centerOfMass = Point((int)w/2,(int)h/2);
-	out.w = w;
-	out.h = h;
-	setShipAttributes(&out);
-	placePart(&out, w / 2, h / 2, 1,0); //starts with a bridge in the middle
-	bufferShip(renderer, screen, &out);
-
-	out.overlayTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w*SPRITE_DIM, h*SPRITE_DIM); //setup new texture
-	SDL_SetTextureBlendMode(out.overlayTexture, SDL_BLENDMODE_BLEND); //for transparency
-
-
-	out.overlayTexture = Sprite( renderer, w*SPRITE_DIM, h*SPRITE_DIM);
-	clearTexture(renderer, out.overlayTexture.get()); //fill in trasparent
-	out.animationsTexture = Sprite( renderer, w*SPRITE_DIM, h*SPRITE_DIM);
-	clearTexture(renderer, out.animationsTexture.get());
-	//animations
-	out.exhaust = new AnimationInstance(Fire1);
-	anims.push_back(out.exhaust);
-
 	centerOfMass = Point((int)w/2,(int)h/2);
 	w = w;
 	h = h;
 	setAttributes();
 	placePart(w / 2, h / 2, 1,0); //starts with a bridge in the middle
-	bufferShip(renderer, screen);
+	buffer(renderer, screen);
 
 	overlayTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w*SPRITE_DIM, h*SPRITE_DIM); //setup new texture
 	SDL_SetTextureBlendMode(overlayTexture, SDL_BLENDMODE_BLEND); //for transparency
@@ -257,19 +277,9 @@ GameShip::GameShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen) {
 	clearTexture(renderer, animationsTexture);
 	//animations
 	exhaust = AnimationInstance(&Fire1);
-	anims.push_back(exhaust);
+	//anims.push_back(exhaust);
 
 }
-
-void drawShip(SDL_Renderer* renderer, GameShip* ship) { //draw ship for a UI, not taking rotation into account
-	SDL_Rect r = getTextureRect(ship->texture.get());
-	quickFillRect(renderer, (width/4)-1,-1,r.w+1,r.h+1, color(255,255,255));
-	quickRect(renderer, (width/4),0,r.w,r.h,color(0));
-	quickImage(renderer, ship->texture,width/4,0);
-
-
-	quickImage(renderer, ship->texture.get(),width/4,0);
-
 void GameShip::drawBSP(SDL_Renderer* renderer) { //draw ship for a UI, not taking rotation into account
 	SDL_Rect r = getTextureRect(texture);
 	quickFillRect(renderer, (width/4)-1,-1,r.w+1,r.h+1, color(255,255,255));
@@ -278,10 +288,6 @@ void GameShip::drawBSP(SDL_Renderer* renderer) { //draw ship for a UI, not takin
 }
 
 void GameShip::physics(){ //update ship's geometric variables based on it's velocities
-
-	ship->gx+=ship->velx;
-	ship->gy+=ship->vely;
-	ship->rot+=ship->rotvel;
 
 	velx = fclamp(velx, -2,2);
 	vely = fclamp(vely, -2,2);
@@ -292,12 +298,6 @@ void GameShip::physics(){ //update ship's geometric variables based on it's velo
 
 
 }
-
-void clearShipOverlay(GameShip* ship){
-	SDL_SetRenderTarget(renderer,ship->overlayTexture);
-
-	SDL_SetRenderTarget(renderer,ship->animationsTexture.get());
-
 void GameShip::clearOverlay(){
 	SDL_SetRenderTarget(renderer,animationsTexture);
 	SDL_SetRenderDrawColor(renderer, 0,0,0,0);
@@ -351,21 +351,6 @@ SDL_Point vDir(Direction d){
 
 } //turn a Direction enum into a translation vector
 
-void renderShipOverlay(GameShip* ship){
-
-	if(ship->enginesOn){
-		SDL_SetRenderTarget(renderer, ship->overlayTexture);
-
-		ship->exhaust.tick();
-		SDL_SetRenderTarget(renderer, ship->animationsTexture.get());
-		for(int i = 0 ; i < ship->engines.size();i++){
-
-			//draw engine light up copy
-			SDL_Rect source = getTextureRect(sprite( Engine.altSprite));
-			int x = ship->engines.at(i).x;
-			int y = ship->engines.at(i).y;
-			GamePart gp = ship->contents.at(x).at(y);
-
 void GameShip::renderOverlay(){
 	//TODO make updated bool for animations, make engines an array
 	if(enginesOn){
@@ -392,7 +377,7 @@ void GameShip::renderOverlay(){
 			Direction d = dir(r);
 			SDL_Point v = vDir(d);
 			SDL_Rect dest2 = getQuickRect(dest.x+(v.x*SPRITE_DIM), dest.y+(v.y*SPRITE_DIM),dest.w,dest.h);
-			image(renderer, ship->exhaust->get(), source, dest2, r,  Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
+			image(renderer, exhaust.get(), source, dest2, r,  Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
 
 			image(renderer, exhaust.get(), source, dest2, r,  Point(SPRITE_DIM/2,SPRITE_DIM/2), SDL_FLIP_NONE);
 
@@ -407,22 +392,6 @@ void GameShip::renderOverlay(){
 
 void GameShip::drawShipView(SDL_Renderer* renderer) { //draw ship for ingame, does rotate
 
-	SDL_Rect textDim = getTextureRect(ship->texture.get());
-	int sw = textDim.w;
-	int sh = textDim.h;
-	int rotCentx = (SPRITE_DIM*ship->centerOfMass.x)+SPRITE_DIM/2;
-	int rotCenty = (SPRITE_DIM*ship->centerOfMass.y)+SPRITE_DIM/2;
-	quickImage(renderer, ship->texture.get(),(width/2)-(rotCentx),(height/2)-(rotCenty),ship->rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
-	clearShipOverlay(ship);
-	renderShipOverlay(ship);
-	quickImage(renderer, ship->overlayTexture,(width/2)-(rotCentx),(height/2)-(rotCenty),ship->rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
-
-
-	if(ship->enginesOn){
-
-		quickImage(renderer, ship->overlayTexture.get(),(width/2)-(rotCentx),(height/2)-(rotCenty),ship->rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
-		quickImage(renderer, ship->animationsTexture.get(),(width/2)-(rotCentx),(height/2)-(rotCenty),ship->rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
-
 	SDL_Rect textDim = getTextureRect(texture);
 	int sw = textDim.w;
 	int sh = textDim.h;
@@ -431,26 +400,39 @@ void GameShip::drawShipView(SDL_Renderer* renderer) { //draw ship for ingame, do
 	quickImage(renderer, texture,(width/2)-(rotCentx),(height/2)-(rotCenty),rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
 	clearOverlay();
 	renderOverlay();
-
+	quickImage(renderer, overlayTexture,(width/2)-(rotCentx),(height/2)-(rotCenty),rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
 	if(enginesOn){
 
 		quickImage(renderer, overlayTexture,(width/2)-(rotCentx),(height/2)-(rotCenty),rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
 		quickImage(renderer, animationsTexture,(width/2)-(rotCentx),(height/2)-(rotCenty),rot,Point(rotCentx,rotCenty),SDL_FLIP_NONE);
-		//cout << "the bruh spot" << endl;
-
-	}
-
+  }
 }
 
-void GameShip::drawPlayerView(){
+
+void GameShip::drawPlayerView(SDL_Renderer* renderer){
 
 	SDL_Rect source = {me.x,me.y,width,height};
 
 	SDL_Rect dest = {0,0,width,height};
-	image(renderer,ship->mapTexture.get(),source,dest);
-	//quickImage(renderer, ship->mapTexture, 0,0);
-
 	image(renderer,mapTexture,source,dest);
 	//quickImage(renderer, mapTexture, 0,0);
 	//quickFillRect(renderer, 50,50,50,50,color(255,0,255));
+}
+
+void GameShip::init(){
+  gameObjects.push_back(std::unique_ptr<GameObject>(this));
+  index = gameObjects.size()-1;
+}
+void GameShip::collision(){
+
+}
+void GameShip::draw(SDL_Renderer* renderer){
+
+}
+
+GameShip createShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen){
+
+  GameShip out = GameShip(w,h,renderer,screen);
+  return out;
+
 }

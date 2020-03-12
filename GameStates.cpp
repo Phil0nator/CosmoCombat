@@ -2,9 +2,6 @@
 //lots of general purpose stuff
 
 
-
-Part current_Part; //part being held in the ship build menu
-GameShip *current_Ship;//ship that the player is currently flying (ship view)
 bool BSP_Rotated = false;
 time_t lastShipUpdate = 1;
 bool bsp_pickupClick = false;
@@ -25,7 +22,7 @@ void BSP_Events(SDL_Event* event){
 		int ex = (width/4)+(bluePrints.at(0).w*SPRITE_DIM);
 		if (/*event->button.clicks == 1&&*/current_Part.num>0&&event->type==SDL_MOUSEBUTTONUP) {
 			if (mx > sx&&mx<ex) {
-				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, current_Part.num,current_Part.rot);
+				current_Ship->placePart( (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, current_Part.num,current_Part.rot);
 
 			}
 
@@ -33,7 +30,7 @@ void BSP_Events(SDL_Event* event){
 		}else if(/*event->button.clicks == 1&&*/current_Part.num==0&&event->type==SDL_MOUSEBUTTONUP){//pick up existing parts
 			if(mx>sx&&!bsp_pickupClick){
 				current_Part = part(bluePrints.at(0).contents.at((mx - sx) / SPRITE_DIM).at(my / SPRITE_DIM).origin.num);
-				placePart(&bluePrints.at(0), (mx - sx) / SPRITE_DIM, my / SPRITE_DIM, 0,0);
+				current_Ship->placePart((mx - sx) / SPRITE_DIM, my / SPRITE_DIM, 0,0);
 				bsp_pickupClick=true;
 			}
 		}else if(event->type!=SDL_MOUSEBUTTONUP){
@@ -126,7 +123,7 @@ void setCurrentPart(Part p) {
 void root_Build_Ship(SDL_Renderer* renderer, SDL_Surface* screen, SDL_Event* event) {
 
 	UI_Build_Ship(renderer);
-	bluePrints.at(0).drawBSP();
+	bluePrints.at(0).drawBSP(renderer);
 	//drawShip(renderer,&bluePrints.at(0));
 	int mx, my;
 	SDL_GetMouseState(&mx, &my);
@@ -156,9 +153,9 @@ void root_Ship_View(SDL_Renderer* renderer, SDL_Event *event){
 
 
 
-	shipPhysics(current_Ship);
+	current_Ship->physics();
 	lastShipUpdate=now();
-	drawGameShip(renderer, current_Ship);
+	current_Ship->drawShipView(renderer);
 //draw objs
 
 

@@ -1,3 +1,4 @@
+
 namespace TextureHandling{
   bool txhInit = false;
 

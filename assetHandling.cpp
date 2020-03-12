@@ -5,8 +5,6 @@
 #define FPS6  1000/6
 #define ASSET_NUMBER 17
 
-vector<Sprite *> sprites;
-vector<AnimationInstance *> anims;
 
 //animations:
 	//world
