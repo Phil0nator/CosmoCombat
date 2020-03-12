@@ -10,6 +10,9 @@ bool bsp_pickupClick = false;
 void BSP_Events(SDL_Event* event){
 
 	int mx, my;
+	if(current_Ship == nullptr){
+		current_Ship = &bluePrints.at(0);
+	}
 	SDL_GetMouseState(&mx, &my);
 	if (&current_Part != nullptr) {
 

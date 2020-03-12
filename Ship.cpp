@@ -68,6 +68,10 @@ void GameShip::placePart(int x, int y, GamePart p) { //correctly add a part to a
 void GameShip::placePart(int x, int y, int part, float r) { //place a part with rotation, calls above function
 	GamePart p = gamePart(part);
 	p.rot = r;
+	if(this == nullptr){
+		cout << "IS NULL" << endl;
+		return;
+	}
 	placePart(x,y,p);
 	updated =false;
 }
@@ -314,8 +318,8 @@ void GameShip::drawPlayerView(SDL_Renderer* renderer){
 }
 
 void GameShip::init(){
-  gameObjects.push_back(std::unique_ptr<GameObject>(this));
-  index = gameObjects.size()-1;
+  //gameObjects.push_back(std::unique_ptr<GameObject>(this));
+  //index = gameObjects.size()-1;
 }
 void GameShip::collision(){
 
@@ -327,6 +331,7 @@ void GameShip::draw(SDL_Renderer* renderer){
 GameShip createShip(int w, int h, SDL_Renderer* renderer, SDL_Surface* screen){
 
   GameShip out = GameShip(w,h,renderer,screen);
+  out.init();
   return out;
 
 }

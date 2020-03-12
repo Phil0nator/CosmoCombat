@@ -60,7 +60,8 @@ int startup(void* ptr){
 	cout << " Configured Parts " << endl;
 	configure_UI_Elements(renderer); //setup all the various ui pages, and fonts
 	cout << " Configured UI Elements" << endl;
-	bluePrints.push_back(createShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
+	GameShip firstShip = createShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen);
+	bluePrints.push_back(firstShip); //creates a placeholder for the first ship
 	World_INIT(renderer, time(NULL));
 	me = Player();
 	//preAllocateShips();
