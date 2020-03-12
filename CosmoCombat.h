@@ -213,7 +213,7 @@ void localToGlobal(int &x,int &y);
 #include "GameObjects.cpp" //handles solid objects that exist in the world
 #include "Player.h" //player class
 
-#include "Ship.cpp" //functions for the GameShip data structure
+#include "Ship.h" //functions for the GameShip data structure
 
 //#include "Player.cpp" //player class
 
