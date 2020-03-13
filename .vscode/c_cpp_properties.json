@@ -4,7 +4,9 @@
             "name": "Win32",
             "includePath": [
                 "Abstractions/**",
-                "C:/SDL/**"
+                "C:/SDL/**",
+                "C:/ENET/enet-1.3.14/include/**",
+                "C:/ENET/**"
             ],
             "defines": [
                 "_DEBUG",
@@ -20,6 +22,7 @@
                 "-I C:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0.10/i686-w64-mingw32/include/SDL2 ",
                 "-I C:/SDL/SDL2_ttf-2.0.15/i686-w64-mingw32/include/SDL2 ",
                 "-I C:/SDL/SDL2_image-devel-2.0.5-mingw/SDL2_image-2.0.5/i686-w64-mingw32/include/SDL2",
+                "-I C:/ENET/enet-1.3.14/include/enet",
                 "-L C:/mingw_dev_lib/lib -LC:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0.10/i686-w64-mingw32/lib ",
                 "-L C:/SDL/SDL2_image-devel-2.0.5-mingw/SDL2_image-2.0.5/i686-w64-mingw32/lib ",
                 "-L C:/SDL/SDL2_ttf-2.0.15/i686-w64-mingw32/lib",

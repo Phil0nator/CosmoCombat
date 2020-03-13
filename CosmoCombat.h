@@ -215,3 +215,6 @@ void localToGlobal(int &x,int &y);
 #include "GameStates.cpp" //handling for each of the root gamestate functions
 #include "UIConfig.cpp" //configure the UI, and callbacks, etc...
 #include "World.cpp" // handling of the world (Alex Harlan)
+
+
+#include "Network/Network.h" //handles all networking functionality
