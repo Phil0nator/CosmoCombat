@@ -5,6 +5,8 @@
 #undef main
 
 
+//http://enet.bespin.org/Downloads.html //Networking protocal
+
 
 //global variables:
 SDL_Window* window;
