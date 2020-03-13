@@ -7,7 +7,7 @@
 bool allSpritesLoaded = false;
 int spritesLoaded = 0;
 
-vector<SDL_Texture* > sprites;
+vector<Sprite*> sprites;
 vector<AnimationInstance *> anims;
 
 //animations:
@@ -18,21 +18,43 @@ Animation Fire1;
 Animation Shoulders1;
 Animation Arms1;
 
+//vector<TH::Sprite> sprites;
 
 
 // </animations>
+
+
+void checkAllSprites()
+{
+	cout << "Sprites" << time(NULL) << ":" << endl;
+	for (int i = 0; i < 16; i++)
+	{
+		cout << "\t" << i << ": ";
+		if (sprites.at(i) == NULL)
+			cout << "NULL";
+		else
+			cout << "SUCCESS";
+		cout << "\n";	
+	}
+}
 
 void loadSprites(SDL_Renderer *renderer)
 //load all sprites in the "assets\sprites\" folder into a single vector, to be referenced later
 {
 	cout << "Loading Assets: " << endl;
 	anims = vector<AnimationInstance *>(0);
-	for (int i = 0; i < 16; i++) {
-		SDL_Texture* sp = loadImage(renderer,string("assets\\sprites\\").append(to_string(i).append(".PNG")).c_str());
-		cout << clearLine << i << "/" << 16<<"                ";
-		sprites.push_back(sp);
-		spritesLoaded++;
+	for (int i = 0; i < 17; i++) {
+		Sprite bufferSprite(string("assets\\sprites\\").append(to_string(i).append(".PNG"));		
+		sprites.push_back(&bufferSprite);
+		cout << i << " / 17" << endl;
 	}
+
+	for (size_t i = 0; i < sprites.size(); i++)
+	{
+		sprites.at(i).loadFromPath();
+	}
+	
+
 	//load animations
 	cout << endl << "Loading Animations: " << endl;
 	Fire1 = Animation(file_fix("assets\\Animations\\world\\fire1\\"),24,FPS24);
@@ -42,8 +64,9 @@ void loadSprites(SDL_Renderer *renderer)
 	Arms1 = Animation(file_fix("assets\\Animations\\player\\Arms1\\"),24,FPS24);
 	spritesLoaded += 24;
 
-	allSpritesLoaded = true;
 	cout << "Loaded Sprites: " << spritesLoaded << endl;
+	checkAllSprites();
+	allSpritesLoaded = true;
 }
 
 //used each frame to tick all active animations

@@ -4,12 +4,10 @@
     {
       "type": "shell",
       "label": "g++.exe build active file",
-      "command": "${fileDirname}\\run.bat",
+      "command": "${fileDirname}\\test.bat",
       "args": [
 
-
-        
-    ],
+      ],
       "options": {
 
       },

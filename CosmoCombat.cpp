@@ -51,6 +51,8 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
+	checkAllSprites();
+
 	setup(); //create window, and setup renderer and screen
 	setDefaultColor(color(255,255,255)); //sets default screen background color;
 	//loadSprites(renderer);
@@ -89,8 +91,12 @@ int main(int argc, char* argv[])
 		handleAnimations(); //update the current frame for AnimationInstance objects. see assetHandling.cpp
 		//gamestates:
 		if (state == MAIN_MENU) {
+			SDL_Rect s = getQuickRect(0, 0, 800, 600);
+			SDL_Rect o = getQuickRect(0, 0, width, height);
+			
 			root_Main_Menu();
 			SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer
+			image(renderer, sprite(15), s, o);
 		}
 		else if (state == BUILD_SHIP) {
 			SDL_GUI_DISPLAY(renderer, &event); //display gui to renderer

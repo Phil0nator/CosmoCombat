@@ -6,6 +6,11 @@
         "limits": "cpp",
         "valarray": "cpp",
         "iostream": "cpp",
-        "explorer.sortOrder": "type"
-    }
+        "explorer.sortOrder": "type",
+        "thread": "cpp",
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "vector": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
