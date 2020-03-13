@@ -7,11 +7,6 @@ string loadingMessage = "Loading";
 #pragma once
 
 
-#define ICON_DIM 75 //dimention of icons
-#define SPRITE_DIM 100 // dimention of Sprites (the size of rooms in a ship for example)
-#define FSDIM 1000 //full-size-dimention: the original size of the images, used for playerView
- //will include "SDL_Abstractions.h", which includes the all the other libraries
-#define SPRITE_ASSET_DIMENTION 1920
 
 //definitions of different gamestates, each of which has a different set of functions to be called each frame
 enum gameState {

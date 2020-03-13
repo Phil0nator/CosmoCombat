@@ -1,13 +1,8 @@
 //L:3167
+#include "unitDefines.h"
 #include "SDL_timer.h"
 #include "CosmoCombat.h"
 #undef main
-
-#define CAP_FRAMERATE true
-#define FRAME_CAP 120
-#define FRAME_COUNTER true
-#define WORLD_DIV_FACTOR 10000
-
 
 
 

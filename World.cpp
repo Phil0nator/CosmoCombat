@@ -1,15 +1,4 @@
 
-#define SIZE_X 20000
-#define SIZE_Y 20000
-#define CHUNK_SIZE 500
-#define CHUNK_AMT_FG 20
-#define CHUNK_AMT_BG 10
-
-#define SMALL_STAR_AMT 100
-#define MED_STAR_AMT 5
-#define BIG_STAR_AMT 1
-#define ASTEROID_AMT 10
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///	TODO:
 ///		make asteroids have velocity

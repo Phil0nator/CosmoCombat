@@ -1,7 +1,3 @@
-#define MAX_OTHER_SHIPS 1024
-#define MAX_GAMEOBJECT_LIFETIME 10000
-#define MAX_PARTICLES 100
-#define MAX_OBJECTS 10000000
 
 int numParticles =0;
 

@@ -1,9 +1,6 @@
 //configure all the uielements for all various pages
 //also, defines their callback functions
 
-#define MAX_PARTS 128
-
-
 
 
 //buttons and pages:
