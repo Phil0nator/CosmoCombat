@@ -81,7 +81,10 @@ int main(int argc, char* argv[])
 	setup(); //create window, and setup renderer and screen
 	setDefaultColor(color(255,255,255)); //sets default screen background color;
 	startup(nullptr);
-
+	initializeNetworkClient();
+	EntityServerEvent e;
+	e.ID = 200;
+	PackEventType(&e);
 	//test:
 
 	SDL_Event event;
