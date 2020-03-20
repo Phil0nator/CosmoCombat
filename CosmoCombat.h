@@ -152,7 +152,7 @@ enum PartType {
 };
 
 
-void loadSprites(SDL_Renderer* renderer);
+void setupSprites(SDL_Renderer* renderer);
 SDL_Texture* sprite(int index);
 
 //item Data:

@@ -55,7 +55,6 @@ int main(int argc, char* argv[])
 
 	setup(); //create window, and setup renderer and screen
 	setDefaultColor(color(255,255,255)); //sets default screen background color;
-	//loadSprites(renderer);
 	configureParts(); // sets up reference Part structures
 	bluePrints.push_back(createNewShip(DEFAULT_SHIP_DIM,DEFAULT_SHIP_DIM,renderer,screen)); //creates a placeholder for the first ship
 	configure_UI_Elements(renderer);

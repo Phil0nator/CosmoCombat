@@ -1,50 +1,44 @@
 class Animation{ //storage class, only one made of each possuble animation
 
-
-
 public:
-  vector<SDL_Texture* > frames;
-
+  vector<TH::Sprite* > frames;
   int numberOfFrames = 1;
-
   int delay = 0;
+
   Animation::Animation();
   Animation::Animation(string path, int numFrames, int indelay);
   Animation::Animation( const Animation& a );
   ~Animation();
-
 };
 
 Animation::~Animation(){
-
-
-
-
 }
+
 Animation::Animation(){
 }
+
 Animation::Animation( const Animation& a ){
-
-
-
   delay = a.delay;
   numberOfFrames = a.numberOfFrames;
   frames = a.frames;
-
-
 } //copy contstructor
+
 Animation::Animation(string path, int numFrames, int indelay){
   numberOfFrames = numFrames-1;
-  frames = vector<SDL_Texture* >(numFrames);
-  frames.resize(numFrames);
+  frames = vector<TH::Sprite *>();
+  
   cout << "NUMFRAMES: " << numFrames << endl;
-  for(int i = 1 ; i <= numFrames;i++){
-    cout << clearLine <<"Load_Animation: " << i << "/" << numFrames<<"                ";
-    string file = path + to_string(i);
-    file+=".png";
-    //cout << "\r" << file << endl;
-    SDL_Texture *f = loadImage(renderer, file.c_str());
-    frames.at(i-1)=f;
+
+  for (int i = 0 ; i < numFrames; i++)
+  {
+    cout << clearLine <<"Load_Animation: " << i << "/" << numFrames << "                ";
+    string file = path + to_string(i + 1);
+    file += ".png";
+    
+    TH::Sprite buffer(path);
+
+    frames.push_back(&buffer);
+    TH::addToRenderQueue(&buffer);
   }
 
   delay = indelay;
@@ -71,32 +65,24 @@ public:
   AnimationInstance(){}
 
   AnimationInstance(Animation *o){
-
     origin = o;
-
   }
+
   void tick(){
-    if(!active)return;
-
-    if(now()-lastTick>origin->delay){
+    if(!active) {return;}
+    if(now() - lastTick > origin->delay){
       frame++;
+
       if(frame>=origin->frames.size()){
-
         frame=0;
-
-
-
       }
+
       lastTick = now();
-
     }
-
   }
 
   SDL_Texture* get(){
-    return origin->frames.at(frame);
-
+    return origin->frames.at(frame)->texture;
   }
-
 
 };

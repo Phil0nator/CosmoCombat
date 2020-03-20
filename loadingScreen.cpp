@@ -16,20 +16,18 @@ void setupLoadingScreen()
 	lrenderer = SDL_CreateRenderer(lwindow, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderTarget(lrenderer, NULL);
 	lscreen = SDL_GetWindowSurface(lwindow);
-	textureHandler.setup(lrenderer, lwindow, lscreen);
+	TH::init(lrenderer, lwindow, lscreen);
 }
 
 int threadedLoadFiles(void* data)
 {
 	SDL_Log("File loading started...");
-	loadSprites(lrenderer);
 	SDL_Log("File loading Ended...");
 	return 1;
 }
 
 bool launchLoadingScreen()
 {
-
 	bool success = true;
     setupLoadingScreen();
     SDL_Log("Loading Screen: START");
@@ -44,18 +42,13 @@ bool launchLoadingScreen()
 		return false;
 	}
 
-	loadSprites(lrenderer);
+	setupSprites(lrenderer);
 
 	//load sprites
-	/*
-	SDL_Thread *thread;
-	thread = SDL_CreateThread(threadedLoadFiles, "LoadingThread", NULL);
-	if (thread == NULL)
-		SDL_Log("THREAD IS NULL!!");
+	int spritesAmt = TH::getAllSpritesSize();
+	int spriteCurrent = 0;
+	int renderAmt = TH::getRenderSpritesSize();
 
-	SDL_DetachThread(thread);
-	*/
-	
 	//Game Loop:
 	SDL_Event event;
 	while (lrunning) {
@@ -70,18 +63,22 @@ bool launchLoadingScreen()
 		}
 		
 		//cout << "images Loaded: " << spritesLoaded << endl;
+		TH::loadSpriteFromPath(spriteCurrent);
+		spriteCurrent++;
+
+		if(spriteCurrent > spritesAmt)
+		{
+			lrunning = false;
+		}
 
 		SDL_RenderClear(lrenderer);
 		SDL_SetRenderTarget(lrenderer, NULL);
 		quickImage(lrenderer, loadingBackground, 0, 0);
 		quickFillRect(lrenderer, 
 			50, 100, 
-			700.f * (spritesLoaded/88.f), 100, 
+			700.f * (spriteCurrent/(spritesAmt * 1.f)), 100, 
 			color(255, 0, 0));
 		SDL_RenderPresent(lrenderer);
-
-		if (spritesLoaded >= 88)
-			lrunning = false;
 	}
 
 	smoothFinish(lwindow, lrenderer);

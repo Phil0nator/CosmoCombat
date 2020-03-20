@@ -9,7 +9,8 @@ namespace TH
 
     Sprite();
     Sprite(string inpPath);
-    loadFromPath();
+    bool loadFromPath();
+    bool loadFromSurface();
     ~Sprite(){
       SDL_DestroyTexture(texture);
       SDL_FreeSurface(surface);
@@ -42,6 +43,18 @@ namespace TH
     queueRender.erase(queueRender.begin());
   }
 
+  int getAllSpritesSize(){
+    return allSprites.size();
+  }
+
+  void loadSpriteFromPath(int index){
+    allSprites.at(index)->loadFromPath();
+  }
+
+  int getRenderSpritesSize(){
+    return queueRender.size();
+  }
+
   void shutdown()
   {
     while (int(queueRender.size()) > 0)
@@ -52,6 +65,7 @@ namespace TH
       queueRender.erase(queueRender.begin());
     } 
   }
+
 
   Sprite::Sprite()
   {
@@ -65,12 +79,26 @@ namespace TH
     texture = NULL;
     surface = NULL;
     path = inpPath;
+
+    allSprites.push_back(this);
   }
 
-  Sprite::loadFromPath()
+  bool Sprite::loadFromPath()
   {
-    char[] buffer = path.c_str();
-    surface = IMG_Load(path);
+    surface = IMG_Load(path.c_str());
     cout << "Load From Path: " << path << " " << surface;
+    
+    if (surface == NULL) {return false;}
+    return true;
+  }
+
+  bool Sprite::loadFromSurface()
+  {
+    if (surface == NULL) {return false;}
+
+    texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+    if(texture == NULL) {return false;}
+    return true;
   }
 }

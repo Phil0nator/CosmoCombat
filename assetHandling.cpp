@@ -7,7 +7,7 @@
 bool allSpritesLoaded = false;
 int spritesLoaded = 0;
 
-vector<Sprite*> sprites;
+vector<TH::Sprite *> sprites;
 vector<AnimationInstance *> anims;
 
 //animations:
@@ -38,20 +38,17 @@ void checkAllSprites()
 	}
 }
 
-void loadSprites(SDL_Renderer *renderer)
+void setupSprites(SDL_Renderer *renderer)
 //load all sprites in the "assets\sprites\" folder into a single vector, to be referenced later
 {
 	cout << "Loading Assets: " << endl;
 	anims = vector<AnimationInstance *>(0);
+
+	//load sprites from sprites folder
 	for (int i = 0; i < 17; i++) {
-		Sprite bufferSprite(string("assets\\sprites\\").append(to_string(i).append(".PNG"));		
+		TH::Sprite bufferSprite(string("assets\\sprites\\").append(to_string(i).append(".PNG")));		
 		sprites.push_back(&bufferSprite);
 		cout << i << " / 17" << endl;
-	}
-
-	for (size_t i = 0; i < sprites.size(); i++)
-	{
-		sprites.at(i).loadFromPath();
 	}
 	
 
@@ -65,22 +62,16 @@ void loadSprites(SDL_Renderer *renderer)
 	spritesLoaded += 24;
 
 	cout << "Loaded Sprites: " << spritesLoaded << endl;
-	checkAllSprites();
 	allSpritesLoaded = true;
 }
 
 //used each frame to tick all active animations
 void handleAnimations(){
 	for(int i = 0 ; i < anims.size();i++){
-
 		anims.at(i)->tick();
-
 	}
-
 }
 
 SDL_Texture* sprite(int index) {//quick access to a sprite by its index number
-
-	return sprites.at(index);
-
+	return sprites.at(index)->texture;
 }
