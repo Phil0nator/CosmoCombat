@@ -1,8 +1,5 @@
 //http://enet.bespin.org/Downloads.html //Networking protocal
-#ifndef __linux__
-    #define _WIN32
-#endif
-#include "enet/enet.h"
+#include "host.c"
 
 
 
@@ -73,9 +70,19 @@ void initializeNetworkClient(){
 
 ENetPacket * PackEventType(void*ptr){
 
+    
+
     ENetPacket * out = enet_packet_create(ptr,sizeof(ptr),ENET_PACKET_FLAG_RELIABLE);
     cout << out->data << endl;
     return out;
+
+}
+
+void unpack(ENetPacket* packet, void* dest){
+
+    unsigned char *buffer = (char*) malloc(sizeof(packet));
+    memcpy(&buffer,( const unsigned char* )packet, sizeof(packet));
+    memcpy(dest, &buffer, sizeof(packet));
 
 }
 

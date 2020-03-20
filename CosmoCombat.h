@@ -217,4 +217,4 @@ void localToGlobal(int &x,int &y);
 #include "World.cpp" // handling of the world (Alex Harlan)
 
 
-//#include "Network/Network.h" //handles all networking functionality
+#include "Network/Network.h" //handles all networking functionality

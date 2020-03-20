@@ -9,10 +9,10 @@ OBJS = CosmoCombat.cpp
 CC = g++
 
 #INCLUDE_PATHS specifies the additional include paths we'll need
-INCLUDE_PATHS = -IC:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0.10/i686-w64-mingw32/include/SDL2 -I C:/SDL/SDL2_ttf-2.0.15/i686-w64-mingw32/include/SDL2 -I C:/SDL/SDL2_image-devel-2.0.5-mingw/SDL2_image-2.0.5/i686-w64-mingw32/include/SDL2 -I C:\ENET\enet-1.3.14\include
+INCLUDE_PATHS = -IC:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0.10/i686-w64-mingw32/include/SDL2 -I C:/SDL/SDL2_ttf-2.0.15/i686-w64-mingw32/include/SDL2 -I C:/SDL/SDL2_image-devel-2.0.5-mingw/SDL2_image-2.0.5/i686-w64-mingw32/include/SDL2 -I C:\ENET\enet-1.3.14\include -I C:\ENET\enet-1.3.14
 
 #LIBRARY_PATHS specifies the additional library paths we'll need
-LIBRARY_PATHS =-L C:/mingw_dev_lib/lib -LC:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0.10/i686-w64-mingw32/lib -L C:/SDL/SDL2_image-devel-2.0.5-mingw/SDL2_image-2.0.5/i686-w64-mingw32/lib -L C:/SDL/SDL2_ttf-2.0.15/i686-w64-mingw32/lib
+LIBRARY_PATHS =-L C:/mingw_dev_lib/lib -LC:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0.10/i686-w64-mingw32/lib -L C:/SDL/SDL2_image-devel-2.0.5-mingw/SDL2_image-2.0.5/i686-w64-mingw32/lib -L C:/SDL/SDL2_ttf-2.0.15/i686-w64-mingw32/lib -L C:\ENET\enet-1.3.14
 
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
@@ -20,7 +20,7 @@ LIBRARY_PATHS =-L C:/mingw_dev_lib/lib -LC:/SDL/SDL2-devel-2.0.10-mingw/SDL2-2.0
 COMPILER_FLAGS = -Wreturn-type
 
 #LINKER_FLAGS specifies the libraries we're linking against
-LINKER_FLAGS = -l mingw32 -l SDL2main -l SDL2 -l SDL2_image -l SDL2_ttf
+LINKER_FLAGS = -l mingw32 -l SDL2main -l SDL2 -l SDL2_image -l SDL2_ttf -lenet -lws2_32 -lwinmm
 
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = CosmoCombat

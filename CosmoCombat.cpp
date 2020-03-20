@@ -81,11 +81,16 @@ int main(int argc, char* argv[])
 	setup(); //create window, and setup renderer and screen
 	setDefaultColor(color(255,255,255)); //sets default screen background color;
 	startup(nullptr);
+	
 	initializeNetworkClient();
-	EntityServerEvent e;
-	e.ID = 200;
-	PackEventType(&e);
-	//test:
+	EntityServerEvent *test = new EntityServerEvent() ;
+	test->ID=69;
+	ENetPacket *testPack = PackEventType(test);
+	EntityServerEvent test2;
+	unpack(testPack,&test2);
+	cout << "TEST2: " << test2.ID << endl;
+
+
 
 	SDL_Event event;
 	while (running) {
